@@ -8,6 +8,9 @@ import { Inter, Marmelad, Marck_Script } from "next/font/google";
 export const metadata = {
   title: "Княжа Вольниця | Голована сторінка",
   description: 'Сайт народного аматорського хору "Княжа Вольниця"',
+  icons: {
+    icon: "/favicon.png",
+  }
 };
 
 const inter = Inter({
