@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+
+  .block {
+    @media (min-width: 744px) {
+      &.hasTitle {
+        width: 488px;
+      }
+    }
+  }
+
+  .title {
+    font-family: var(--third-family);
+    font-weight: 400;
+    font-size: 33px;
+    line-height: 90%;
+    color: var(--chervoniy-volnicya);
+    margin-bottom: 16px;
+  }
+
+  .text {
+    font-size: 16px;
+    line-height: 180%;
+
+    @media (min-width: 744px) {
+      font-size: 20px;
+    }
+  }
+}

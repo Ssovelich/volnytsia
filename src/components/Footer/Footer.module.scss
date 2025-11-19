@@ -1,0 +1,53 @@
+.footer {
+  padding: 48px 0 34px;
+  text-align: center;
+  overflow: visible;
+
+  .decorWrap {
+    position: relative;
+    width: 100%;
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 58px;
+
+    .decor {
+      width: 613px;
+      height: auto;
+      transform: translateY(0);
+    }
+  }
+
+  .title {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 180%;
+    margin-bottom: 24px;
+  }
+
+  .socialList {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    margin-bottom: 48px;
+
+    .socialItem {
+      border-radius: 5px;
+      padding: 4px;
+      width: 32px;
+      height: 32px;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+      background: var(--bіliy);
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .copy {
+    font-size: 12px;
+    line-height: 180%;
+  }
+}

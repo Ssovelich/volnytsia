@@ -1,0 +1,80 @@
+// $font-inter-regular: "Inter", sans-serif;
+// $font-inter-semibold: "Inter", sans-serif;
+// $font-inter-italic: "Inter", sans-serif;
+// $font-marmelad: "Marmelad", sans-serif;
+// $font-marckscript: "MarckScript", cursive;
+
+:root {
+  --font-family: "Inter", sans-serif;
+  --second-family: "Marmelad", sans-serif;
+  --third-family: "Marck Script", sans-serif;
+
+  --korichneviy-volnicya: #291818;
+  --chervoniy-volnicya: #bd0000;
+  --svіtlo-chervoniy: #ff8c8c;
+  --bіliy: #fff;
+  --bezh-tlo: #f5f5f5;
+  --neativniy-tekst: #7f7a7a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  font-weight: 400;
+  background: var(--bezh-tlo);
+  color: var(--korichneviy-volnicya);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 60px 20px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+button{
+  cursor: pointer;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.container {
+  width: calc(100% - 48px);
+  max-width: 375px;
+  padding-inline: 24px;
+  margin-inline: auto;
+}
+
+@media screen and (min-width: 744px) {
+  .container {
+    max-width: 744px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
+  }
+}
+
+
+.brTablet {
+  display: none;
+
+  @media (min-width: 744px) {
+    display: block;
+  }
+}
