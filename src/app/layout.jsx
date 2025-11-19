@@ -4,6 +4,7 @@ import Footer from "@/components/Footer/Footer";
 import PageLoader from "@/components/PageLoader/PageLoader";
 
 import { Inter, Marmelad, Marck_Script } from "next/font/google";
+import ScrollToTop from "@/components/ScrollToTop/ScrollToTop";
 
 export const metadata = {
   title: "Княжа Вольниця | Голована сторінка",
@@ -42,6 +43,7 @@ export default function RootLayout({ children }) {
         <Header />
         {children}
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );
