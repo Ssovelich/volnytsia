@@ -4,6 +4,8 @@
   gap: 48px;
 
   .block {
+    position: relative;
+
     @media (min-width: 744px) {
       &.hasTitle {
         width: 562px;
@@ -26,6 +28,27 @@
 
     @media (min-width: 744px) {
       font-size: 20px;
+    }
+  }
+
+  .toggleBtn {
+    display: block;
+    margin-top: 8px;
+    margin-left: auto;
+    width: fit-content;
+    padding: 0;
+    gap: 4px;
+    color: var(--neativniy-tekst);
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    .arrow img {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+      vertical-align: middle;
+      transform: translateY(-1px);
     }
   }
 }
