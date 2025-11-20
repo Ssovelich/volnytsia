@@ -1,7 +1,6 @@
 .section {
   text-align: center;
-  overflow: visible;
-
+ 
   h1 {
     font-weight: 400;
     font-size: 20px;
@@ -28,7 +27,8 @@
     margin-bottom: 48px;
 
     .decor {
-      width: 613px;
+      width: 100%;
+      max-width: 613px;
       height: auto;
       transform: translateY(0);
     }

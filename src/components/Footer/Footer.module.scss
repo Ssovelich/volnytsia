@@ -1,7 +1,7 @@
 .footer {
   padding: 48px 0 34px;
   text-align: center;
-  overflow: visible;
+  // overflow: visible;
 
   .decorWrap {
     position: relative;
@@ -12,7 +12,8 @@
     margin-bottom: 58px;
 
     .decor {
-      width: 613px;
+      width: 100%;
+      max-width: 613px;
       height: auto;
       transform: translateY(0);
     }
