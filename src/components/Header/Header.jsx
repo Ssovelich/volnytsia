@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import styles from "./Header.module.scss";
@@ -9,6 +9,8 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
+  const menuRef = useRef(null);
+
   const navItems = [
     { href: "/", label: "Головна" },
     { href: "/about", label: "Про нас" },
@@ -16,6 +18,29 @@ const Header = () => {
     { href: "/gallery", label: "Галерея" },
     { href: "/backstage", label: "За лаштунками" },
   ];
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
+
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, []);
 
   return (
     <header className={styles.header}>
@@ -29,9 +54,7 @@ const Header = () => {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className={
-                  pathname === item.href ? styles.activeLink : undefined
-                }
+                className={pathname === item.href ? styles.activeLink : undefined}
               >
                 {item.label}
               </Link>
@@ -41,13 +64,16 @@ const Header = () => {
       </nav>
 
       {!isOpen && (
-        <button className={styles.menuButton} onClick={() => setIsOpen(true)}>
+        <button
+          className={styles.menuButton}
+          onClick={() => setIsOpen(true)}
+        >
           Меню
         </button>
       )}
 
       {isOpen && (
-        <div className={styles.mobileMenu}>
+        <div ref={menuRef} className={styles.mobileMenu}>
           <button
             className={styles.closeButton}
             onClick={() => setIsOpen(false)}
@@ -60,9 +86,7 @@ const Header = () => {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={
-                    pathname === item.href ? styles.activeLink : undefined
-                  }
+                  className={pathname === item.href ? styles.activeLink : undefined}
                   onClick={() => setIsOpen(false)}
                 >
                   {item.label}
