@@ -6,9 +6,8 @@ import { homeContent } from "@/data/homeContent";
 
 const HomeContent = () => {
   const [expanded, setExpanded] = useState(false);
-  const [isMobile, setIsMobile] = useState(null); // важливо
+  const [isMobile, setIsMobile] = useState(null);
 
-  // Визначаємо isMobile тільки на клієнті
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 744);
     check();
@@ -42,7 +41,6 @@ const HomeContent = () => {
     <div className={styles.wrapper}>
       <div className={styles.block}>
         <p className={styles.text}>
-          {/* Поки не знаємо ширину — рендеримо повний текст (стає безпечним для SSR) */}
           {isMobile === null
             ? renderParts(fullParts)
             : isMobile && !expanded
