@@ -5,7 +5,6 @@
 
 .tabBtn {
   border-radius: 30px 30px 0 0;
-  // border: 1px solid rgba(0, 0, 0, 0.15);
   border: none;
   padding: 12px 48px;
   width: 165px;
@@ -18,7 +17,7 @@
   font-size: 12px;
   line-height: 115%;
   text-transform: uppercase;
-   color: var( --neativniy-tekst);
+  color: var(--neativniy-tekst);
   transition: 0.2s ease;
   margin-left: -24px;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.15);
@@ -28,7 +27,6 @@
     // background: var(--bezh-tlo);
     color: var(--korichneviy-volnicya);
     z-index: 10;
-    // box-shadow: none;
   }
 }
 
@@ -41,7 +39,7 @@
   // box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.15);
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
   background: var(--bіliy);
-   margin-top: -1px;
+  margin-top: -1px;
 
   /* Leaders list (vertical) */
   .leaders {
@@ -74,7 +72,7 @@
         width: 250px;
         height: 250px;
         object-fit: cover;
-        margin-bottom: 16px;
+        margin-bottom: 8px;
       }
 
       .name {
@@ -86,14 +84,12 @@
       .role {
         font-size: 14px;
         color: var(--neativniy-tekst);
-        margin-bottom: 16px;
       }
-
-      .achievements {
-        font-size: 16px;
-        line-height: 170%;
-        color: var(--main-text);
-      }
+    }
+    .achievements {
+      font-size: 16px;
+      line-height: 170%;
+      color: var(--main-text);
     }
   }
 
