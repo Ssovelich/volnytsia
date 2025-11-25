@@ -166,6 +166,12 @@
       box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.25);
       text-align: center;
       overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3);
+      }
 
       .photo {
         width: 100%;
