@@ -37,11 +37,11 @@
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.12);
   background: var(--bіliy);
 
-   @media (min-width: 744px) {
+  @media (min-width: 744px) {
     padding: 60px;
     gap: 120px;
-   }
-  
+  }
+
   .leaders {
     display: flex;
     flex-direction: column;
@@ -141,38 +141,48 @@
   .membersWrapper {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    align-items: center;
+    gap: 30px;
+    max-width: 300px;
 
     @media (min-width: 744px) {
       flex-direction: row;
       flex-wrap: wrap;
-    }
-  }
-
-  .memberCard {
-    background: #fff;
-    padding: 16px;
-    border-radius: 12px;
-    text-align: center;
-
-    .photo {
-      border-radius: 15px;
-      width: 200px;
-      height: 200px;
-      object-fit: cover;
-      margin: 0 auto 12px;
+      justify-content: center;
+      gap: 30px 20px;
+      max-width: 636px;
     }
 
-    .name {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 4px;
-      width: 200px;
+    @media (min-width: 1440px) {
+      gap: 48px;
+      max-width: 996px;
     }
 
-    .role {
-      font-size: 14px;
-      color: var(--neativniy-tekst);
+    .memberCard {
+      background: #fff;
+      border-radius: 25px;
+      width: 300px;
+      height: 379px;
+      box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.25);
+      text-align: center;
+      overflow: hidden;
+
+      .photo {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+
+      .name {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 180%;
+      }
+
+      .role {
+        font-size: 14px;
+        color: var(--neativniy-tekst);
+      }
     }
   }
 }
