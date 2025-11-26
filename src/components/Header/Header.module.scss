@@ -90,6 +90,23 @@
     }
   }
 
+  .breadCrumbs {
+    margin: 12px 0 0 32px;
+    font-family: var(--second-family);
+    font-size: 12px;
+    text-transform: uppercase;
+    display: flex;
+    gap: 6px;
+
+    @media (min-width: 744px) {
+      display: none;
+    }
+
+    .menu {
+      color: var(--neativniy-tekst);
+    }
+  }
+
   /* Мобільне меню (замінює кнопку) */
   .mobileMenu {
     display: flex;

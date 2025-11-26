@@ -19,6 +19,8 @@ const Header = () => {
     { href: "/backstage", label: "За лаштунками" },
   ];
 
+  const currentPage = navItems.find((item) => item.href === pathname)?.label;
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -54,7 +56,9 @@ const Header = () => {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className={pathname === item.href ? styles.activeLink : undefined}
+                className={
+                  pathname === item.href ? styles.activeLink : undefined
+                }
               >
                 {item.label}
               </Link>
@@ -64,12 +68,16 @@ const Header = () => {
       </nav>
 
       {!isOpen && (
-        <button
-          className={styles.menuButton}
-          onClick={() => setIsOpen(true)}
-        >
-          Меню
-        </button>
+        <>
+          <button className={styles.menuButton} onClick={() => setIsOpen(true)}>
+            Меню
+          </button>
+
+          <div className={styles.breadCrumbs}>
+            <span className={styles.menu}>Меню &gt;</span>
+            <span>{currentPage}</span>
+          </div>
+        </>
       )}
 
       {isOpen && (
@@ -86,7 +94,9 @@ const Header = () => {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={pathname === item.href ? styles.activeLink : undefined}
+                  className={
+                    pathname === item.href ? styles.activeLink : undefined
+                  }
                   onClick={() => setIsOpen(false)}
                 >
                   {item.label}
