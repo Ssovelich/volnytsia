@@ -29,25 +29,24 @@ const Awards = () => {
             />
           ))}
         </div>
-
-        {modalImg && (
-          <div className={styles.backdrop} onClick={closeModal}>
-            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-              <button className={styles.closeButton} onClick={closeModal}>
-                ✕
-              </button>
-
-              <Image
-                src={modalImg.full}
-                alt={modalImg.alt}
-                width={900}
-                height={1200}
-                className={styles.modalImage}
-              />
-            </div>
-          </div>
-        )}
       </SectionWrapper>
+      {modalImg && (
+        <div className={styles.backdrop} onClick={closeModal}>
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.closeButton} onClick={closeModal}>
+              ✕
+            </button>
+
+            <Image
+              src={modalImg.full}
+              alt={modalImg.alt}
+              width={900}
+              height={1200}
+              className={styles.modalImage}
+            />
+          </div>
+        </div>
+      )}
     </main>
   );
 };

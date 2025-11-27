@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "./HomeContent.module.scss";
 import { homeContent } from "@/data/homeContent";
+import Image from "next/image";
 
 const HomeContent = () => {
   const [expanded, setExpanded] = useState(false);
@@ -39,6 +40,15 @@ const HomeContent = () => {
 
   return (
     <div className={styles.wrapper}>
+      <div className={styles.heroImg}>
+        <Image
+          src="/home-hero.jpg"
+          alt="Фонове фото"
+          fill
+          style={{ objectFit: "contain" }}
+          priority
+        />
+      </div>
       <div className={styles.block}>
         <p className={styles.text}>
           {isMobile === null
