@@ -55,7 +55,7 @@ const PhotoGallery = () => {
             src={item.src}
             alt={item.alt}
             width={250}
-            height={200}
+            height={188}
             className={styles.galleryImage}
             onClick={() => openModal(item, index)}
           />
