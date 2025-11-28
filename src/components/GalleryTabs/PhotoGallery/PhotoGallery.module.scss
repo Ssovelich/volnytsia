@@ -1,0 +1,124 @@
+.galleryList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+
+  .galleryImage {
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    object-fit: contain;
+
+    &:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
+  }
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  padding: 16px;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  max-height: 100%;
+  animation: scaleIn 0.3s ease forwards;
+
+  .modalImage {
+    width: 90vw;
+    height: auto;
+    object-fit: contain;
+
+    @media (min-width: 744px) {
+      width: auto;
+      max-height: 80vh;
+    }
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 36px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease, background 0.3s ease;
+
+  &:hover {
+    transform: rotate(90deg);
+    background: var(--bіliy);
+  }
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 50%;
+  font-size: 32px;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 10;
+
+  &:hover {
+    background: var(--bіliy);
+  }
+
+  /* Ліва кнопка */
+  &:first-of-type {
+    left: 10px; /* Зменшуємо відстань від лівого краю */
+  }
+
+  /* Права кнопка */
+  &:last-of-type {
+    right: 10px; /* Зменшуємо відстань від правого краю */
+  }
+}
+
+/* Анімація Fade In */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Анімація масштабування */
+@keyframes scaleIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

@@ -1,4 +1,4 @@
-import AboutTabs from "./AboutTabs";
+import AboutTabs from "@/components/AboutTabs/AboutTabs";
 import SectionWrapper from "@/components/SectionWrapper/SectionWrapper";
 
 export const metadata = {
