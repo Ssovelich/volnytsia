@@ -83,25 +83,27 @@
   border-radius: 50%;
   font-size: 32px;
   cursor: pointer;
-  padding: 10px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 10;
+  transition: background 0.3s ease;
 
   &:hover {
     background: var(--bіliy);
   }
 
-  /* Ліва кнопка */
   &:first-of-type {
-    left: 10px; /* Зменшуємо відстань від лівого краю */
+    left: 10px;
   }
 
-  /* Права кнопка */
   &:last-of-type {
-    right: 10px; /* Зменшуємо відстань від правого краю */
+    right: 10px;
   }
 }
 
-/* Анімація Fade In */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -111,7 +113,6 @@
   }
 }
 
-/* Анімація масштабування */
 @keyframes scaleIn {
   from {
     transform: scale(0.85);

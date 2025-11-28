@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { galleryData } from "@/data/galleryPhotoData";
 import styles from "./PhotoGallery.module.scss";
+import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 
 const PhotoGallery = () => {
   const { galleryImages } = galleryData;
@@ -25,7 +27,8 @@ const PhotoGallery = () => {
   };
 
   const prevImage = () => {
-    const prevIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+    const prevIndex =
+      (currentIndex - 1 + galleryImages.length) % galleryImages.length;
     setCurrentIndex(prevIndex);
     setModalImg(galleryImages[prevIndex]);
   };
@@ -33,16 +36,15 @@ const PhotoGallery = () => {
   // Блокування скролу
   useEffect(() => {
     if (modalImg) {
-      document.body.style.overflow = "hidden"; // Блокуємо скрол
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "auto"; // Відновлюємо скрол
+      document.body.style.overflow = "auto";
     }
 
-    // Очищаємо після відключення компонента
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [modalImg]); // Викликається при зміні modalImg
+  }, [modalImg]);
 
   return (
     <>
@@ -69,11 +71,11 @@ const PhotoGallery = () => {
 
             <div className={styles.navButtonContainer}>
               <button className={styles.navButton} onClick={prevImage}>
-                ←
+                <FaArrowLeft />
               </button>
 
               <button className={styles.navButton} onClick={nextImage}>
-                →
+                <FaArrowRight />
               </button>
             </div>
 
