@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { galleryData } from "@/data/galleryPhotoData";
+import { galleryData } from "@/data/galleryData";
 import styles from "./Banner.module.scss";
 
 const Banner = () => {

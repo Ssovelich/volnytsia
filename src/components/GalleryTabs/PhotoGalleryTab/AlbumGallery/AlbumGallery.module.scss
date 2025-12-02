@@ -1,0 +1,215 @@
+.albumGallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // padding: 20px;
+
+  .navPanel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .albumTitleMob {
+      font-family: var(--second-family);
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 115%;
+      text-transform: uppercase;
+      color: var(--chervoniy-volnicya);
+
+      @media (min-width: 744px) {
+        display: none;
+      }
+    }
+
+    @media (min-width: 744px) {
+      margin-bottom: 24px;
+    }
+
+    .navWrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      .albumTitle {
+        font-family: var(--second-family);
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 115%;
+        text-transform: uppercase;
+        color: var(--chervoniy-volnicya);
+        display: none;
+
+        @media (min-width: 744px) {
+          display: block;
+        }
+      }
+
+      .backButton,
+      .nextButton {
+        background: none;
+        border: none;
+        padding: 6px 10px;
+        font-family: var(--second-family);
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 180%;
+        color: var(--korichneviy-volnicya);
+        cursor: pointer;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: var(--chervoniy-volnicya);
+        }
+      }
+    }
+  }
+
+  .gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    @media (min-width: 744px) {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 28px 24px;
+      width: 648px;
+    }
+
+    @media (min-width: 1440px) {
+      gap: 20px;
+      width: 1300px;
+    }
+
+    .imageCard {
+      width: 310px;
+      height: 233px;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+      background: var(--bezh-tlo);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: scale(1.03);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      }
+
+      .image {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    padding: 16px;
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  .modal {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    max-height: 100%;
+    animation: scaleIn 0.3s ease forwards;
+
+    .modalImage {
+      width: 90vw;
+      height: auto;
+      object-fit: contain;
+
+      @media (min-width: 744px) {
+        width: auto;
+        max-height: 80vh;
+      }
+    }
+  }
+
+  .closeButton {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 36px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background 0.3s ease;
+
+    &:hover {
+      transform: rotate(90deg);
+      background: var(--bіliy);
+    }
+  }
+
+  .navButtonContainer {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    z-index: 10;
+  }
+
+  .navButton {
+    background: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 50%;
+    font-size: 32px;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: var(--bіliy);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.85);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}

@@ -1,26 +1,65 @@
-export const galleryData = {
-  topParagraph: `Кожна світлина — це історія. Народний аматорський хор «Княжа Вольниця» виступав на численних сценах України та за її межами, несучи українську пісню до слухачів різних країн. Наші голоси звучали в концертних залах, храмах, на фестивальних сценах та просто неба — всюди, де є серце, здатне відгукнутися на музику.`,
-
-  bottomParagraph: `Ми з гордістю представляли українську культуру за кордоном, знайомили світ із нашими традиціями, мелодикою та красою рідної пісні. Кожна поїздка, кожен виступ, чи зустріч з глядачами — це частинка історії нашого колективу, наповнена теплом, емоціями та неповторними враженнями.
-Переглядаючи ці світлини, ви зможете відчути шлях, яким іде наш хор — шлях творчості, дружби і натхнення.`,
-
-  galleryImages: [
-    { id: 1, src: "/gallery/01.jpg", alt: "Фото 1" },
-    { id: 2, src: "/gallery/02.jpg", alt: "Фото 2" },
-    { id: 3, src: "/gallery/01.jpg", alt: "Фото 3" },
-    { id: 4, src: "/gallery/02.jpg", alt: "Фото 4" },
-    { id: 5, src: "/gallery/01.jpg", alt: "Фото 5" },
-    { id: 6, src: "/gallery/02.jpg", alt: "Фото 6" },
-    { id: 7, src: "/gallery/01.jpg", alt: "Фото 7" },
-    { id: 8, src: "/gallery/02.jpg", alt: "Фото 8" },
-    { id: 9, src: "/gallery/01.jpg", alt: "Фото 9" },
-    { id: 10, src: "/gallery/02.jpg", alt: "Фото 10" },
-  ],
-
-  bannerImages: [
-    { id: 1, src: "/gallery/banner/banner1.jpg", alt: "Банер 1" },
-    { id: 2, src: "/gallery/banner/banner2.jpg", alt: "Банер 2" },
-    { id: 3, src: "/gallery/banner/banner3.jpg", alt: "Банер 3" },
-    { id: 4, src: "/gallery/banner/banner4.jpg", alt: "Банер 4" }
+// galleryPhotoData.js
+export const galleryPhotoData = {
+  albums: [
+    {
+      id: 1,
+      title: "Альбом 1",
+      coverImage: "/gallery/01.jpg", // Обкладинка альбому
+      images: [
+        { id: 1, src: "/gallery/01.jpg", alt: "Фото 1" },
+        { id: 2, src: "/gallery/02.jpg", alt: "Фото 2" },
+        { id: 3, src: "/gallery/03.jpg", alt: "Фото 3" },
+        { id: 4, src: "/gallery/04.jpg", alt: "Фото 4" },
+        { id: 5, src: "/gallery/05.jpg", alt: "Фото 5" },
+        { id: 6, src: "/gallery/06.jpg", alt: "Фото 6" },
+        { id: 7, src: "/gallery/07.jpg", alt: "Фото 7" },
+        { id: 8, src: "/gallery/08.jpg", alt: "Фото 8" },
+      ],
+    },
+    {
+      id: 2,
+      title: "Альбом 2",
+      coverImage: "/gallery/02.jpg",
+      images: [
+        { id: 1, src: "/gallery/01.jpg", alt: "Фото 1" },
+        { id: 2, src: "/gallery/02.jpg", alt: "Фото 2" },
+        { id: 3, src: "/gallery/03.jpg", alt: "Фото 3" },
+        { id: 4, src: "/gallery/04.jpg", alt: "Фото 4" },
+        { id: 5, src: "/gallery/05.jpg", alt: "Фото 5" },
+        { id: 6, src: "/gallery/06.jpg", alt: "Фото 6" },
+        { id: 7, src: "/gallery/07.jpg", alt: "Фото 7" },
+        { id: 8, src: "/gallery/08.jpg", alt: "Фото 8" },
+      ],
+    },
+    {
+      id: 3,
+      title: "Альбом 3",
+      coverImage: "/gallery/01.jpg", // Обкладинка альбому
+      images: [
+        { id: 1, src: "/gallery/01.jpg", alt: "Фото 1" },
+        { id: 2, src: "/gallery/02.jpg", alt: "Фото 2" },
+        { id: 3, src: "/gallery/03.jpg", alt: "Фото 3" },
+        { id: 4, src: "/gallery/04.jpg", alt: "Фото 4" },
+        { id: 5, src: "/gallery/05.jpg", alt: "Фото 5" },
+        { id: 6, src: "/gallery/06.jpg", alt: "Фото 6" },
+        { id: 7, src: "/gallery/07.jpg", alt: "Фото 7" },
+        { id: 8, src: "/gallery/08.jpg", alt: "Фото 8" },
+      ],
+    },
+    {
+      id: 4,
+      title: "Альбом 4",
+      coverImage: "/gallery/02.jpg",
+      images: [
+        { id: 1, src: "/gallery/01.jpg", alt: "Фото 1" },
+        { id: 2, src: "/gallery/02.jpg", alt: "Фото 2" },
+        { id: 3, src: "/gallery/03.jpg", alt: "Фото 3" },
+        { id: 4, src: "/gallery/04.jpg", alt: "Фото 4" },
+        { id: 5, src: "/gallery/05.jpg", alt: "Фото 5" },
+        { id: 6, src: "/gallery/06.jpg", alt: "Фото 6" },
+        { id: 7, src: "/gallery/07.jpg", alt: "Фото 7" },
+        { id: 8, src: "/gallery/08.jpg", alt: "Фото 8" },
+      ],
+    },
   ],
 };

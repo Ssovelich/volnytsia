@@ -2,14 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { galleryData } from "@/data/galleryPhotoData";
-import styles from "./PhotoGallery.module.scss";
+import styles from "./AlbumGallery.module.scss";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 
-const PhotoGallery = () => {
-  const { galleryImages } = galleryData;
-
+const AlbumGallery = ({ album, onBack, nextAlbum }) => {
   const [modalImg, setModalImg] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(null);
 
@@ -21,19 +18,18 @@ const PhotoGallery = () => {
   const closeModal = () => setModalImg(null);
 
   const nextImage = () => {
-    const nextIndex = (currentIndex + 1) % galleryImages.length;
+    const nextIndex = (currentIndex + 1) % album.images.length;
     setCurrentIndex(nextIndex);
-    setModalImg(galleryImages[nextIndex]);
+    setModalImg(album.images[nextIndex]);
   };
 
   const prevImage = () => {
     const prevIndex =
-      (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+      (currentIndex - 1 + album.images.length) % album.images.length;
     setCurrentIndex(prevIndex);
-    setModalImg(galleryImages[prevIndex]);
+    setModalImg(album.images[prevIndex]);
   };
 
-  // Блокування скролу
   useEffect(() => {
     if (modalImg) {
       document.body.style.overflow = "hidden";
@@ -47,18 +43,37 @@ const PhotoGallery = () => {
   }, [modalImg]);
 
   return (
-    <>
-      <div className={styles.galleryList}>
-        {galleryImages.map((item, index) => (
-          <Image
+    <div className={styles.albumGallery}>
+      <div className={styles.navPanel}>
+        <h2 className={styles.albumTitleMob}>{album.title}</h2>
+        <div className={styles.navWrapper}>
+          <button className={styles.backButton} onClick={onBack}>
+            &lt; До альбомів
+          </button>
+
+          <h2 className={styles.albumTitle}>{album.title}</h2>
+
+          <button className={styles.nextButton} onClick={nextAlbum}>
+            Наступний альбом &gt;
+          </button>
+        </div>
+      </div>
+
+      <div className={styles.gallery}>
+        {album.images.map((item, index) => (
+          <div
             key={item.id}
-            src={item.src}
-            alt={item.alt}
-            width={250}
-            height={188}
-            className={styles.galleryImage}
+            className={styles.imageCard}
             onClick={() => openModal(item, index)}
-          />
+          >
+            <Image
+              src={item.src}
+              alt={item.alt}
+              width={250}
+              height={188}
+              className={styles.image}
+            />
+          </div>
         ))}
       </div>
 
@@ -89,8 +104,8 @@ const PhotoGallery = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
-export default PhotoGallery;
+export default AlbumGallery;

@@ -1,0 +1,49 @@
+.albumList {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: center;
+  width: 326px;
+
+    @media (min-width: 744px) {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      width: 678px;
+    }
+      @media (min-width: 1440px) {
+        gap: 48px;
+        width: 1074px;
+      }
+
+
+.albumCard {
+  border-radius: 15px;
+  padding: 8px;
+  width: 326px;
+  height: 317px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  background: var(--bezh-tlo);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  }
+
+  h3 {
+    margin-top: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--korichneviy-volnicya);
+  }
+}
+
+.albumImage {
+  object-fit: cover;
+  border-radius: 15px 15px 0 0;
+  width: 310px;
+  height: 233px;
+}
+}
