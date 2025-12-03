@@ -20,6 +20,10 @@ const PhotoGalleryTab = () => {
 
   return (
     <>
+      <p className={styles.text}>
+        Ласкаво просимо переглянути альбоми, зібрані за багато співочих років:
+      </p>
+
       {openedAlbumIndex === null && (
         <div className={styles.albumList}>
           {albums.map((album, index) => (

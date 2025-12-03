@@ -3,49 +3,44 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./AlbumGallery.module.scss";
-import { FaArrowLeft } from "react-icons/fa";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const AlbumGallery = ({ album, onBack, nextAlbum }) => {
   const [modalImg, setModalImg] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(null);
 
-  const openModal = (img, index) => {
-    setModalImg(img);
+  // Відкрити модалку — беремо ВЕЛИКІ фото
+  const openModal = (index) => {
     setCurrentIndex(index);
+    setModalImg(album.imagesFull[index]);
   };
 
   const closeModal = () => setModalImg(null);
 
   const nextImage = () => {
-    const nextIndex = (currentIndex + 1) % album.images.length;
+    const nextIndex = (currentIndex + 1) % album.imagesFull.length;
     setCurrentIndex(nextIndex);
-    setModalImg(album.images[nextIndex]);
+    setModalImg(album.imagesFull[nextIndex]);
   };
 
   const prevImage = () => {
     const prevIndex =
-      (currentIndex - 1 + album.images.length) % album.images.length;
+      (currentIndex - 1 + album.imagesFull.length) % album.imagesFull.length;
     setCurrentIndex(prevIndex);
-    setModalImg(album.images[prevIndex]);
+    setModalImg(album.imagesFull[prevIndex]);
   };
 
+  // Локер скролу
   useEffect(() => {
-    if (modalImg) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
+    document.body.style.overflow = modalImg ? "hidden" : "auto";
+    return () => (document.body.style.overflow = "auto");
   }, [modalImg]);
 
   return (
     <div className={styles.albumGallery}>
       <div className={styles.navPanel}>
         <h2 className={styles.albumTitleMob}>{album.title}</h2>
+
         <div className={styles.navWrapper}>
           <button className={styles.backButton} onClick={onBack}>
             &lt; До альбомів
@@ -59,12 +54,13 @@ const AlbumGallery = ({ album, onBack, nextAlbum }) => {
         </div>
       </div>
 
+      {/* ГРІД — показує малi фото (images) */}
       <div className={styles.gallery}>
         {album.images.map((item, index) => (
           <div
             key={item.id}
             className={styles.imageCard}
-            onClick={() => openModal(item, index)}
+            onClick={() => openModal(index)}
           >
             <Image
               src={item.src}
@@ -77,6 +73,7 @@ const AlbumGallery = ({ album, onBack, nextAlbum }) => {
         ))}
       </div>
 
+      {/* МОДАЛКА — показує imagesFull */}
       {modalImg && (
         <div className={styles.backdrop} onClick={closeModal}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
@@ -97,8 +94,8 @@ const AlbumGallery = ({ album, onBack, nextAlbum }) => {
             <Image
               src={modalImg.src}
               alt={modalImg.alt}
-              width={900}
-              height={900}
+              width={1100}
+              height={1100}
               className={styles.modalImage}
             />
           </div>
