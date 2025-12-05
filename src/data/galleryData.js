@@ -9,6 +9,8 @@ export const galleryData = {
     { id: 1, src: "/gallery/banner/banner1.jpg", alt: "Банер 1" },
     { id: 2, src: "/gallery/banner/banner2.jpg", alt: "Банер 2" },
     { id: 3, src: "/gallery/banner/banner3.jpg", alt: "Банер 3" },
-    { id: 4, src: "/gallery/banner/banner4.jpg", alt: "Банер 4" }
+    { id: 4, src: "/gallery/banner/banner4.jpg", alt: "Банер 4" },
+    { id: 5, src: "/gallery/banner/banner5.jpg", alt: "Банер 5" },
+    { id: 6, src: "/gallery/banner/banner6.jpg", alt: "Банер 6" }
   ],
 };

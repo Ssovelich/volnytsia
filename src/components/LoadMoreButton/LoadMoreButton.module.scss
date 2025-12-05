@@ -1,0 +1,19 @@
+.loadMoreBtn {
+  margin-inline: auto;
+  padding: 10px 20px;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 180%;
+  color: var(--neaktivniy-tekst);
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: transform 0.25s ease;
+
+  &:hover {
+    transform: scale(1.06);
+  }
+}
