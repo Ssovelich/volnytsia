@@ -4,12 +4,19 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./AlbumGallery.module.scss";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton";
 
 const AlbumGallery = ({ album, onBack, nextAlbum }) => {
   const [modalImg, setModalImg] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(null);
 
-  // Відкрити модалку — беремо ВЕЛИКІ фото
+  const { visibleItems, loadMoreButton } = LoadMoreButton({
+    data: album.images,
+    mobile: 4,
+    tablet: 8,
+    desktop: 16,
+  });
+
   const openModal = (index) => {
     setCurrentIndex(index);
     setModalImg(album.imagesFull[index]);
@@ -30,7 +37,6 @@ const AlbumGallery = ({ album, onBack, nextAlbum }) => {
     setModalImg(album.imagesFull[prevIndex]);
   };
 
-  // Локер скролу
   useEffect(() => {
     document.body.style.overflow = modalImg ? "hidden" : "auto";
     return () => (document.body.style.overflow = "auto");
@@ -54,9 +60,8 @@ const AlbumGallery = ({ album, onBack, nextAlbum }) => {
         </div>
       </div>
 
-      {/* ГРІД — показує малi фото (images) */}
       <div className={styles.gallery}>
-        {album.images.map((item, index) => (
+        {visibleItems.map((item, index) => (
           <div
             key={item.id}
             className={styles.imageCard}
@@ -73,7 +78,8 @@ const AlbumGallery = ({ album, onBack, nextAlbum }) => {
         ))}
       </div>
 
-      {/* МОДАЛКА — показує imagesFull */}
+      {loadMoreButton}
+
       {modalImg && (
         <div className={styles.backdrop} onClick={closeModal}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
