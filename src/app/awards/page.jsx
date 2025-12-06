@@ -1,10 +1,11 @@
 "use client";
 
 import SectionWrapper from "@/components/SectionWrapper/SectionWrapper";
-import { awardsText, awardsImages } from "./awardsData";
+import { awardsText, awardsImages } from "@/data/awardsData";
 import Image from "next/image";
 import styles from "./awardsPage.module.scss";
 import { useState } from "react";
+import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton";
 
 const Awards = () => {
   const [modalImg, setModalImg] = useState(null);
@@ -12,12 +13,19 @@ const Awards = () => {
   const openModal = (img) => setModalImg(img);
   const closeModal = () => setModalImg(null);
 
+  const { visibleItems, loadMoreButton } = LoadMoreButton({
+    data: awardsImages,
+    mobile: 4,
+    tablet: 8,
+    desktop: 20,
+  });
+
   return (
     <main>
       <SectionWrapper title={"Наші нагороди та відзнаки"}>
         <p className={styles.description}>{awardsText}</p>
         <div className={styles.awardsList}>
-          {awardsImages.map((item) => (
+         {visibleItems.map((item) => (
             <Image
               key={item.id}
               src={item.src}
@@ -29,6 +37,8 @@ const Awards = () => {
             />
           ))}
         </div>
+
+        {loadMoreButton}
       </SectionWrapper>
       {modalImg && (
         <div className={styles.backdrop} onClick={closeModal}>
