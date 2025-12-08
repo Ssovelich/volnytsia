@@ -91,15 +91,12 @@ const AlbumGallery = ({ album, onBack, nextAlbum }) => {
       {modalImg && (
         <div className={styles.backdrop} onClick={closeModal}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-            
-            {/* Лоадер */}
             {isLoading && (
               <div className={styles.loader}>
                 <PageLoader />
               </div>
             )}
 
-            {/* Фото */}
             <Image
               src={modalImg.src}
               alt={modalImg.alt}
@@ -109,7 +106,6 @@ const AlbumGallery = ({ album, onBack, nextAlbum }) => {
               onLoadingComplete={() => setIsLoading(false)}
             />
 
-            {/* Кнопки показуємо тільки після завантаження */}
             {!isLoading && (
               <>
                 <button className={styles.closeButton} onClick={closeModal}>
