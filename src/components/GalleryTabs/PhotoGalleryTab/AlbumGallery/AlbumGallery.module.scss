@@ -78,6 +78,7 @@
       flex-wrap: wrap;
       gap: 28px 24px;
       width: 648px;
+      justify-content: center;
     }
 
     @media (min-width: 1440px) {
@@ -86,6 +87,7 @@
     }
 
     .imageCard {
+      margin: 0;
       width: 310px;
       height: 233px;
       box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);

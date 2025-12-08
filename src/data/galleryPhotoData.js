@@ -193,7 +193,7 @@ export const galleryPhotoData = {
     {
       id: 7,
       title: "Гран-прі",
-      coverImage: "/gallery/1.jpg",
+      coverImage: "/gallery/7.jpg",
       images: [
         { id: 1, src: "/gallery/album-7/1.jpg", alt: "Фото 1" },
         { id: 2, src: "/gallery/album-7/2.jpg", alt: "Фото 2" },
@@ -224,7 +224,7 @@ export const galleryPhotoData = {
     {
       id: 8,
       title: "Подорожі",
-      coverImage: "/gallery/1.jpg",
+      coverImage: "/gallery/8.jpg",
       images: [
         { id: 1, src: "/gallery/album-8/1.jpg", alt: "Фото 1" },
         { id: 2, src: "/gallery/album-8/2.jpg", alt: "Фото 2" },
@@ -249,7 +249,7 @@ export const galleryPhotoData = {
     {
       id: 9,
       title: "Пирогів. День вишиванки і ткацтва",
-      coverImage: "/gallery/1.jpg",
+      coverImage: "/gallery/9.jpg",
       images: [
         { id: 1, src: "/gallery/album-9/1.jpg", alt: "Фото 1" },
         { id: 2, src: "/gallery/album-9/2.jpg", alt: "Фото 2" },
