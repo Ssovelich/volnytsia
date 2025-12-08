@@ -2,7 +2,7 @@ export const galleryPhotoData = {
   albums: [
     {
       id: 1,
-      title: "різне",
+      title: "Різне",
       coverImage: "/gallery/1.jpg",
       images: [
         { id: 1, src: "/gallery/album-1/1.jpg", alt: "Фото 1" },
@@ -51,7 +51,7 @@ export const galleryPhotoData = {
     },
     {
       id: 2,
-      title: "день соборності україни 2016",
+      title: "День соборності україни 2016",
       coverImage: "/gallery/2.jpg",
       images: [
         { id: 1, src: "/gallery/album-2/1.jpg", alt: "Фото 1" },
@@ -97,7 +97,7 @@ export const galleryPhotoData = {
     },
     {
       id: 4,
-      title: "чорноморськ",
+      title: "Чорноморськ",
       coverImage: "/gallery/4.jpg",
       images: [
         { id: 1, src: "/gallery/album-4/1.jpg", alt: "Фото 1" },
@@ -122,7 +122,7 @@ export const galleryPhotoData = {
     },
     {
       id: 5,
-      title: "співоче поле",
+      title: "Співоче поле",
       coverImage: "/gallery/5.jpg",
       images: [
         { id: 1, src: "/gallery/album-5/1.jpg", alt: "Фото 1" },
@@ -153,7 +153,7 @@ export const galleryPhotoData = {
     },
     {
       id: 6,
-      title: "клайпеда",
+      title: "Клайпеда",
       coverImage: "/gallery/6.jpg",
       images: [
         { id: 1, src: "/gallery/album-6/1.jpg", alt: "Фото 1" },
@@ -192,7 +192,7 @@ export const galleryPhotoData = {
     },
     {
       id: 7,
-      title: "гран-прі",
+      title: "Гран-прі",
       coverImage: "/gallery/1.jpg",
       images: [
         { id: 1, src: "/gallery/album-7/1.jpg", alt: "Фото 1" },
@@ -223,7 +223,7 @@ export const galleryPhotoData = {
     },
     {
       id: 8,
-      title: "подорожі",
+      title: "Подорожі",
       coverImage: "/gallery/1.jpg",
       images: [
         { id: 1, src: "/gallery/album-8/1.jpg", alt: "Фото 1" },
