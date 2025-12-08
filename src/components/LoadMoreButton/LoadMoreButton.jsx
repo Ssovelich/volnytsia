@@ -11,21 +11,26 @@ const LoadMoreButton = ({
   desktop = 12,
   children,
 }) => {
-  const getItemsPerLoad = () => {
-    if (typeof window === "undefined") return mobile;
+  const [itemsPerLoad, setItemsPerLoad] = useState(mobile);
+  const [visibleCount, setVisibleCount] = useState(mobile);
+  const [isClient, setIsClient] = useState(false);
 
+  const getItemsPerLoadByWindow = () => {
     const width = window.innerWidth;
     if (width >= 1440) return desktop;
     if (width >= 744) return tablet;
     return mobile;
   };
 
-  const [itemsPerLoad, setItemsPerLoad] = useState(() => getItemsPerLoad());
-  const [visibleCount, setVisibleCount] = useState(() => getItemsPerLoad());
-
   useEffect(() => {
+    const initialCount = getItemsPerLoadByWindow();
+
+    setItemsPerLoad(initialCount);
+    setVisibleCount(initialCount);
+    setIsClient(true);
+
     const handleResize = () => {
-      const count = getItemsPerLoad();
+      const count = getItemsPerLoadByWindow();
       setItemsPerLoad(count);
       setVisibleCount(count);
     };
@@ -38,10 +43,12 @@ const LoadMoreButton = ({
     setVisibleCount((prev) => prev + itemsPerLoad);
   };
 
-  const isAllShown = visibleCount >= data.length;
+  const finalVisibleCount = isClient ? visibleCount : mobile;
+
+  const isAllShown = finalVisibleCount >= data.length;
 
   return {
-    visibleItems: data.slice(0, visibleCount),
+    visibleItems: data.slice(0, finalVisibleCount),
     loadMoreButton: !isAllShown ? (
       <button className={styles.loadMoreBtn} onClick={handleLoadMore}>
         {children || "Завантажити більше"}
