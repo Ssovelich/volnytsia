@@ -5,10 +5,12 @@ import Image from "next/image";
 import styles from "./AlbumGallery.module.scss";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton";
+import PageLoader from "@/components/PageLoader/PageLoader";
 
 const AlbumGallery = ({ album, onBack, nextAlbum }) => {
   const [modalImg, setModalImg] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { visibleItems, loadMoreButton } = LoadMoreButton({
     data: album.images,
@@ -19,14 +21,19 @@ const AlbumGallery = ({ album, onBack, nextAlbum }) => {
 
   const openModal = (index) => {
     setCurrentIndex(index);
+    setIsLoading(true);
     setModalImg(album.imagesFull[index]);
   };
 
-  const closeModal = () => setModalImg(null);
+  const closeModal = () => {
+    setModalImg(null);
+    setIsLoading(false);
+  };
 
   const nextImage = () => {
     const nextIndex = (currentIndex + 1) % album.imagesFull.length;
     setCurrentIndex(nextIndex);
+    setIsLoading(true);
     setModalImg(album.imagesFull[nextIndex]);
   };
 
@@ -34,6 +41,7 @@ const AlbumGallery = ({ album, onBack, nextAlbum }) => {
     const prevIndex =
       (currentIndex - 1 + album.imagesFull.length) % album.imagesFull.length;
     setCurrentIndex(prevIndex);
+    setIsLoading(true);
     setModalImg(album.imagesFull[prevIndex]);
   };
 
@@ -83,27 +91,42 @@ const AlbumGallery = ({ album, onBack, nextAlbum }) => {
       {modalImg && (
         <div className={styles.backdrop} onClick={closeModal}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-            <button className={styles.closeButton} onClick={closeModal}>
-              ✕
-            </button>
+            
+            {/* Лоадер */}
+            {isLoading && (
+              <div className={styles.loader}>
+                <PageLoader />
+              </div>
+            )}
 
-            <div className={styles.navButtonContainer}>
-              <button className={styles.navButton} onClick={prevImage}>
-                <FaArrowLeft />
-              </button>
-
-              <button className={styles.navButton} onClick={nextImage}>
-                <FaArrowRight />
-              </button>
-            </div>
-
+            {/* Фото */}
             <Image
               src={modalImg.src}
               alt={modalImg.alt}
               width={1100}
               height={1100}
               className={styles.modalImage}
+              onLoadingComplete={() => setIsLoading(false)}
             />
+
+            {/* Кнопки показуємо тільки після завантаження */}
+            {!isLoading && (
+              <>
+                <button className={styles.closeButton} onClick={closeModal}>
+                  ✕
+                </button>
+
+                <div className={styles.navButtonContainer}>
+                  <button className={styles.navButton} onClick={prevImage}>
+                    <FaArrowLeft />
+                  </button>
+
+                  <button className={styles.navButton} onClick={nextImage}>
+                    <FaArrowRight />
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
