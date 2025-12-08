@@ -3,6 +3,7 @@
 import { useState } from "react";
 import PhotoGalleryTab from "@/components/GalleryTabs/PhotoGalleryTab/PhotoGalleryTab";
 import styles from "./GalleryTabs.module.scss";
+import VideoGalleryTab from "./VideoGalleryTab/VideoGalleryTab";
 
 const GalleryTabs = () => {
   const [tab, setTab] = useState("photos");
@@ -39,7 +40,9 @@ const GalleryTabs = () => {
 
         {/* Videos Tab */}
         {tab === "videos" && (
-          <div className={styles.tabContent}>Відео контент</div>
+          <>
+            <VideoGalleryTab />
+          </>
         )}
       </div>
     </>
