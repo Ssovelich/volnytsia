@@ -45,7 +45,7 @@ const HomeContent = () => {
           src="/home-hero.jpg"
           alt="Фонове фото"
           fill
-          style={{ objectFit: "contain" }}
+          style={{ objectFit: "cover" }}
           priority
         />
       </div>

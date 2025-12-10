@@ -16,7 +16,7 @@ const Header = () => {
     { href: "/about", label: "Про нас" },
     { href: "/awards", label: "Відзнаки" },
     { href: "/gallery", label: "Галерея" },
-    { href: "/backstage", label: "За лаштунками" },
+    // { href: "/backstage", label: "За лаштунками" },
   ];
 
   const currentPage = navItems.find((item) => item.href === pathname)?.label;

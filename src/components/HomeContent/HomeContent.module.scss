@@ -5,13 +5,28 @@
 
   .heroImg {
     position: relative;
-    width: 100%;
+    width: 100vw;
+    margin-left: calc((100% - 100vw) / 2);
     height: 178px;
+    overflow: hidden;
+     :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;       
+      object-position: center;
+    }
     @media (min-width: 744px) {
       height: 354px;
+       :global(img) {
+        object-position: center;
+      }
     }
     @media (min-width: 1440px) {
       height: 684px;
+      margin-inline: auto;
+      :global(img) {
+        object-position: center;
+      }
     }
   }
 
