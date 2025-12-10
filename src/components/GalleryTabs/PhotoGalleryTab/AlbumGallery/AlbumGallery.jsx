@@ -128,7 +128,7 @@ const AlbumGallery = ({ album, onBack, nextAlbum }) => {
           </button>
           <h2 className={styles.albumTitle}>{album.title}</h2>
           <button className={styles.nextButton} onClick={nextAlbum}>
-            Наступний альбом &gt;
+            Наступний &gt;
           </button>
         </div>
       </div>

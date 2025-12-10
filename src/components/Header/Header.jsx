@@ -8,7 +8,6 @@ import styles from "./Header.module.scss";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-
   const menuRef = useRef(null);
 
   const navItems = [
@@ -16,29 +15,24 @@ const Header = () => {
     { href: "/about", label: "Про нас" },
     { href: "/awards", label: "Відзнаки" },
     { href: "/gallery", label: "Галерея" },
-    // { href: "/backstage", label: "За лаштунками" },
   ];
 
   const currentPage = navItems.find((item) => item.href === pathname)?.label;
 
   useEffect(() => {
     if (!isOpen) return;
-
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
   useEffect(() => {
     const handleEsc = (e) => {
-      if (e.key === "Escape") {
-        setIsOpen(false);
-      }
+      if (e.key === "Escape") setIsOpen(false);
     };
     document.addEventListener("keydown", handleEsc);
     return () => document.removeEventListener("keydown", handleEsc);
@@ -56,9 +50,7 @@ const Header = () => {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className={
-                  pathname === item.href ? styles.activeLink : undefined
-                }
+                className={pathname === item.href ? styles.activeLink : undefined}
               >
                 {item.label}
               </Link>
@@ -67,45 +59,38 @@ const Header = () => {
         </ul>
       </nav>
 
-      {!isOpen && (
-        <>
-          <button className={styles.menuButton} onClick={() => setIsOpen(true)}>
-            Меню
-          </button>
-
-          <div className={styles.breadCrumbs}>
-            <span className={styles.menu}>Меню &gt;</span>
-            <span>{currentPage}</span>
-          </div>
-        </>
-      )}
-
-      {isOpen && (
-        <div ref={menuRef} className={styles.mobileMenu}>
-          <button
-            className={styles.closeButton}
-            onClick={() => setIsOpen(false)}
-          >
-            ✕
-          </button>
-
-          <ul className={styles.mobileMenuList}>
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={
-                    pathname === item.href ? styles.activeLink : undefined
-                  }
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+      <div className={`${styles.menuControls} ${isOpen ? styles.hiddenControls : ""}`}>
+        <button className={styles.menuButton} onClick={() => setIsOpen(true)}>
+          Меню
+        </button>
+        <div className={styles.breadCrumbs}>
+          <span className={styles.menu}>Меню &gt;</span>
+          <span>{currentPage}</span>
         </div>
-      )}
+      </div>
+
+      <div ref={menuRef} className={`${styles.mobileMenu} ${isOpen ? styles.open : ""}`}>
+        <button
+          className={styles.closeButton}
+          onClick={() => setIsOpen(false)}
+        >
+          ✕
+        </button>
+
+        <ul className={styles.mobileMenuList}>
+          {navItems.map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                className={pathname === item.href ? styles.activeLink : undefined}
+                onClick={() => setIsOpen(false)}
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </header>
   );
 };
