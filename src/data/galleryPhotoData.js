@@ -22,7 +22,7 @@ export const galleryPhotoData = {
 
     {
       id: 2,
-      title: "Облосна хорова асамблея м.Фастів",
+      title: "Обласна хорова асамблея м.Фастів",
       coverImage: "/gallery/002.jpg",
       images: [
         { id: 1, src: "/gallery/album-002/1.jpg", alt: "Фото 1" },
