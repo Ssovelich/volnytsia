@@ -64,6 +64,15 @@
         &:hover {
           color: var(--chervoniy-volnicya);
         }
+
+        &:active {
+          color: var(--korichneviy-volnicya);
+        }
+
+        &:focus {
+          outline: none;
+          color: var(--korichneviy-volnicya);
+        }
       }
     }
   }

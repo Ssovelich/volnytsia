@@ -17,7 +17,7 @@
   flex-direction: column;
   gap: 32px;
   justify-content: center;
-  width: 326px;
+  width: 310px;
 
   @media (min-width: 744px) {
     flex-direction: row;
@@ -33,7 +33,7 @@
   .albumCard {
     border-radius: 15px;
     padding: 8px;
-    width: 326px;
+    width: 310px;
     height: 317px;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
     background: var(--bezh-tlo);
@@ -58,7 +58,7 @@
   .albumImage {
     object-fit: cover;
     border-radius: 15px 15px 0 0;
-    width: 310px;
+    width: 100%;
     height: 233px;
   }
 }
