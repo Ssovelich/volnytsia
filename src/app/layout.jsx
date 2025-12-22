@@ -7,11 +7,62 @@ import { Inter, Marmelad, Marck_Script } from "next/font/google";
 import ScrollToTop from "@/components/ScrollToTop/ScrollToTop";
 
 export const metadata = {
-  title: "Княжа Вольниця | Голована сторінка",
-  description: 'Сайт народного аматорського хору "Княжа Вольниця"',
+  title: {
+    default: "Княжа Вольниця",
+    template: "%s | Княжа Вольниця",
+  },
+  description:
+    "Сайт народного аматорського хору “Княжа Вольниця”. Колектив, що зберігає і примножує українські пісенні традиції. ",
+  keywords: [
+    "Княжа Вольниця",
+    "народний хор",
+    "аматорський хор",
+    "українська пісня",
+    "хорова музика",
+    "фольклорний колектив",
+    "українські традиції",
+    "хор Київщина",
+    "виступ хору",
+    "народна творчість",
+  ],
+  openGraph: {
+    title: "Княжа Вольниця | Народний аматорський хор",
+    description: "Сайт народного аматорського хору “Княжа Вольниця”",
+    url: "https://volnytsia.vercel.app/",
+    siteName: "Княжа Вольниця",
+    locale: "uk_UA",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Колектив хору Княжа Вольниця",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Княжа Вольниця | Народний аматорський хор",
+    description: "Сайт народного аматорського хору “Княжа Вольниця”",
+    images: ["/og-image.png"],
+  },
   icons: {
     icon: "/favicon.png",
-  }
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 const inter = Inter({
@@ -38,7 +89,9 @@ const marckScript = Marck_Script({
 export default function RootLayout({ children }) {
   return (
     <html lang="uk">
-      <body className={`${inter.variable} ${marmelad.variable} ${marckScript.variable}`}>
+      <body
+        className={`${inter.variable} ${marmelad.variable} ${marckScript.variable}`}
+      >
         <PageLoader />
         <Header />
         {children}

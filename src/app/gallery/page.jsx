@@ -4,7 +4,7 @@ import { galleryData } from "@/data/galleryData";
 import Banner from "@/components/GalleryTabs/Banner/Banner";
 
 export const metadata = {
-  title: "Галерея | Княжа Вольниця",
+  title: "Галерея",
   description: "Фотографії та відео з концертів та заходів хору",
 };
 
