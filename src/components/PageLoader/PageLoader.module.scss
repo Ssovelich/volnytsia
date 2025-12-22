@@ -1,7 +1,7 @@
 .loaderWrapper {
   position: fixed;
   inset: 0;
-  background: var(--bіliy);
+  background: var(--bіliy, #ffffff);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,31 +10,70 @@
 
 .loader {
   display: flex;
-  gap: 8px;
+  gap: 15px;
+  align-items: flex-end;
+  height: 50px;
+}
 
-  span {
-    width: 12px;
-    height: 12px;
-    background: var(--chervoniy-volnicya);
-    border-radius: 50%;
-    animation: bounce 0.6s infinite alternate;
-  }
+.loader span {
+  width: 14px;
+  height: 14px;
+  background: var(--chervoniy-volnicya, #e30613);
+  border-radius: 50%;
+  transform-origin: 50% 100%;
+  animation: liquid-bounce 1.2s infinite linear;
 
-  span:nth-child(2) {
-    animation-delay: 0.2s;
+  &:nth-child(2) {
+    animation-delay: 0.15s;
   }
-  span:nth-child(3) {
-    animation-delay: 0.4s;
+  &:nth-child(3) {
+    animation-delay: 0.3s;
   }
 }
 
-@keyframes bounce {
-  from {
-    transform: translateY(0);
-    opacity: 0.6;
+@keyframes liquid-bounce {
+  // 0% - Зависання вгорі: повна непрозорість
+  0% {
+    transform: translateY(-30px) scaleX(1) scaleY(1);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5); // Падіння
   }
-  to {
-    transform: translateY(-16px);
+
+  // 40% - Торкання землі
+  40% {
+    transform: translateY(0) scaleX(1) scaleY(1);
+    opacity: 1;
+    animation-timing-function: ease-out;
+  }
+
+  // 45% - ПЕРША ФАЗА СПЛЮЩЕННЯ: починаємо плавно втрачати прозорість
+  45% {
+    transform: translateY(0) scaleX(1.5) scaleY(0.6);
+    opacity: 0.6; // Легка прозорість в момент сильного стиснення
+  }
+
+  // 55% - ЗАТРИМКА НА ЗЕМЛІ: тримаємо форму і колір
+  55% {
+    transform: translateY(0) scaleX(1.5) scaleY(0.6);
+    opacity: 0.7;
+    animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1); // Плавний старт вгору
+  }
+
+  // 65% - ПОЧАТОК ВІДСТРИБУВАННЯ: повертаємо колір
+  65% {
+    transform: translateY(-10px) scaleX(0.85) scaleY(1.2);
+    opacity: 0.9;
+  }
+
+  // 85% - МАЙЖЕ ВГОРІ
+  85% {
+    transform: translateY(-25px) scaleX(1) scaleY(1);
+    opacity: 1;
+  }
+
+  // 100% - ВЕРШИНА
+  100% {
+    transform: translateY(-30px) scaleX(1) scaleY(1);
     opacity: 1;
   }
 }
