@@ -34,7 +34,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/og-image.png",
+        url: "https://volnytsia.vercel.app/og-image.png",
         width: 1200,
         height: 630,
         alt: "Колектив хору Княжа Вольниця",
@@ -45,7 +45,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Княжа Вольниця | Народний аматорський хор",
     description: "Сайт народного аматорського хору “Княжа Вольниця”",
-    images: ["/og-image.png"],
+    images: ["https://volnytsia.vercel.app/og-image.png"],
   },
   icons: {
     icon: "/favicon.png",
