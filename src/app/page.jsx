@@ -1,6 +1,5 @@
 import SectionWrapper from "@/components/SectionWrapper/SectionWrapper";
 import HomeContent from "@/components/HomeContent/HomeContent";
-import PageLoader from "@/components/PageLoader/PageLoader";
 
 export const metadata = {
   title: "Княжа Вольниця | Народний аматорський хор",
@@ -20,7 +19,6 @@ const HomePage = () => {
         }
       >
         <HomeContent />
-        <PageLoader/>
       </SectionWrapper>
     </main>
   );
