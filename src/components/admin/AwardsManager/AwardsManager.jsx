@@ -37,6 +37,16 @@ export default function AwardsManager() {
 
   if (status === "loading" && awards.length === 0) return <PageLoader />;
 
+  if (status === "idle" || (status === "succeeded" && awards.length === 0)) {
+    return (
+      <div className={styles.emptyWrapper}>
+        <p className={styles.emptyText}>
+          Відзнак поки що немає. Ви можете додати першу!
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.managerWrapper}>
       <div className={styles.awardsList}>
@@ -68,9 +78,7 @@ export default function AwardsManager() {
         ))}
       </div>
 
-      <div className={styles.paginationWrapper}>
-        {loadMoreButton}
-      </div>
+      <div className={styles.paginationWrapper}>{loadMoreButton}</div>
     </div>
   );
 }
