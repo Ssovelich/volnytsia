@@ -2,7 +2,7 @@ import "@/styles/globals.scss";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import PageLoader from "@/components/PageLoader/PageLoader";
-
+import StoreProvider from "@/app/(main)/StoreProvider";
 import { Inter, Marmelad, Marck_Script } from "next/font/google";
 import ScrollToTop from "@/components/ScrollToTop/ScrollToTop";
 
@@ -92,11 +92,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${inter.variable} ${marmelad.variable} ${marckScript.variable}`}
       >
-        <PageLoader />
-        <Header />
-        {children}
-        <Footer />
-        <ScrollToTop />
+        <StoreProvider>
+          <PageLoader />
+          <Header />
+          {children}
+          <Footer />
+          <ScrollToTop />
+        </StoreProvider>
       </body>
     </html>
   );

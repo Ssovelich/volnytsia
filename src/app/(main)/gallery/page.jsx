@@ -1,5 +1,5 @@
 import SectionWrapper from "@/components/SectionWrapper/SectionWrapper";
-import GalleryTabs from "../../components/GalleryTabs/GalleryTabs";
+import GalleryTabs from "@/components/GalleryTabs/GalleryTabs";
 import { galleryData } from "@/data/galleryData";
 import Banner from "@/components/GalleryTabs/Banner/Banner";
 

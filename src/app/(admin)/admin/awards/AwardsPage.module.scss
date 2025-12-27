@@ -1,0 +1,69 @@
+.container {
+  padding: 1rem; // Менший відступ для мобілок
+
+  @media (min-width: 744px) {
+    padding: 1.5rem;
+  }
+
+  @media (min-width: 1440px) {
+    padding: 2rem;
+    max-width: 1200px; // Обмежуємо ширину на дуже великих екранах для зручності
+    margin: 0 auto;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column; // На мобільних — колонка
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+
+  // Планшет (від 744px)
+  @media (min-width: 744px) {
+    flex-direction: row; // Повертаємо в рядок
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+}
+
+.title {
+  font-size: 1.5rem; // Трохи менше для мобілок
+  font-weight: 700;
+  color: #1e293b; // Темно-синій/чорний для професійного вигляду
+
+  @media (min-width: 744px) {
+    font-size: 1.875rem;
+  }
+}
+
+.addButton {
+  width: 100%; // Кнопка на всю ширину на мобільних (зручніше натискати)
+  background-color: var(--chervoniy-volnicya);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  color: #ffffff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: var(--svіtlo-chervoniy);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  // Планшет
+  @media (min-width: 744px) {
+    width: auto; // Повертаємо нормальну ширину
+    padding: 0.5rem 1.5rem;
+  }
+}

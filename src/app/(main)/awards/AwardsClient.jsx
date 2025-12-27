@@ -1,23 +1,41 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAwards } from "@/lib/awards/awardsSlice";
 import SectionWrapper from "@/components/SectionWrapper/SectionWrapper";
-import { awardsText, awardsImages } from "@/data/awardsData";
+import { awardsText } from "@/data/awardsData";
 import Image from "next/image";
 import styles from "./awardsPage.module.scss";
-import { useState } from "react";
 import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton";
+import PageLoader from "@/components/PageLoader/PageLoader";
 
 export default function AwardsClient() {
+  const dispatch = useDispatch();
+  const { items: awards, status } = useSelector((state) => state.awards);
   const [modalImg, setModalImg] = useState(null);
-  const openModal = (img) => setModalImg(img);
+  const [isImageLoading, setIsImageLoading] = useState(true);
+
+  useEffect(() => {
+    dispatch(fetchAwards());
+  }, [dispatch]);
+
+  const openModal = (item) => {
+    setModalImg(item);
+    setIsImageLoading(true);
+  };
   const closeModal = () => setModalImg(null);
 
   const { visibleItems, loadMoreButton } = LoadMoreButton({
-    data: awardsImages,
+    data: awards,
     mobile: 4,
     tablet: 8,
     desktop: 20,
   });
+
+  if (status === "loading" && awards.length === 0) {
+    return <PageLoader />;
+  }
 
   return (
     <main>
@@ -26,9 +44,9 @@ export default function AwardsClient() {
         <div className={styles.awardsList}>
           {visibleItems.map((item) => (
             <Image
-              key={item.id}
-              src={item.src}
-              alt={item.alt}
+              key={item._id}
+              src={item.images?.thumbnail}
+              alt={item.alt || "Нагорода"}
               width={200}
               height={301}
               onClick={() => openModal(item)}
@@ -45,9 +63,14 @@ export default function AwardsClient() {
             <button className={styles.closeButton} onClick={closeModal}>
               ✕
             </button>
+
+            {isImageLoading && (
+              <PageLoader/>
+            )}
+
             <Image
-              src={modalImg.full}
-              alt={modalImg.alt}
+              src={modalImg.images?.full}
+              alt={modalImg.alt || "Нагорода"}
               width={900}
               height={1200}
               className={styles.modalImage}
