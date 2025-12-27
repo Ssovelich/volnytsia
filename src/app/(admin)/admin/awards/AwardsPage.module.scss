@@ -1,5 +1,5 @@
 .container {
-  padding: 1rem; // Менший відступ для мобілок
+  padding: 1rem;
 
   @media (min-width: 744px) {
     padding: 1.5rem;
@@ -7,21 +7,20 @@
 
   @media (min-width: 1440px) {
     padding: 2rem;
-    max-width: 1200px; // Обмежуємо ширину на дуже великих екранах для зручності
+    max-width: 1200px;
     margin: 0 auto;
   }
 }
 
 .header {
   display: flex;
-  flex-direction: column; // На мобільних — колонка
+  flex-direction: column;
   gap: 1rem;
   align-items: flex-start;
   margin-bottom: 1.5rem;
 
-  // Планшет (від 744px)
   @media (min-width: 744px) {
-    flex-direction: row; // Повертаємо в рядок
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
@@ -29,9 +28,9 @@
 }
 
 .title {
-  font-size: 1.5rem; // Трохи менше для мобілок
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #1e293b; // Темно-синій/чорний для професійного вигляду
+  color: #1e293b;
 
   @media (min-width: 744px) {
     font-size: 1.875rem;
@@ -39,9 +38,11 @@
 }
 
 .addButton {
-  width: 100%; // Кнопка на всю ширину на мобільних (зручніше натискати)
+  max-width: 300px;
+  width: 100%;
   background-color: var(--chervoniy-volnicya);
   padding: 0.75rem 1.5rem;
+  margin-inline: auto;
   border-radius: 50px;
   color: #ffffff;
   font-weight: 600;
@@ -61,9 +62,10 @@
     transform: translateY(0);
   }
 
-  // Планшет
   @media (min-width: 744px) {
-    width: auto; // Повертаємо нормальну ширину
+    width: auto;
     padding: 0.5rem 1.5rem;
+    margin-inline: 0;
+    margin-left: auto;
   }
 }
