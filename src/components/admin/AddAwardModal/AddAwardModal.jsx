@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchAwards } from "@/lib/awards/awardsSlice";
-import { HiX } from "react-icons/hi"; // Імпортуємо іконку
+import { HiX } from "react-icons/hi";
+import { MdCloudUpload } from "react-icons/md"; // Додаємо іконку
 import styles from "./AddAwardModal.module.scss";
 
 export default function AddAwardModal({ isOpen, onClose }) {
@@ -59,27 +60,45 @@ export default function AddAwardModal({ isOpen, onClose }) {
         </div>
 
         <form onSubmit={handleUpload} className={styles.form}>
+          {/* Поле для основного зображення */}
           <div className={styles.inputGroup}>
-            <label className={styles.label}>
-              Основне зображення (повний розмір):
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setFullImage(e.target.files[0])}
-              required
-              className={styles.fileInput}
-            />
+            <label className={styles.label}>Основне зображення:</label>
+            <div className={styles.uploadContainer}>
+              <label className={styles.customUploadBtn}>
+                <MdCloudUpload />
+                <span>Обрати файл</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setFullImage(e.target.files[0])}
+                  required
+                  hidden
+                />
+              </label>
+              <span className={styles.fileName}>
+                {fullImage ? fullImage.name : "Файл не вибрано"}
+              </span>
+            </div>
           </div>
 
+          {/* Поле для мініатюри */}
           <div className={styles.inputGroup}>
             <label className={styles.label}>Мініатюра (необов’язково):</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setThumbImage(e.target.files[0])}
-              className={styles.fileInput}
-            />
+            <div className={styles.uploadContainer}>
+              <label className={styles.customUploadBtn}>
+                <MdCloudUpload />
+                <span>Обрати файл</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setThumbImage(e.target.files[0])}
+                  hidden
+                />
+              </label>
+              <span className={styles.fileName}>
+                {thumbImage ? thumbImage.name : "Файл не вибрано"}
+              </span>
+            </div>
           </div>
 
           <div className={styles.actions}>

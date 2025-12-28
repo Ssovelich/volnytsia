@@ -1,0 +1,242 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+  padding: 1rem;
+}
+
+.modal {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  color: #1f2937;
+  width: 100%;
+  max-width: 650px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  position: relative;
+  animation: modalAppear 0.3s ease-out;
+
+  @media (min-width: 744px) {
+    padding: 2.5rem 2rem;
+  }
+}
+
+@keyframes modalAppear {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0;
+  color: #111827;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 1.75rem;
+  cursor: pointer;
+  color: #9ca3af;
+  display: flex;
+  padding: 0.25rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #ef4444; // Колір "Вольниці"
+    transform: rotate(90deg);
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
+
+.photoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: center;
+  width: 100%;
+}
+
+.previewBox {
+  width: 150px;
+  height: 180px;
+  position: relative;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: #f3f4f6;
+  border: 2px dashed #d1d5db;
+  
+  .placeholder {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: #9ca3af;
+    text-align: center;
+    padding: 1rem;
+  }
+}
+
+// Контейнер для кнопки та назви файлу
+.uploadContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+// Стилізована кнопка замість стандартного input
+.customUploadBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #374151;
+  color: white;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: 600;
+  width: 100%;
+  max-width: 160px;
+
+  &:hover {
+    background: #111827;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  svg {
+    font-size: 1.2rem;
+  }
+}
+
+// Текст під кнопкою
+.fileName {
+  font-size: 0.75rem;
+  color: #6b7280;
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.formGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  .label {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #374151;
+  }
+
+  .textInput {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.6rem;
+    font-size: 1rem;
+    transition: all 0.2s;
+
+    &:focus {
+      border-color: #ef4444;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #f3f4f6;
+
+  @media (max-width: 480px) {
+    flex-direction: column-reverse;
+    
+    button {
+      width: 100%;
+    }
+  }
+
+  .cancelBtn {
+    color: #4b5563;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.6rem;
+    padding: 0.7rem 1.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+
+    &:hover {
+      background: #f3f4f6;
+      border-color: #d1d5db;
+    }
+  }
+
+  .submitBtn {
+    background: var(--chervoniy-volnicya);
+    color: white;
+    padding: 0.7rem 2rem;
+    border-radius: 0.6rem;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.3s ease;
+
+    &:hover:not(:disabled) {
+      filter: brightness(1.1);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}

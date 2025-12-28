@@ -1,7 +1,7 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,10 +11,9 @@
 }
 
 .modal {
-  background-color: #f0eeee;
+  background: white;
   padding: 1.5rem;
-  border-radius: 0.75rem;
-  border: 1px solid var(--chervoniy-volnicya);
+  border-radius: 1rem;
   color: #000000;
   width: 100%;
   max-width: 448px;
@@ -28,14 +27,20 @@
 }
 
 @keyframes modalAppear {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .modalHeader {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 1.5rem;
 }
 
@@ -56,56 +61,86 @@
   transition: all 0.3s ease;
 
   &:hover {
-    color: var(--chervoniy-volnicya);
-     transform: rotate(90deg);
+    color: #ef4444; // Колір акценту (червоний)
+    transform: rotate(90deg);
   }
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 
   .label {
-    display: block;
-    margin-bottom: 0.5rem;
     font-size: 0.9rem;
-    font-weight: 500;
-  }
-
-  .fileInput {
-    width: 100%;
-    font-size: 0.85rem;
-
-    &::file-selector-button {
-      margin-bottom: 0.5rem;
-      border: none;
-      background: var(--chervoniy-volnicya);
-      border-radius: 50px;
-      width: 100%;
-      height: 38px;
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s ease;
-
-      @media (min-width: 400px) {
-        width: 180px;
-        margin-right: 1rem;
-        margin-bottom: 0;
-      }
-
-      &:hover {
-        background: var(--svіtlo-chervoniy);
-      }
-    }
+    font-weight: 600;
+    color: #374151;
   }
 }
 
+/* Секція завантаження файлів */
+.uploadContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.customUploadBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: #374151; // Темно-сірий колір
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.85rem;
+  font-weight: 600;
+  width: 100%;
+  
+  @media (min-width: 400px) {
+    width: auto;
+  }
+
+  &:hover {
+    background: #111827;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  svg {
+    font-size: 1.2rem;
+  }
+}
+
+.fileName {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-style: italic;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Кнопки дій */
 .actions {
   display: flex;
   flex-direction: column-reverse;
   gap: 0.75rem;
   margin-top: 1rem;
+  border-top: 1px solid #f3f4f6;
+  padding-top: 1.25rem;
 
   @media (min-width: 480px) {
     flex-direction: row;
@@ -115,34 +150,32 @@
 
   .cancelBtn {
     color: #4b5563;
-    background: transparent;
+    background: #f1f5f9;
     border: 1px solid #d1d5db;
     border-radius: 0.5rem;
-    padding: 0.6rem 1rem;
+    padding: 0.6rem 1.5rem;
     cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
+    font-weight: 600;
+    transition: all 0.2s ease;
 
     &:hover {
-      background-color: #f3f4f6;
-      color: #000;
-      border-color: var(--chervoniy-volnicya)
+      background: #e2e8f0;
     }
   }
 
   .submitBtn {
-    background-color: var(--chervoniy-volnicya);
+    background: var(--chervoniy-volnicya);
     color: #ffffff;
-    padding: 0.6rem 1.5rem;
+    padding: 0.6rem 2rem;
     border-radius: 0.5rem;
     border: none;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 700;
     transition: all 0.3s ease;
 
     &:hover:not(:disabled) {
-      background-color: var(--svіtlo-chervoniy);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      filter: brightness(1.1);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
     }
 
     &:disabled {

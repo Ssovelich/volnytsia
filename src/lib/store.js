@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import awardsReducer from './awards/awardsSlice';
+import membersReducer from "@/lib/members/membersSlice"
 
 export const store = configureStore({
   reducer: {
     awards: awardsReducer,
-    // тут потім додасте gallery: galleryReducer і т.д.
+    members: membersReducer,
   },
 });

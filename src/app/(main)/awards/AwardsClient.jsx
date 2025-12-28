@@ -37,24 +37,38 @@ export default function AwardsClient() {
     return <PageLoader />;
   }
 
+  const isEmpty = status === "succeeded" && awards.length === 0;
+
   return (
     <main>
       <SectionWrapper title={"Наші нагороди та відзнаки"}>
         <p className={styles.description}>{awardsText}</p>
-        <div className={styles.awardsList}>
-          {visibleItems.map((item) => (
-            <Image
-              key={item._id}
-              src={item.images?.thumbnail}
-              alt={item.alt || "Нагорода"}
-              width={200}
-              height={301}
-              onClick={() => openModal(item)}
-              className={styles.modalImage}
-            />
-          ))}
-        </div>
-        {loadMoreButton}
+
+        {isEmpty ? (
+          <div className={styles.emptyState}>
+            <p>
+              На даний момент розділ оновлюється. Незабаром тут з’являться наші
+              нові досягнення!
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className={styles.awardsList}>
+              {visibleItems.map((item) => (
+                <Image
+                  key={item._id}
+                  src={item.images?.thumbnail}
+                  alt={item.alt || "Нагорода"}
+                  width={200}
+                  height={301}
+                  onClick={() => openModal(item)}
+                  className={styles.modalImage}
+                />
+              ))}
+            </div>
+            {loadMoreButton}
+          </>
+        )}
       </SectionWrapper>
 
       {modalImg && (
@@ -64,9 +78,7 @@ export default function AwardsClient() {
               ✕
             </button>
 
-            {isImageLoading && (
-              <PageLoader/>
-            )}
+            {isImageLoading && <PageLoader />}
 
             <Image
               src={modalImg.images?.full}

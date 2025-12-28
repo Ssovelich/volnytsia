@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAwards, deleteAward } from "@/lib/awards/awardsSlice";
 import Image from "next/image";
@@ -8,10 +8,15 @@ import PageLoader from "@/components/PageLoader/PageLoader";
 import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import styles from "./AwardsManager.module.scss";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 
 export default function AwardsManager() {
   const dispatch = useDispatch();
   const { items: awards, status } = useSelector((state) => state.awards);
+  const [deleteModal, setDeleteModal] = useState({ 
+    isOpen: false, 
+    id: null 
+  });
 
   useEffect(() => {
     dispatch(fetchAwards());
@@ -24,9 +29,17 @@ export default function AwardsManager() {
     desktop: 20,
   });
 
-  const handleDelete = (id) => {
-    if (confirm("Видалити цю нагороду?")) {
-      dispatch(deleteAward(id));
+  const openDeleteModal = (id) => {
+    setDeleteModal({ isOpen: true, id });
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteModal({ isOpen: false, id: null });
+  };
+
+  const handleConfirmDelete = () => {
+    if (deleteModal.id) {
+      dispatch(deleteAward(deleteModal.id));
     }
   };
 
@@ -68,7 +81,7 @@ export default function AwardsManager() {
             </p>
 
             <button
-              onClick={() => handleDelete(award._id)}
+              onClick={() => openDeleteModal(award._id)}
               className={styles.deleteBtn}
               title="Видалити"
             >
@@ -79,6 +92,14 @@ export default function AwardsManager() {
       </div>
 
       <div className={styles.paginationWrapper}>{loadMoreButton}</div>
+
+      <ConfirmModal
+        isOpen={deleteModal.isOpen}
+        onClose={closeDeleteModal}
+        onConfirm={handleConfirmDelete}
+        title="Видалити відзнаку?"
+        message="Ви впевнені, що хочете видалити цю нагороду?"
+      />
     </div>
   );
 }
