@@ -12,7 +12,7 @@
 
 .modal {
   background: white;
-  padding: 1.5rem;
+  padding: 16px;
   border-radius: 1rem;
   color: #1f2937;
   width: 100%;
@@ -22,20 +22,26 @@
   animation: modalAppear 0.3s ease-out;
 
   @media (min-width: 744px) {
-    padding: 2.5rem 2rem;
+    padding: 26px;
   }
 }
 
 @keyframes modalAppear {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .modalHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 16px;
 }
 
 .title {
@@ -56,7 +62,7 @@
   transition: all 0.3s ease;
 
   &:hover {
-    color: #ef4444; // Колір "Вольниці"
+    color: #ef4444;
     transform: rotate(90deg);
   }
 }
@@ -64,8 +70,8 @@
 .content {
   display: grid;
   grid-template-columns: 180px 1fr;
-  gap: 2rem;
-  margin-bottom: 2rem;
+  gap: 16px;
+  margin-bottom: 16px;
 
   @media (max-width: 600px) {
     grid-template-columns: 1fr;
@@ -76,20 +82,20 @@
 .photoSection {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 12px;
   align-items: center;
   width: 100%;
 }
 
 .previewBox {
   width: 150px;
-  height: 180px;
+  height: 150px;
   position: relative;
   border-radius: 0.75rem;
   overflow: hidden;
   background: #f3f4f6;
   border: 2px dashed #d1d5db;
-  
+
   .placeholder {
     height: 100%;
     display: flex;
@@ -102,7 +108,6 @@
   }
 }
 
-// Контейнер для кнопки та назви файлу
 .uploadContainer {
   display: flex;
   flex-direction: column;
@@ -111,7 +116,6 @@
   width: 100%;
 }
 
-// Стилізована кнопка замість стандартного input
 .customUploadBtn {
   display: flex;
   align-items: center;
@@ -139,7 +143,6 @@
   }
 }
 
-// Текст під кнопкою
 .fileName {
   font-size: 0.75rem;
   color: #6b7280;
@@ -153,14 +156,14 @@
 .formGrid {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 12px;
   width: 100%;
 }
 
 .inputGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 4px;
 
   .label {
     font-size: 0.875rem;
@@ -170,7 +173,7 @@
 
   .textInput {
     width: 100%;
-    padding: 0.7rem 0.85rem;
+    padding: 8px 10px;
     border: 1px solid #d1d5db;
     border-radius: 0.6rem;
     font-size: 1rem;
@@ -191,13 +194,13 @@
 .actions {
   display: flex;
   justify-content: flex-end;
-  gap: 1rem;
-  padding-top: 1.5rem;
+  gap: 8px;
+  padding-top: 16px;
   border-top: 1px solid #f3f4f6;
 
   @media (max-width: 480px) {
     flex-direction: column-reverse;
-    
+
     button {
       width: 100%;
     }

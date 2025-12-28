@@ -4,6 +4,7 @@
   align-items: center;
   gap: 30px;
   max-width: 300px;
+  margin: 0 auto; // Центруємо контейнер
 
   @media (min-width: 744px) {
     flex-direction: row;
@@ -27,28 +28,64 @@
     text-align: center;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
 
     &:hover {
       transform: scale(1.05);
       box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3);
     }
 
-    .photo {
+    // Обгортка для Next.js Image
+    .photoWrapper {
+      position: relative;
       width: 100%;
-      height: auto;
-      object-fit: cover;
+      height: 280px; // Фіксована висота для фото
+      overflow: hidden;
+
+      .photo {
+        object-fit: cover;
+      }
     }
 
     .name {
       font-weight: 600;
       font-size: 16px;
       line-height: 180%;
+      margin-top: 12px;
+      padding: 0 10px;
+      // Текст з великої літери
+      text-transform: capitalize;
     }
 
     .role {
       font-size: 14px;
       color: var(--neativniy-tekst);
+      padding: 0 10px 15px;
+      // Перша літера велика, решта маленькі
+      text-transform: lowercase;
+      &::first-letter {
+        text-transform: uppercase;
+      }
     }
   }
 }
 
+// Стилі для повідомлення, коли учасників немає
+.emptyState {
+  width: 100%;
+  text-align: center;
+  padding: 60px 20px;
+  background: #fdfdfd;
+  border: 2px dashed #e2e8f0;
+  border-radius: 25px;
+  margin: 20px 0;
+
+  p {
+    color: var(--neativniy-tekst);
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}

@@ -1,0 +1,53 @@
+.wrapper {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  text-align: center;
+  background-color: #fff;
+
+  .content {
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .title {
+    // Плавно змінюється від 24px до 48px залежно від ширини екрана
+    font-size: clamp(1.5rem, 6vw, 3rem);
+    color: var(--chervoniy-volnicya, #e11d48);
+    margin-bottom: clamp(1rem, 3vw, 2rem);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .text {
+    // Від 16px до 20px
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: #4b5563;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
+    padding: 0 1rem;
+  }
+
+  .homeBtn {
+    display: inline-block;
+    background-color: var(--chervoniy-volnicya, #e11d48);
+    color: white;
+    padding: clamp(0.8rem, 2vw, 1.2rem) clamp(1.5rem, 5vw, 3rem);
+    border-radius: 50px;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      filter: brightness(1.1);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}

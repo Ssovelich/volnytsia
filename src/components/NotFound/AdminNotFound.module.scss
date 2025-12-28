@@ -1,0 +1,64 @@
+.adminContainer {
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8fafc; // М'який сірий фон
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  padding: 2rem;
+  text-align: center;
+
+  .errorCode {
+    font-weight: 800;
+    // Дуже великий, але адаптивний номер помилки
+    font-size: clamp(4rem, 15vw, 8rem);
+    line-height: 1;
+    color: #e2e8f0; // Світлий колір, як водяний знак
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .adminTitle {
+    font-size: clamp(1.25rem, 4vw, 2rem);
+    color: #1e293b;
+    font-family: sans-serif;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  .adminText {
+    color: #64748b;
+    margin-bottom: 2.5rem;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    max-width: 450px;
+    line-height: 1.5;
+  }
+
+  .backBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: #3b82f6;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+
+    svg {
+      font-size: 1.4em;
+    }
+
+    &:hover {
+      color: #2563eb;
+      background-color: #eff6ff;
+    }
+  }
+}

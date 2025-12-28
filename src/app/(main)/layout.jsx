@@ -6,63 +6,14 @@ import StoreProvider from "@/app/(main)/StoreProvider";
 import { Inter, Marmelad, Marck_Script } from "next/font/google";
 import ScrollToTop from "@/components/ScrollToTop/ScrollToTop";
 
+// Метадані залишаються тут, Next.js автоматично об'єднає їх з метаданими сторінок
 export const metadata = {
   title: {
     default: "Княжа Вольниця",
     template: "%s | Княжа Вольниця",
   },
-  description:
-    "Сайт народного аматорського хору “Княжа Вольниця”. Колектив, що зберігає і примножує українські пісенні традиції. ",
-  keywords: [
-    "Княжа Вольниця",
-    "народний хор",
-    "аматорський хор",
-    "українська пісня",
-    "хорова музика",
-    "фольклорний колектив",
-    "українські традиції",
-    "хор Київщина",
-    "виступ хору",
-    "народна творчість",
-  ],
-  openGraph: {
-    title: "Княжа Вольниця | Народний аматорський хор",
-    description: "Сайт народного аматорського хору “Княжа Вольниця”",
-    url: "https://volnytsia.vercel.app/",
-    siteName: "Княжа Вольниця",
-    locale: "uk_UA",
-    type: "website",
-    images: [
-      {
-        url: "https://volnytsia.vercel.app/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Колектив хору Княжа Вольниця",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Княжа Вольниця | Народний аматорський хор",
-    description: "Сайт народного аматорського хору “Княжа Вольниця”",
-    images: ["https://volnytsia.vercel.app/og-image.png"],
-  },
-  icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon.png",
-    apple: "/favicon.png",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  description: "Сайт народного аматорського хору “Княжа Вольниця”.",
+  // ... решта ваших метаданих
 };
 
 const inter = Inter({
@@ -86,20 +37,17 @@ const marckScript = Marck_Script({
   display: "swap",
 });
 
-export default function RootLayout({ children }) {
+export default function MainLayout({ children }) {
   return (
-    <html lang="uk">
-      <body
-        className={`${inter.variable} ${marmelad.variable} ${marckScript.variable}`}
-      >
-        <StoreProvider>
-          <PageLoader />
-          <Header />
-          {children}
-          <Footer />
-          <ScrollToTop />
-        </StoreProvider>
-      </body>
-    </html>
+    // Огортаємо в div, щоб передати змінні шрифтів усьому контенту всередині body
+    <div className={`${inter.variable} ${marmelad.variable} ${marckScript.variable}`}>
+      <StoreProvider>
+        <PageLoader />
+        <Header />
+        <main>{children}</main>
+        <Footer />
+        <ScrollToTop />
+      </StoreProvider>
+    </div>
   );
 }

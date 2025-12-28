@@ -16,6 +16,8 @@ export default function AwardsClient() {
   const [modalImg, setModalImg] = useState(null);
   const [isImageLoading, setIsImageLoading] = useState(true);
 
+  const DEFAULT_AWARD_IMG = "/default-award.png";
+
   useEffect(() => {
     dispatch(fetchAwards());
   }, [dispatch]);
@@ -57,12 +59,13 @@ export default function AwardsClient() {
               {visibleItems.map((item) => (
                 <Image
                   key={item._id}
-                  src={item.images?.thumbnail}
+                  src={item.images?.thumbnail || DEFAULT_AWARD_IMG}
                   alt={item.alt || "Нагорода"}
                   width={200}
                   height={301}
                   onClick={() => openModal(item)}
                   className={styles.modalImage}
+                  onError={(e) => { e.target.src = DEFAULT_AWARD_IMG }}
                 />
               ))}
             </div>
@@ -81,11 +84,16 @@ export default function AwardsClient() {
             {isImageLoading && <PageLoader />}
 
             <Image
-              src={modalImg.images?.full}
+              src={modalImg.images?.full || DEFAULT_AWARD_IMG}
               alt={modalImg.alt || "Нагорода"}
               width={900}
               height={1200}
+              onLoadingComplete={() => setIsImageLoading(false)}
               className={styles.modalImage}
+              onError={(e) => { 
+                e.target.src = DEFAULT_AWARD_IMG;
+                setIsImageLoading(false);
+              }}
             />
           </div>
         </div>

@@ -19,7 +19,7 @@
 .imgWrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 3 / 3;
   background: #f3f4f6;
   border-bottom: 1px solid #f1f5f9;
 }
@@ -59,7 +59,10 @@
     font-weight: 500;
     margin: 0;
     letter-spacing: 0.025em;
-    text-transform: capitalize;
+    text-transform: lowercase;
+    &::first-letter {
+      text-transform: uppercase;
+    }
   }
 }
 
