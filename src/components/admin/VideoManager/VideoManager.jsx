@@ -27,8 +27,8 @@ export default function VideoManager() {
   const { visibleItems, loadMoreButton } = LoadMoreButton({
     data: videos,
     mobile: 4,
-    tablet: 8,
-    desktop: 20,
+    tablet: 6,
+    desktop: 8,
   });
 
   const openDeleteModal = (id) => {

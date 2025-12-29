@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,6 +10,7 @@ import {
 } from "@/lib/members/membersSlice";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import PageLoader from "@/components/PageLoader/PageLoader";
+import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton"; // Імпортуємо хук
 import styles from "./MembersManager.module.scss";
 import MemberCard from "../MemberCard/MemberCard";
 import MemberModal from "../MemberModal/MemberModal";
@@ -26,6 +28,13 @@ export default function MembersManager() {
       dispatch(fetchMembers());
     }
   }, [status, dispatch]);
+
+  const { visibleItems, loadMoreButton } = LoadMoreButton({
+    data: members,
+    mobile: 4,
+    tablet: 8,
+    desktop: 12,
+  });
 
   const handleOpenCreate = () => {
     setEditData(null);
@@ -48,7 +57,9 @@ export default function MembersManager() {
 
   if (status === "loading" && members.length === 0) return <PageLoader />;
 
-  const noItems = (status === "succeeded" || status === "failed" || status === "idle") && members.length === 0;
+  const noItems =
+    (status === "succeeded" || status === "failed" || status === "idle") &&
+    members.length === 0;
 
   if (noItems) {
     return (
@@ -61,17 +72,20 @@ export default function MembersManager() {
         </header>
         <div className={styles.emptyWrapper}>
           <p className={styles.emptyText}>
-            {status === "failed" 
-              ? `На жаль, виникла проблема з доступом до даних.` 
+            {status === "failed"
+              ? `На жаль, виникла проблема з доступом до даних.`
               : "Учасників поки що немає. Ви можете додати першого!"}
           </p>
           {status === "failed" && (
-            <button onClick={() => dispatch(fetchMembers())} className={styles.retryBtn}>
+            <button
+              onClick={() => dispatch(fetchMembers())}
+              className={styles.retryBtn}
+            >
               Спробувати знову
             </button>
           )}
         </div>
-        
+
         <MemberModal
           key="new-empty"
           isOpen={isModalOpen}
@@ -93,7 +107,7 @@ export default function MembersManager() {
       </header>
 
       <div className={styles.membersGrid}>
-        {members.map((member) => (
+        {visibleItems.map((member) => (
           <MemberCard
             key={member._id}
             member={member}
@@ -102,6 +116,8 @@ export default function MembersManager() {
           />
         ))}
       </div>
+
+      <div className={styles.loadMoreContainer}>{loadMoreButton}</div>
 
       <MemberModal
         key={editData ? editData._id : "new"}
@@ -114,7 +130,10 @@ export default function MembersManager() {
       <ConfirmModal
         isOpen={deleteModal.isOpen}
         onClose={() => setDeleteModal({ isOpen: false, id: null })}
-        onConfirm={() => dispatch(deleteMember(deleteModal.id))}
+        onConfirm={async () => {
+          await dispatch(deleteMember(deleteModal.id));
+          setDeleteModal({ isOpen: false, id: null });
+        }}
         title="Видалити учасника?"
         message="Ця дія видалить усі дані про учасника безповоротно."
       />
