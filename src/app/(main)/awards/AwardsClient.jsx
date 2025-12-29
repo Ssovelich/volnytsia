@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAwards } from "@/lib/awards/awardsSlice";
 import SectionWrapper from "@/components/SectionWrapper/SectionWrapper";
@@ -19,14 +19,23 @@ export default function AwardsClient() {
   const DEFAULT_AWARD_IMG = "/default-award.png";
 
   useEffect(() => {
-    dispatch(fetchAwards());
-  }, [dispatch]);
+    if (status === "idle") {
+      dispatch(fetchAwards());
+    }
+  }, [status, dispatch]);
 
   const openModal = (item) => {
     setModalImg(item);
     setIsImageLoading(true);
   };
+
   const closeModal = () => setModalImg(null);
+
+  const handleImageError = useCallback((e) => {
+    if (e.target.src !== window.location.origin + DEFAULT_AWARD_IMG) {
+      e.target.src = DEFAULT_AWARD_IMG;
+    }
+  }, []);
 
   const { visibleItems, loadMoreButton } = LoadMoreButton({
     data: awards,
@@ -39,14 +48,14 @@ export default function AwardsClient() {
     return <PageLoader />;
   }
 
-  const isEmpty = status === "succeeded" && awards.length === 0;
+  const isActuallyEmpty = status === "succeeded" && awards.length === 0;
 
   return (
     <main>
       <SectionWrapper title={"Наші нагороди та відзнаки"}>
         <p className={styles.description}>{awardsText}</p>
 
-        {isEmpty ? (
+        {isActuallyEmpty ? (
           <div className={styles.emptyState}>
             <p>
               На даний момент розділ оновлюється. Незабаром тут з’являться наші
@@ -65,7 +74,7 @@ export default function AwardsClient() {
                   height={301}
                   onClick={() => openModal(item)}
                   className={styles.modalImage}
-                  onError={(e) => { e.target.src = DEFAULT_AWARD_IMG }}
+                  onError={handleImageError}
                 />
               ))}
             </div>
@@ -90,8 +99,8 @@ export default function AwardsClient() {
               height={1200}
               onLoadingComplete={() => setIsImageLoading(false)}
               className={styles.modalImage}
-              onError={(e) => { 
-                e.target.src = DEFAULT_AWARD_IMG;
+              onError={(e) => {
+                handleImageError(e);
                 setIsImageLoading(false);
               }}
             />
