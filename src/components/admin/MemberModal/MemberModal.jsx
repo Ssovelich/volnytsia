@@ -127,7 +127,7 @@ export default function MemberModal({ isOpen, onClose, onSave, editData }) {
 
             <div className={styles.formGrid}>
               <div className={styles.inputGroup}>
-                <label className={styles.label}>Прізвище:</label>
+                <label className={styles.label}>Прізвище*</label>
                 <input
                   type="text"
                   value={formData.surname}
@@ -139,7 +139,7 @@ export default function MemberModal({ isOpen, onClose, onSave, editData }) {
                 />
               </div>
               <div className={styles.inputGroup}>
-                <label className={styles.label}>{"Ім'я:"}</label>
+                <label className={styles.label}>{"Ім'я*"}</label>
                 <input
                   type="text"
                   value={formData.name}
@@ -151,7 +151,7 @@ export default function MemberModal({ isOpen, onClose, onSave, editData }) {
                 />
               </div>
               <div className={styles.inputGroup}>
-                <label className={styles.label}>Роль:</label>
+                <label className={styles.label}>Роль*</label>
                 <input
                   type="text"
                   value={formData.role}
@@ -164,7 +164,7 @@ export default function MemberModal({ isOpen, onClose, onSave, editData }) {
                 />
               </div>
               <div className={styles.inputGroup}>
-                <label className={styles.label}>Порядок сортування:</label>
+                <label className={styles.label}>Порядок сортування</label>
                 <input
                   type="number"
                   value={formData.order}

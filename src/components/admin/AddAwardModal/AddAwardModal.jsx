@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchAwards } from "@/lib/awards/awardsSlice";
 import { HiX } from "react-icons/hi";
-import { MdCloudUpload } from "react-icons/md"; // Додаємо іконку
+import { MdCloudUpload } from "react-icons/md";
 import styles from "./AddAwardModal.module.scss";
 
 export default function AddAwardModal({ isOpen, onClose }) {
@@ -60,9 +60,8 @@ export default function AddAwardModal({ isOpen, onClose }) {
         </div>
 
         <form onSubmit={handleUpload} className={styles.form}>
-          {/* Поле для основного зображення */}
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Основне зображення:</label>
+            <label className={styles.label}>Основне зображення*</label>
             <div className={styles.uploadContainer}>
               <label className={styles.customUploadBtn}>
                 <MdCloudUpload />
@@ -81,9 +80,8 @@ export default function AddAwardModal({ isOpen, onClose }) {
             </div>
           </div>
 
-          {/* Поле для мініатюри */}
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Мініатюра (необов’язково):</label>
+            <label className={styles.label}>Мініатюра (необов’язково)</label>
             <div className={styles.uploadContainer}>
               <label className={styles.customUploadBtn}>
                 <MdCloudUpload />

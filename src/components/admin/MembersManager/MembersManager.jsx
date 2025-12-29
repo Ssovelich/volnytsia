@@ -15,7 +15,7 @@ import MemberModal from "../MemberModal/MemberModal";
 
 export default function MembersManager() {
   const dispatch = useDispatch();
-  const { items: members, status, error } = useSelector((state) => state.members);
+  const { items: members, status } = useSelector((state) => state.members);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editData, setEditData] = useState(null);

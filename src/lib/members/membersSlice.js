@@ -41,6 +41,15 @@ export const deleteMember = createAsyncThunk(
   }
 );
 
+const sortMembers = (items) => {
+  return items.sort((a, b) => {
+    if (a.order !== b.order) {
+      return (a.order || 0) - (b.order || 0);
+    }
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+};
+
 const membersSlice = createSlice({
   name: "members",
   initialState: { items: [], status: "idle", error: null },
@@ -53,20 +62,24 @@ const membersSlice = createSlice({
       })
       .addCase(fetchMembers.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.items = action.payload;
+        state.items = sortMembers(action.payload);
       })
       .addCase(fetchMembers.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
       .addCase(addMember.fulfilled, (state, action) => {
-        state.items.unshift(action.payload);
+        state.items.push(action.payload);
+        sortMembers(state.items);
       })
       .addCase(updateMember.fulfilled, (state, action) => {
         const index = state.items.findIndex(
           (m) => m._id === action.payload._id
         );
-        if (index !== -1) state.items[index] = action.payload;
+        if (index !== -1) {
+          state.items[index] = action.payload;
+          sortMembers(state.items);
+        }
       })
       .addCase(deleteMember.fulfilled, (state, action) => {
         state.items = state.items.filter((item) => item._id !== action.payload);

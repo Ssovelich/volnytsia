@@ -94,3 +94,53 @@
     opacity: 0.7;
   }
 }
+
+.errorContainer {
+  padding: 3rem 1rem;
+  text-align: center;
+  border-radius: 12px;
+  margin: 2rem auto;
+  max-width: 600px;
+
+  .errorText {
+    color: #c53030;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .retryBtn {
+    background-color: var(--chervoniy-volnicya);
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+
+    &:hover {
+      background-color: var(--svіtlo-chervoniy);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+      transform: translateY(2px);
+    }
+  }
+}
+
+.emptyState {
+  padding: 3rem 1rem;
+  text-align: center;
+  border-radius: 25px;
+  margin: 20px 0;
+
+  p {
+    font-size: 1.1rem;
+    color: #64748b;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+}

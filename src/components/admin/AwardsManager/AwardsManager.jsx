@@ -9,6 +9,7 @@ import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton";
 import { MdOutlineDeleteForever } from "react-icons/md";
 import styles from "./AwardsManager.module.scss";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
+import { formatDate } from "@/lib/formatDate";
 
 export default function AwardsManager() {
   const dispatch = useDispatch();
@@ -43,11 +44,6 @@ export default function AwardsManager() {
     if (deleteModal.id) {
       dispatch(deleteAward(deleteModal.id));
     }
-  };
-
-  const formatDate = (dateString) => {
-    if (!dateString) return "";
-    return dateString.split("T")[0];
   };
 
   if (status === "loading" && awards.length === 0) return <PageLoader />;
@@ -107,7 +103,7 @@ export default function AwardsManager() {
         ))}
       </div>
 
-      <div className={styles.paginationWrapper}>{loadMoreButton}</div>
+      <div>{loadMoreButton}</div>
 
       <ConfirmModal
         isOpen={deleteModal.isOpen}
