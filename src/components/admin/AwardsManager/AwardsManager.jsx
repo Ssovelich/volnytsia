@@ -13,14 +13,16 @@ import ConfirmModal from "../ConfirmModal/ConfirmModal";
 export default function AwardsManager() {
   const dispatch = useDispatch();
   const { items: awards, status } = useSelector((state) => state.awards);
-  const [deleteModal, setDeleteModal] = useState({ 
-    isOpen: false, 
-    id: null 
+  const [deleteModal, setDeleteModal] = useState({
+    isOpen: false,
+    id: null,
   });
 
   useEffect(() => {
-    dispatch(fetchAwards());
-  }, [dispatch]);
+    if (status === "idle") {
+      dispatch(fetchAwards());
+    }
+  }, [status, dispatch]);
 
   const { visibleItems, loadMoreButton } = LoadMoreButton({
     data: awards,
@@ -50,12 +52,26 @@ export default function AwardsManager() {
 
   if (status === "loading" && awards.length === 0) return <PageLoader />;
 
-  if (status === "idle" || (status === "succeeded" && awards.length === 0)) {
+  const noItems =
+    (status === "succeeded" || status === "failed" || status === "idle") &&
+    awards.length === 0;
+
+  if (noItems) {
     return (
       <div className={styles.emptyWrapper}>
         <p className={styles.emptyText}>
-          Відзнак поки що немає. Ви можете додати першу!
+          {status === "failed"
+            ? "На жаль, виникла проблема з доступом до даних."
+            : "Відзнак поки що немає. Ви можете додати першу!"}
         </p>
+        {status === "failed" && (
+          <button
+            onClick={() => dispatch(fetchAwards())}
+            className={styles.retryBtn}
+          >
+            Спробувати знову
+          </button>
+        )}
       </div>
     );
   }

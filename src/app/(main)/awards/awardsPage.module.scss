@@ -24,6 +24,61 @@
   }
 }
 
+.errorContainer {
+  padding: 3rem 1rem;
+  text-align: center;
+  border-radius: 12px;
+  margin: 2rem auto;
+  max-width: 600px;
+
+  .errorText {
+    color: #c53030;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .errorDetail {
+    color: #9b2c2c;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+  }
+
+  .retryBtn {
+    background-color: var(--chervoniy-volnicya);
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: var(--svіtlo-chervoniy);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+      transform: translateY(2px);
+    }
+  }
+}
+
+.emptyState {
+  padding: 3rem 1rem;
+  text-align: center;
+
+  p {
+    font-size: 1.1rem;
+    color: #64748b;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+}
+
 .backdrop {
   position: fixed;
   inset: 0;
@@ -76,10 +131,11 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.3s ease, background 0.3s ease;
+  z-index: 10;
 
   &:hover {
     transform: rotate(90deg);
-    background: var(--bіliy);
+    background: #ffffff;
   }
 }
 
@@ -108,6 +164,7 @@
     width: 462px;
     flex-direction: row;
     flex-wrap: wrap;
+    margin: 0 auto;
 
     .modalImage {
       max-width: 200px;
@@ -119,18 +176,5 @@
   .awardsList {
     width: 1392px;
     justify-content: center;
-  }
-}
-
-.emptyState {
-  padding: 3rem 1rem;
-  text-align: center;
-
-  p {
-    font-size: 1.1rem;
-    color: #64748b;
-    max-width: 500px;
-    margin: 0 auto;
-    line-height: 1.6;
   }
 }

@@ -4,7 +4,7 @@
   align-items: center;
   gap: 30px;
   max-width: 300px;
-  margin: 0 auto; // Центруємо контейнер
+  margin: 0 auto;
 
   @media (min-width: 744px) {
     flex-direction: row;
@@ -36,11 +36,10 @@
       box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3);
     }
 
-    // Обгортка для Next.js Image
     .photoWrapper {
       position: relative;
       width: 100%;
-      height: 280px; // Фіксована висота для фото
+      height: 280px;
       overflow: hidden;
 
       .photo {
@@ -54,7 +53,6 @@
       line-height: 180%;
       margin-top: 12px;
       padding: 0 10px;
-      // Текст з великої літери
       text-transform: capitalize;
     }
 
@@ -62,7 +60,6 @@
       font-size: 14px;
       color: var(--neativniy-tekst);
       padding: 0 10px 15px;
-      // Перша літера велика, решта маленькі
       text-transform: lowercase;
       &::first-letter {
         text-transform: uppercase;
@@ -71,21 +68,52 @@
   }
 }
 
-// Стилі для повідомлення, коли учасників немає
-.emptyState {
-  width: 100%;
+.errorContainer {
+  padding: 3rem 1rem;
   text-align: center;
-  padding: 60px 20px;
-  background: #fdfdfd;
-  border: 2px dashed #e2e8f0;
+  border-radius: 12px;
+  margin: 2rem auto;
+  max-width: 600px;
+
+  .errorText {
+    color: #c53030;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .retryBtn {
+    background-color: var(--chervoniy-volnicya);
+    color: white;
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+
+    &:hover {
+      background-color: var(--svіtlo-chervoniy);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+      transform: translateY(2px);
+    }
+  }
+}
+
+.emptyState {
+  padding: 3rem 1rem;
+  text-align: center;
   border-radius: 25px;
   margin: 20px 0;
 
   p {
-    color: var(--neativniy-tekst);
-    font-size: 18px;
-    line-height: 1.6;
-    max-width: 600px;
+    font-size: 1.1rem;
+    color: #64748b;
+    max-width: 500px;
     margin: 0 auto;
+    line-height: 1.6;
   }
 }

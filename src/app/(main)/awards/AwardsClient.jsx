@@ -13,6 +13,7 @@ import PageLoader from "@/components/PageLoader/PageLoader";
 export default function AwardsClient() {
   const dispatch = useDispatch();
   const { items: awards, status } = useSelector((state) => state.awards);
+
   const [modalImg, setModalImg] = useState(null);
   const [isImageLoading, setIsImageLoading] = useState(true);
 
@@ -49,6 +50,26 @@ export default function AwardsClient() {
   }
 
   const isActuallyEmpty = status === "succeeded" && awards.length === 0;
+
+  if (status === "failed" && awards.length === 0) {
+    return (
+      <main>
+        <SectionWrapper title={"Наші нагороди та відзнаки"}>
+          <div className={styles.errorContainer}>
+            <p className={styles.errorText}>
+              На жаль, виникла проблема з доступом до даних.
+            </p>
+            <button
+              className={styles.retryBtn}
+              onClick={() => dispatch(fetchAwards())}
+            >
+              Спробувати знову
+            </button>
+          </div>
+        </SectionWrapper>
+      </main>
+    );
+  }
 
   return (
     <main>

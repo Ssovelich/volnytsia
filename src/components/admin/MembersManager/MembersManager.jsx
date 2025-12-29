@@ -15,15 +15,17 @@ import MemberModal from "../MemberModal/MemberModal";
 
 export default function MembersManager() {
   const dispatch = useDispatch();
-  const { items: members, status } = useSelector((state) => state.members);
+  const { items: members, status, error } = useSelector((state) => state.members);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editData, setEditData] = useState(null);
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, id: null });
 
   useEffect(() => {
-    dispatch(fetchMembers());
-  }, [dispatch]);
+    if (status === "idle") {
+      dispatch(fetchMembers());
+    }
+  }, [status, dispatch]);
 
   const handleOpenCreate = () => {
     setEditData(null);
@@ -46,8 +48,9 @@ export default function MembersManager() {
 
   if (status === "loading" && members.length === 0) return <PageLoader />;
 
- 
-  if (status === "idle" || (status === "succeeded" && members.length === 0)) {
+  const noItems = (status === "succeeded" || status === "failed" || status === "idle") && members.length === 0;
+
+  if (noItems) {
     return (
       <div className={styles.container}>
         <header className={styles.header}>
@@ -58,8 +61,15 @@ export default function MembersManager() {
         </header>
         <div className={styles.emptyWrapper}>
           <p className={styles.emptyText}>
-            Учасників поки що немає. Ви можете додати першого!
+            {status === "failed" 
+              ? `На жаль, виникла проблема з доступом до даних.` 
+              : "Учасників поки що немає. Ви можете додати першого!"}
           </p>
+          {status === "failed" && (
+            <button onClick={() => dispatch(fetchMembers())} className={styles.retryBtn}>
+              Спробувати знову
+            </button>
+          )}
         </div>
         
         <MemberModal
