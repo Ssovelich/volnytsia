@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/awardsр`;
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/awards`;
 
 export const fetchAwards = createAsyncThunk("awards/fetchAll", async () => {
   const response = await axios.get(API_URL, {
