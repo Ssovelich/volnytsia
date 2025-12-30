@@ -11,6 +11,7 @@ import {
   HiOutlinePhoto,
   HiOutlineVideoCamera,
 } from "react-icons/hi2";
+import { RiSlideshowView } from "react-icons/ri";
 import { IoPersonOutline } from "react-icons/io5";
 import { MdPeopleOutline } from "react-icons/md";
 import { PiSignOut } from "react-icons/pi";
@@ -29,6 +30,7 @@ export default function AdminClientLayout({ children }) {
 
   const navItems = [
     { name: "Відзнаки", href: "/admin/awards", icon: <HiOutlineTrophy /> },
+    { name: "Фото-банер", href: "/admin/banner", icon: <RiSlideshowView /> },
     { name: "Галерея", href: "/admin/gallery", icon: <HiOutlinePhoto /> },
     { name: "Відео", href: "/admin/videos", icon: <HiOutlineVideoCamera /> },
     { name: "Керівники", href: "/admin/leaders", icon: <IoPersonOutline /> },
