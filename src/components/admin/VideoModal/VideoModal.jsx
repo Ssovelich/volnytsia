@@ -2,28 +2,35 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { fetchVideos } from "@/lib/videoGallery/videoGallerySlice";
+import { addVideo, updateVideo } from "@/lib/videoGallery/videoGallerySlice";
 import { HiX } from "react-icons/hi";
 import styles from "./VideoModal.module.scss";
 
-export default function VideoModal({ isOpen, onClose }) {
+export default function VideoModal({ isOpen, onClose, editData = null }) {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const [order, setOrder] = useState(0);
   const [loading, setLoading] = useState(false);
-  
+
   const firstInputRef = useRef(null);
 
   useEffect(() => {
     if (!isOpen) return;
-    setTitle("");
-    setUrl("");
-    setOrder(0);
+
+    if (editData) {
+      setTitle(editData.title || "");
+      setUrl(editData.url || "");
+      setOrder(editData.order || 0);
+    } else {
+      setTitle("");
+      setUrl("");
+      setOrder(0);
+    }
 
     const timer = setTimeout(() => firstInputRef.current?.focus(), 100);
     return () => clearTimeout(timer);
-  }, [isOpen]);
+  }, [isOpen, editData]);
 
   if (!isOpen) return null;
 
@@ -34,42 +41,39 @@ export default function VideoModal({ isOpen, onClose }) {
     const videoData = {
       title,
       url,
-      order: Number(order)
+      order: Number(order),
     };
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/gallery-videos`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(videoData),
-      });
-
-      if (res.ok) {
-        dispatch(fetchVideos());
-        onClose();
+      if (editData) {
+        await dispatch(
+          updateVideo({ id: editData._id, formData: videoData })
+        ).unwrap();
       } else {
-        alert("Помилка при збереженні відео");
+        await dispatch(addVideo(videoData)).unwrap();
       }
+      onClose();
     } catch (error) {
-      console.error("Upload error:", error);
+      console.error("Operation error:", error);
+      alert("Помилка при збереженні відео");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div 
-      className={styles.overlay} 
+    <div
+      className={styles.overlay}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <div className={styles.modal}>
         <div className={styles.modalHeader}>
-          <h2 className={styles.title}>Додати відео YouTube</h2>
-          <button 
-            className={styles.closeBtn} 
-            onClick={onClose} 
+          <h2 className={styles.title}>
+            {editData ? "Редагувати відео" : "Додати відео YouTube"}
+          </h2>
+          <button
+            className={styles.closeBtn}
+            onClick={onClose}
             type="button"
             aria-label="Закрити"
           >
@@ -80,7 +84,7 @@ export default function VideoModal({ isOpen, onClose }) {
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formGrid}>
             <div className={styles.inputGroup}>
-              <label className={styles.label}>Назва відео*</label>
+              <label className={styles.label}>Назва відео</label>
               <input
                 ref={firstInputRef}
                 type="text"
@@ -93,7 +97,7 @@ export default function VideoModal({ isOpen, onClose }) {
             </div>
 
             <div className={styles.inputGroup}>
-              <label className={styles.label}>Посилання YouTube*</label>
+              <label className={styles.label}>Посилання YouTube</label>
               <input
                 type="url"
                 value={url}
@@ -117,16 +121,16 @@ export default function VideoModal({ isOpen, onClose }) {
           </div>
 
           <div className={styles.actions}>
-            <button 
-              type="button" 
-              onClick={onClose} 
+            <button
+              type="button"
+              onClick={onClose}
               className={styles.cancelBtn}
               disabled={loading}
             >
               Скасувати
             </button>
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className={styles.submitBtn}
               disabled={loading}
             >

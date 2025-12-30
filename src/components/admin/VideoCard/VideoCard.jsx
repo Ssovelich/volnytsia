@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { MdOutlineDeleteForever } from "react-icons/md";
+import { MdOutlineDeleteForever, MdEdit } from "react-icons/md";
 import styles from "./VideoCard.module.scss";
 import { formatDate } from "@/lib/formatDate";
 
-export default function VideoCard({ video, onDelete }) {
+export default function VideoCard({ video, onEdit, onDelete }) {
   const [imgSrc, setImgSrc] = useState(null);
 
   const getYoutubeId = (url) => {
@@ -38,7 +38,21 @@ export default function VideoCard({ video, onDelete }) {
         {video.order > 0 && (
           <div className={styles.orderBadge}>№{video.order}</div>
         )}
+      </div>
 
+      <div className={styles.info}>
+        <h3 className={styles.title}>{video.title}</h3>
+        <p className={styles.created}>Додано: {formatDate(video.createdAt)}</p>
+      </div>
+
+      <div className={styles.actions}>
+        <button
+          onClick={() => onEdit(video)}
+          className={styles.editBtn}
+          title="Редагувати"
+        >
+          <MdEdit />
+        </button>
         <button
           onClick={onDelete}
           className={styles.deleteBtn}
@@ -46,11 +60,6 @@ export default function VideoCard({ video, onDelete }) {
         >
           <MdOutlineDeleteForever />
         </button>
-      </div>
-
-      <div className={styles.info}>
-        <h3 className={styles.title}>{video.title}</h3>
-        <p className={styles.created}>Додано: {formatDate(video.createdAt)}</p>
       </div>
     </div>
   );

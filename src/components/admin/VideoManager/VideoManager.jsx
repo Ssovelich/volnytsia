@@ -9,10 +9,9 @@ import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import styles from "./VideoManager.module.scss";
 
-export default function VideoManager() {
+export default function VideoManager({ onEditVideo }) {
   const dispatch = useDispatch();
   const { items: videos, status } = useSelector((state) => state.galleryVideos);
-
   const [deleteModal, setDeleteModal] = useState({
     isOpen: false,
     id: null,
@@ -52,39 +51,39 @@ export default function VideoManager() {
     (status === "succeeded" || status === "failed" || status === "idle") &&
     videos.length === 0;
 
-  if (noItems) {
-    return (
-      <div className={styles.emptyWrapper}>
-        <p className={styles.emptyText}>
-          {status === "failed"
-            ? "На жаль, виникла проблема з доступом до даних."
-            : "Відео поки що немає. Ви можете додати перше!"}
-        </p>
-        {status === "failed" && (
-          <button
-            onClick={() => dispatch(fetchVideos())}
-            className={styles.retryBtn}
-          >
-            Спробувати знову
-          </button>
-        )}
-      </div>
-    );
-  }
-
   return (
     <div className={styles.managerWrapper}>
-      <div className={styles.grid}>
-        {visibleItems.map((video) => (
-          <VideoCard
-            key={video._id}
-            video={video}
-            onDelete={() => openDeleteModal(video._id)}
-          />
-        ))}
-      </div>
-
-      <div>{loadMoreButton}</div>
+      {noItems ? (
+        <div className={styles.emptyWrapper}>
+          <p className={styles.emptyText}>
+            {status === "failed"
+              ? "На жаль, виникла проблема з доступом до даних."
+              : "Відео поки що немає. Ви можете додати перше!"}
+          </p>
+          {status === "failed" && (
+            <button
+              onClick={() => dispatch(fetchVideos())}
+              className={styles.retryBtn}
+            >
+              Спробувати знову
+            </button>
+          )}
+        </div>
+      ) : (
+        <>
+          <div className={styles.grid}>
+            {visibleItems.map((video) => (
+              <VideoCard
+                key={video._id}
+                video={video}
+                onEdit={onEditVideo}
+                onDelete={() => openDeleteModal(video._id)}
+              />
+            ))}
+          </div>
+          <div>{loadMoreButton}</div>
+        </>
+      )}
 
       <ConfirmModal
         isOpen={deleteModal.isOpen}

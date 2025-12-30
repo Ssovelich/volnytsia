@@ -19,6 +19,14 @@ export const addVideo = createAsyncThunk(
   }
 );
 
+export const updateVideo = createAsyncThunk(
+  "galleryVideos/updateVideo",
+  async ({ id, formData }) => {
+    const response = await axios.put(`${API_URL}/${id}`, formData);
+    return response.data;
+  }
+);
+
 export const deleteVideo = createAsyncThunk(
   "galleryVideos/deleteVideo",
   async (id) => {
@@ -55,6 +63,15 @@ const videoGallerySlice = createSlice({
       })
       .addCase(addVideo.fulfilled, (state, action) => {
         state.items.push(action.payload);
+        sortVideos(state.items);
+      })
+      .addCase(updateVideo.fulfilled, (state, action) => {
+        const index = state.items.findIndex(
+          (v) => v._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.items[index] = action.payload;
+        }
         sortVideos(state.items);
       })
       .addCase(deleteVideo.fulfilled, (state, action) => {

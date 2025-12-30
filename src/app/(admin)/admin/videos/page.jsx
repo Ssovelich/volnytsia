@@ -7,25 +7,39 @@ import styles from "./VideosPage.module.scss";
 
 export default function VideosPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editData, setEditData] = useState(null);
+
+  const handleOpenCreate = () => {
+    setEditData(null);
+    setIsModalOpen(true);
+  };
+
+  const handleOpenEdit = (video) => {
+    setEditData(video);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditData(null);
+  };
 
   return (
     <div className={styles.container}>
       <header className={styles.header}>
         <h1 className={styles.title}>Відеогалерея</h1>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className={styles.addButton}
-        >
+        <button onClick={handleOpenCreate} className={styles.addButton}>
           + Додати відео
         </button>
       </header>
 
-      <VideoManager />
+      <VideoManager onEditVideo={handleOpenEdit} />
 
       <VideoModal
-        key={isModalOpen ? "modal-open" : "modal-closed"}
+        key={editData ? editData._id : "new-video"}
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleCloseModal}
+        editData={editData}
       />
     </div>
   );
