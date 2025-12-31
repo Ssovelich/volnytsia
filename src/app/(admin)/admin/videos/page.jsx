@@ -4,6 +4,7 @@ import { useState } from "react";
 import VideoManager from "@/components/admin/VideoManager/VideoManager";
 import VideoModal from "@/components/admin/VideoModal/VideoModal";
 import styles from "./VideosPage.module.scss";
+import AdminHeader from "@/components/admin/AdminHeader/AdminHeader";
 
 export default function VideosPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,12 +27,11 @@ export default function VideosPage() {
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Відеогалерея</h1>
-        <button onClick={handleOpenCreate} className={styles.addButton}>
-          + Додати відео
-        </button>
-      </header>
+      <AdminHeader
+        title="Відеогалерея"
+        onAdd={handleOpenCreate}
+        btnText="+ Додати відео"
+      />
 
       <VideoManager onEditVideo={handleOpenEdit} />
 

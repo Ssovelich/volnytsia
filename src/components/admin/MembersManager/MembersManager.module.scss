@@ -2,56 +2,6 @@
   padding: 1rem;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
-  gap: 1rem;
-
-  h1 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1e293b;
-
-    @media (min-width: 744px) {
-      font-size: 1.875rem;
-    }
-  }
-
-  @media (max-width: 600px) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-.addBtn {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  justify-content: center;
-  line-height: 1.2;
-  background-color: var(--chervoniy-volnicya);
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 50px;
-  border: none;
-  height: 40px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-
-  &:hover {
-    background-color: var(--svіtlo-chervoniy);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  }
-
-  &:active {
-    transform: translateY(2px);
-  }
-}
-
 .membersGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -93,7 +43,7 @@
   font-size: 0.9rem;
   transition: all 0.3s ease;
 
- &:hover {
+  &:hover {
     background-color: var(--svіtlo-chervoniy);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   }

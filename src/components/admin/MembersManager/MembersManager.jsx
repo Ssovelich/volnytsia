@@ -14,6 +14,7 @@ import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton"; // Ім
 import styles from "./MembersManager.module.scss";
 import MemberCard from "../MemberCard/MemberCard";
 import MemberModal from "../MemberModal/MemberModal";
+import AdminHeader from "../AdminHeader/AdminHeader";
 
 export default function MembersManager() {
   const dispatch = useDispatch();
@@ -64,12 +65,12 @@ export default function MembersManager() {
   if (noItems) {
     return (
       <div className={styles.container}>
-        <header className={styles.header}>
-          <h1>Учасники колективу</h1>
-          <button onClick={handleOpenCreate} className={styles.addBtn}>
-            + Додати учасника
-          </button>
-        </header>
+        <AdminHeader
+          title="Учасники колективу"
+          onAdd={handleOpenCreate}
+          btnText="+ Додати учасника"
+        />
+
         <div className={styles.emptyWrapper}>
           <p className={styles.emptyText}>
             {status === "failed"
