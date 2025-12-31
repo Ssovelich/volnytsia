@@ -47,14 +47,15 @@ export default function AddAwardModal({ isOpen, onClose }) {
   };
 
   return (
-    <div
-      className={styles.overlay}
-      onClick={(e) => e.target === e.currentTarget && onClose()}
-    >
+    <div className={styles.overlay}>
       <div className={styles.modal}>
         <div className={styles.modalHeader}>
           <h2 className={styles.title}>Додати нагороду</h2>
-          <button className={styles.closeBtn} onClick={onClose} aria-label="Закрити">
+          <button
+            className={styles.closeBtn}
+            onClick={onClose}
+            aria-label="Закрити"
+          >
             <HiX />
           </button>
         </div>

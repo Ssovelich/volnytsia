@@ -62,10 +62,7 @@ export default function VideoModal({ isOpen, onClose, editData = null }) {
   };
 
   return (
-    <div
-      className={styles.overlay}
-      onClick={(e) => e.target === e.currentTarget && onClose()}
-    >
+    <div className={styles.overlay}>
       <div className={styles.modal}>
         <div className={styles.modalHeader}>
           <h2 className={styles.title}>
