@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { MdOutlineDeleteForever, MdEdit } from "react-icons/md";
 import styles from "./VideoCard.module.scss";
 import { formatDate } from "@/lib/formatDate";
+import AdminCardActions from "../AdminCardActions/AdminCardActions";
 
 export default function VideoCard({ video, onEdit, onDelete }) {
   const [imgSrc, setImgSrc] = useState(null);
@@ -45,22 +45,7 @@ export default function VideoCard({ video, onEdit, onDelete }) {
         <p className={styles.created}>Додано: {formatDate(video.createdAt)}</p>
       </div>
 
-      <div className={styles.actions}>
-        <button
-          onClick={() => onEdit(video)}
-          className={styles.editBtn}
-          title="Редагувати"
-        >
-          <MdEdit />
-        </button>
-        <button
-          onClick={onDelete}
-          className={styles.deleteBtn}
-          title="Видалити"
-        >
-          <MdOutlineDeleteForever />
-        </button>
-      </div>
+      <AdminCardActions onEdit={() => onEdit(video)} onDelete={onDelete} />
     </div>
   );
 }

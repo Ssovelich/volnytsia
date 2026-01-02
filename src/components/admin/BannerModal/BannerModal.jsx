@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addBanner, updateBanner } from "@/lib/banners/bannersSlice";
+import { HiX } from "react-icons/hi";
 import styles from "./BannerModal.module.scss";
 
 export default function BannerModal({ isOpen, onClose, editData }) {
@@ -47,8 +48,30 @@ export default function BannerModal({ isOpen, onClose, editData }) {
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
-        <h2>{editData ? "Редагувати слайд" : "Додати новий слайд"}</h2>
+        <div className={styles.modalHeader}>
+          <h2 className={styles.title}>
+            {editData ? "Редагувати слайд" : "Додати новий слайд"}
+          </h2>
+          <button
+            className={styles.closeBtn}
+            onClick={onClose}
+            type="button"
+            aria-label="Закрити"
+          >
+            <HiX />
+          </button>
+        </div>
         <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.inputGroup}>
+            <label>Зображення (1390x480 рекомендується)</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setFile(e.target.files[0])}
+              required={!editData}
+              className={styles.textInput}
+            />
+          </div>
           <div className={styles.inputGroup}>
             <label>Порядок сортування</label>
             <input
@@ -58,17 +81,7 @@ export default function BannerModal({ isOpen, onClose, editData }) {
               className={styles.textInput}
             />
           </div>
-          <div className={styles.inputGroup}>
-            <label>Зображення</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setFile(e.target.files[0])}
-              required={!editData}
-              className={styles.textInput}
-            />
-          </div>
-          <div className={styles.btns}>
+          <div className={styles.actions}>
             <button
               type="button"
               onClick={onClose}

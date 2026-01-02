@@ -5,7 +5,15 @@
 .bannerList {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 10px;
   max-width: 1000px;
   margin: 0 auto;
+
+   @media (min-width: 744px) {
+    gap: 20px;
+  }
+
+  @media (min-width: 1440px) {
+    gap: 32px;
+  }
 }
