@@ -4,13 +4,4 @@ export const galleryData = {
 
   bottomParagraph: `Ми з гордістю представляли українську культуру за кордоном, знайомили світ із нашими традиціями, мелодикою та красою рідної пісні. Кожна поїздка, кожен виступ, чи зустріч з глядачами — це частинка історії нашого колективу, наповнена теплом, емоціями та неповторними враженнями.
   Переглядаючи ці світлини, ви зможете відчути шлях, яким іде наш хор — шлях творчості, дружби і натхнення.`,
-
-  bannerImages: [
-    { id: 1, src: "/gallery/banner/banner1.jpg", alt: "Банер 1" },
-    { id: 2, src: "/gallery/banner/banner2.jpg", alt: "Банер 2" },
-    { id: 3, src: "/gallery/banner/banner3.jpg", alt: "Банер 3" },
-    { id: 4, src: "/gallery/banner/banner4.jpg", alt: "Банер 4" },
-    { id: 5, src: "/gallery/banner/banner5.jpg", alt: "Банер 5" },
-    { id: 6, src: "/gallery/banner/banner6.jpg", alt: "Банер 6" }
-  ],
 };
