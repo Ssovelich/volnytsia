@@ -4,18 +4,21 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVideos, deleteVideo } from "@/lib/videoGallery/videoGallerySlice";
 import VideoCard from "../VideoCard/VideoCard";
+import VideoModal from "../VideoModal/VideoModal";
 import PageLoader from "@/components/PageLoader/PageLoader";
 import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
+import AdminHeader from "../AdminHeader/AdminHeader";
 import styles from "./VideoManager.module.scss";
+import AdminEmptyState from "../AdminEmptyState/AdminEmptyState";
 
-export default function VideoManager({ onEditVideo }) {
+export default function VideoManager() {
   const dispatch = useDispatch();
   const { items: videos, status } = useSelector((state) => state.galleryVideos);
-  const [deleteModal, setDeleteModal] = useState({
-    isOpen: false,
-    id: null,
-  });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editData, setEditData] = useState(null);
+  const [deleteModal, setDeleteModal] = useState({ isOpen: false, id: null });
 
   useEffect(() => {
     if (status === "idle") {
@@ -30,19 +33,19 @@ export default function VideoManager({ onEditVideo }) {
     desktop: 8,
   });
 
-  const openDeleteModal = (id) => {
-    setDeleteModal({ isOpen: true, id });
+  const handleOpenCreate = () => {
+    setEditData(null);
+    setIsModalOpen(true);
   };
 
-  const closeDeleteModal = () => {
-    setDeleteModal({ isOpen: false, id: null });
+  const handleOpenEdit = (video) => {
+    setEditData(video);
+    setIsModalOpen(true);
   };
 
-  const handleConfirmDelete = async () => {
-    if (deleteModal.id) {
-      await dispatch(deleteVideo(deleteModal.id));
-      closeDeleteModal();
-    }
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditData(null);
   };
 
   if (status === "loading" && videos.length === 0) return <PageLoader />;
@@ -52,43 +55,57 @@ export default function VideoManager({ onEditVideo }) {
     videos.length === 0;
 
   return (
-    <div className={styles.managerWrapper}>
-      {noItems ? (
-        <div className={styles.emptyWrapper}>
-          <p className={styles.emptyText}>
-            {status === "failed"
-              ? "На жаль, виникла проблема з доступом до даних."
-              : "Відео поки що немає. Ви можете додати перше!"}
-          </p>
-          {status === "failed" && (
-            <button
-              onClick={() => dispatch(fetchVideos())}
-              className={styles.retryBtn}
-            >
-              Спробувати знову
-            </button>
-          )}
-        </div>
-      ) : (
-        <>
-          <div className={styles.grid}>
-            {visibleItems.map((video) => (
-              <VideoCard
-                key={video._id}
-                video={video}
-                onEdit={onEditVideo}
-                onDelete={() => openDeleteModal(video._id)}
-              />
-            ))}
-          </div>
-          <div>{loadMoreButton}</div>
-        </>
-      )}
+    <div className={styles.container}>
+      <AdminHeader
+        title="Відеогалерея"
+        onAdd={handleOpenCreate}
+        btnText="+ Додати відео"
+      />
+
+      <div className={styles.managerWrapper}>
+        {noItems ? (
+          <AdminEmptyState
+            isFailed={status === "failed"}
+            onRetry={() => dispatch(fetchMembers())}
+            message={
+              status === "failed"
+                ? "Не вдалося завантажити список учасників."
+                : "Учасників поки що немає. Ви можете додати першого!"
+            }
+          />
+        ) : (
+          <>
+            <div className={styles.grid}>
+              {visibleItems.map((video) => (
+                <VideoCard
+                  key={video._id}
+                  video={video}
+                  onEdit={handleOpenEdit}
+                  onDelete={() =>
+                    setDeleteModal({ isOpen: true, id: video._id })
+                  }
+                />
+              ))}
+            </div>
+            <div className={styles.loadMoreContainer}>{loadMoreButton}</div>
+          </>
+        )}
+      </div>
+
+      <VideoModal
+        key={editData ? editData._id : "new-video"}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        editData={editData}
+      />
 
       <ConfirmModal
         isOpen={deleteModal.isOpen}
-        onClose={closeDeleteModal}
-        onConfirm={handleConfirmDelete}
+        onClose={() => setDeleteModal({ isOpen: false, id: null })}
+        onConfirm={async () => {
+          await dispatch(deleteVideo(deleteModal.id));
+          setDeleteModal({ isOpen: false, id: null });
+        }}
         title="Видалити відео?"
         message="Це відео буде видалено з галереї назавжди."
       />

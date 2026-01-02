@@ -10,11 +10,11 @@ import {
 } from "@/lib/members/membersSlice";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import PageLoader from "@/components/PageLoader/PageLoader";
-import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton"; // Імпортуємо хук
-import styles from "./MembersManager.module.scss";
+import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton";
 import MemberCard from "../MemberCard/MemberCard";
 import MemberModal from "../MemberModal/MemberModal";
 import AdminHeader from "../AdminHeader/AdminHeader";
+import styles from "./MembersManager.module.scss";
 
 export default function MembersManager() {
   const dispatch = useDispatch();
@@ -62,66 +62,50 @@ export default function MembersManager() {
     (status === "succeeded" || status === "failed" || status === "idle") &&
     members.length === 0;
 
-  if (noItems) {
-    return (
-      <div className={styles.container}>
-        <AdminHeader
-          title="Учасники колективу"
-          onAdd={handleOpenCreate}
-          btnText="+ Додати учасника"
-        />
-
-        <div className={styles.emptyWrapper}>
-          <p className={styles.emptyText}>
-            {status === "failed"
-              ? `На жаль, виникла проблема з доступом до даних.`
-              : "Учасників поки що немає. Ви можете додати першого!"}
-          </p>
-          {status === "failed" && (
-            <button
-              onClick={() => dispatch(fetchMembers())}
-              className={styles.retryBtn}
-            >
-              Спробувати знову
-            </button>
-          )}
-        </div>
-
-        <MemberModal
-          key="new-empty"
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onSave={handleSave}
-          editData={null}
-        />
-      </div>
-    );
-  }
-
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <h1>Учасники колективу</h1>
-        <button onClick={handleOpenCreate} className={styles.addBtn}>
-          + Додати учасника
-        </button>
-      </header>
+      <AdminHeader
+        title="Учасники колективу"
+        onAdd={handleOpenCreate}
+        btnText="+ Додати учасника"
+      />
 
-      <div className={styles.membersGrid}>
-        {visibleItems.map((member) => (
-          <MemberCard
-            key={member._id}
-            member={member}
-            onEdit={() => handleOpenEdit(member)}
-            onDelete={() => setDeleteModal({ isOpen: true, id: member._id })}
-          />
-        ))}
+      <div className={styles.contentWrapper}>
+        {noItems ? (
+          <div className={styles.emptyWrapper}>
+            <p className={styles.emptyText}>
+              {status === "failed"
+                ? `На жаль, виникла проблема з доступом до даних.`
+                : "Учасників поки що немає. Ви можете додати першого!"}
+            </p>
+            {status === "failed" && (
+              <button
+                onClick={() => dispatch(fetchMembers())}
+                className={styles.retryBtn}
+              >
+                Спробувати знову
+              </button>
+            )}
+          </div>
+        ) : (
+          <>
+            <div className={styles.membersGrid}>
+              {visibleItems.map((member) => (
+                <MemberCard
+                  key={member._id}
+                  member={member}
+                  onEdit={() => handleOpenEdit(member)}
+                  onDelete={() => setDeleteModal({ isOpen: true, id: member._id })}
+                />
+              ))}
+            </div>
+            <div className={styles.loadMoreContainer}>{loadMoreButton}</div>
+          </>
+        )}
       </div>
 
-      <div className={styles.loadMoreContainer}>{loadMoreButton}</div>
-
       <MemberModal
-        key={editData ? editData._id : "new"}
+        key={editData ? editData._id : "new-member"}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSave}
