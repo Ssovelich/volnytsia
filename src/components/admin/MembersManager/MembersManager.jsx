@@ -15,6 +15,7 @@ import MemberCard from "../MemberCard/MemberCard";
 import MemberModal from "../MemberModal/MemberModal";
 import AdminHeader from "../AdminHeader/AdminHeader";
 import styles from "./MembersManager.module.scss";
+import AdminEmptyState from "../AdminEmptyState/AdminEmptyState";
 
 export default function MembersManager() {
   const dispatch = useDispatch();
@@ -72,21 +73,15 @@ export default function MembersManager() {
 
       <div className={styles.contentWrapper}>
         {noItems ? (
-          <div className={styles.emptyWrapper}>
-            <p className={styles.emptyText}>
-              {status === "failed"
-                ? `На жаль, виникла проблема з доступом до даних.`
-                : "Учасників поки що немає. Ви можете додати першого!"}
-            </p>
-            {status === "failed" && (
-              <button
-                onClick={() => dispatch(fetchMembers())}
-                className={styles.retryBtn}
-              >
-                Спробувати знову
-              </button>
-            )}
-          </div>
+          <AdminEmptyState
+            isFailed={status === "failed"}
+            onRetry={() => dispatch(fetchMembers())}
+            message={
+              status === "failed"
+                ? "На жаль, виникла проблема з доступом до даних."
+                : "Учасників поки що немає. Ви можете додати першого!"
+            }
+          />
         ) : (
           <>
             <div className={styles.membersGrid}>
@@ -95,7 +90,9 @@ export default function MembersManager() {
                   key={member._id}
                   member={member}
                   onEdit={() => handleOpenEdit(member)}
-                  onDelete={() => setDeleteModal({ isOpen: true, id: member._id })}
+                  onDelete={() =>
+                    setDeleteModal({ isOpen: true, id: member._id })
+                  }
                 />
               ))}
             </div>
