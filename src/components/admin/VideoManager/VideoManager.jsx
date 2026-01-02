@@ -62,11 +62,11 @@ export default function VideoManager() {
         btnText="+ Додати відео"
       />
 
-      <div className={styles.managerWrapper}>
+      <div>
         {noItems ? (
           <AdminEmptyState
             isFailed={status === "failed"}
-            onRetry={() => dispatch(fetchMembers())}
+            onRetry={() => dispatch(fetchVideos())}
             message={
               status === "failed"
                 ? "На жаль, виникла проблема з доступом до даних."
@@ -87,7 +87,7 @@ export default function VideoManager() {
                 />
               ))}
             </div>
-            <div className={styles.loadMoreContainer}>{loadMoreButton}</div>
+            <div>{loadMoreButton}</div>
           </>
         )}
       </div>

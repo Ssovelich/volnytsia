@@ -71,7 +71,7 @@ export default function MembersManager() {
         btnText="+ Додати учасника"
       />
 
-      <div className={styles.contentWrapper}>
+      <div>
         {noItems ? (
           <AdminEmptyState
             isFailed={status === "failed"}
@@ -84,7 +84,7 @@ export default function MembersManager() {
           />
         ) : (
           <>
-            <div className={styles.membersGrid}>
+            <div className={styles.grid}>
               {visibleItems.map((member) => (
                 <MemberCard
                   key={member._id}

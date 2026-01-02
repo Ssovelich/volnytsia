@@ -30,7 +30,7 @@ export default function AdminClientLayout({ children }) {
 
   const navItems = [
     { name: "Відзнаки", href: "/admin/awards", icon: <HiOutlineTrophy /> },
-    { name: "Фото-банер", href: "/admin/banner", icon: <RiSlideshowView /> },
+    { name: "Фото-банер", href: "/admin/banners", icon: <RiSlideshowView /> },
     { name: "Галерея", href: "/admin/gallery", icon: <HiOutlinePhoto /> },
     { name: "Відео", href: "/admin/videos", icon: <HiOutlineVideoCamera /> },
     { name: "Керівники", href: "/admin/leaders", icon: <IoPersonOutline /> },

@@ -1,0 +1,11 @@
+.container {
+   padding: 20px 0;
+}
+
+.bannerList {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
