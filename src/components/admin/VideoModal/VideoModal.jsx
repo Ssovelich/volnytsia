@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { addVideo, updateVideo } from "@/lib/videoGallery/videoGallerySlice";
 import { HiX } from "react-icons/hi";
 import styles from "./VideoModal.module.scss";
+import AdminModalActions from "../AdminModalActions/AdminModalActions";
 
 export default function VideoModal({ isOpen, onClose, editData = null }) {
   const dispatch = useDispatch();
@@ -117,23 +118,11 @@ export default function VideoModal({ isOpen, onClose, editData = null }) {
             </div>
           </div>
 
-          <div className={styles.actions}>
-            <button
-              type="button"
-              onClick={onClose}
-              className={styles.cancelBtn}
-              disabled={loading}
-            >
-              Скасувати
-            </button>
-            <button
-              type="submit"
-              className={styles.submitBtn}
-              disabled={loading}
-            >
-              {loading ? "Збереження..." : "Зберегти"}
-            </button>
-          </div>
+          <AdminModalActions
+            onClose={onClose}
+            loading={loading}
+            submitText={editData ? "Оновити" : "Зберегти"}
+          />
         </form>
       </div>
     </div>

@@ -15,6 +15,7 @@ import { RiSlideshowView } from "react-icons/ri";
 import { IoPersonOutline } from "react-icons/io5";
 import { MdPeopleOutline } from "react-icons/md";
 import { PiSignOut } from "react-icons/pi";
+import { VscLayoutPanel } from "react-icons/vsc";
 import styles from "./AdminLayout.module.scss";
 
 export default function AdminClientLayout({ children }) {
@@ -35,6 +36,7 @@ export default function AdminClientLayout({ children }) {
     { name: "Відео", href: "/admin/videos", icon: <HiOutlineVideoCamera /> },
     { name: "Керівники", href: "/admin/leaders", icon: <IoPersonOutline /> },
     { name: "Учасники", href: "/admin/members", icon: <MdPeopleOutline /> },
+    { name: "Футер", href: "/admin/footer", icon: <VscLayoutPanel /> },
   ];
 
   const isLoginPage = pathname === "/admin/login";
