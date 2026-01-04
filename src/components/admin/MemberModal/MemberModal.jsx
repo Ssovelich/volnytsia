@@ -4,6 +4,7 @@ import Image from "next/image";
 import { HiX } from "react-icons/hi";
 import { MdCloudUpload } from "react-icons/md";
 import styles from "./MemberModal.module.scss";
+import AdminModalActions from "../AdminModalActions/AdminModalActions";
 
 export default function MemberModal({ isOpen, onClose, onSave, editData }) {
   const [formData, setFormData] = useState({
@@ -178,22 +179,11 @@ export default function MemberModal({ isOpen, onClose, onSave, editData }) {
             </div>
           </div>
 
-          <div className={styles.actions}>
-            <button
-              type="button"
-              onClick={onClose}
-              className={styles.cancelBtn}
-            >
-              Скасувати
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className={styles.submitBtn}
-            >
-              {loading ? "Збереження..." : "Зберегти"}
-            </button>
-          </div>
+          <AdminModalActions
+            onClose={onClose}
+            loading={loading}
+            submitText={editData ? "Оновити" : "Зберегти"}
+          />
         </form>
       </div>
     </div>

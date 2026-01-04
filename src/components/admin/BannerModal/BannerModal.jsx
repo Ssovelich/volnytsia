@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { addBanner, updateBanner } from "@/lib/banners/bannersSlice";
 import { HiX } from "react-icons/hi";
 import styles from "./BannerModal.module.scss";
+import AdminModalActions from "../AdminModalActions/AdminModalActions";
 
 export default function BannerModal({ isOpen, onClose, editData }) {
   const dispatch = useDispatch();
@@ -81,22 +82,11 @@ export default function BannerModal({ isOpen, onClose, editData }) {
               className={styles.textInput}
             />
           </div>
-          <div className={styles.actions}>
-            <button
-              type="button"
-              onClick={onClose}
-              className={styles.cancelBtn}
-            >
-              Скасувати
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className={styles.submitBtn}
-            >
-              {loading ? "Збереження..." : "Зберегти"}
-            </button>
-          </div>
+          <AdminModalActions
+            onClose={onClose}
+            loading={loading}
+            submitText={editData ? "Оновити" : "Зберегти"}
+          />
         </form>
       </div>
     </div>
