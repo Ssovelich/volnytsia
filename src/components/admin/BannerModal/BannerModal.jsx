@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addBanner, updateBanner } from "@/lib/banners/bannersSlice";
-import { HiX } from "react-icons/hi";
 import styles from "./BannerModal.module.scss";
 import AdminModalActions from "../AdminModalActions/AdminModalActions";
+import AdminModalHeader from "../AdminModalHeader/AdminModalHeader";
+import AdminFileInput from "../AdminAddFileInput/AdminAddFileInput";
 
 export default function BannerModal({ isOpen, onClose, editData }) {
   const dispatch = useDispatch();
@@ -49,39 +50,31 @@ export default function BannerModal({ isOpen, onClose, editData }) {
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
-        <div className={styles.modalHeader}>
-          <h2 className={styles.title}>
-            {editData ? "Редагувати слайд" : "Додати новий слайд"}
-          </h2>
-          <button
-            className={styles.closeBtn}
-            onClick={onClose}
-            type="button"
-            aria-label="Закрити"
-          >
-            <HiX />
-          </button>
-        </div>
+        <AdminModalHeader
+          title={editData ? "Редагувати слайд" : "Додати новий слайд"}
+          onClose={onClose}
+        />
+
         <form onSubmit={handleSubmit} className={styles.form}>
+          <AdminFileInput
+            label="Зображення (1390x480 рекомендується)"
+            onChange={setFile}
+            fileName={file?.name}
+            required={!editData}
+            disabled={loading}
+          />
+
           <div className={styles.inputGroup}>
-            <label>Зображення (1390x480 рекомендується)</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setFile(e.target.files[0])}
-              required={!editData}
-              className={styles.textInput}
-            />
-          </div>
-          <div className={styles.inputGroup}>
-            <label>Порядок сортування</label>
+            <label className={styles.label}>Порядок сортування</label>
             <input
               type="number"
               value={order}
               onChange={(e) => setOrder(e.target.value)}
               className={styles.textInput}
+              disabled={loading}
             />
           </div>
+
           <AdminModalActions
             onClose={onClose}
             loading={loading}

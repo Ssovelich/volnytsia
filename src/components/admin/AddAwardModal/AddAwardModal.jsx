@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchAwards } from "@/lib/awards/awardsSlice";
-import { HiX } from "react-icons/hi";
 import { MdCloudUpload } from "react-icons/md";
 import styles from "./AddAwardModal.module.scss";
 import AdminModalActions from "../AdminModalActions/AdminModalActions";
+import AdminModalHeader from "../AdminModalHeader/AdminModalHeader";
+import AdminFileInput from "../AdminAddFileInput/AdminAddFileInput";
 
 export default function AddAwardModal({ isOpen, onClose }) {
   const dispatch = useDispatch();
@@ -50,62 +51,29 @@ export default function AddAwardModal({ isOpen, onClose }) {
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
-        <div className={styles.modalHeader}>
-          <h2 className={styles.title}>Додати нагороду</h2>
-          <button
-            className={styles.closeBtn}
-            onClick={onClose}
-            aria-label="Закрити"
-          >
-            <HiX />
-          </button>
-        </div>
+        <AdminModalHeader title={"Додати нагороду"} onClose={onClose} />
 
         <form onSubmit={handleUpload} className={styles.form}>
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>Основне зображення*</label>
-            <div className={styles.uploadContainer}>
-              <label className={styles.customUploadBtn}>
-                <MdCloudUpload />
-                <span>Обрати файл</span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setFullImage(e.target.files[0])}
-                  required
-                  hidden
-                />
-              </label>
-              <span className={styles.fileName}>
-                {fullImage ? fullImage.name : "Файл не вибрано"}
-              </span>
-            </div>
-          </div>
+          <AdminFileInput
+            label="Основне зображення"
+            required
+            onChange={setFullImage}
+            fileName={fullImage?.name}
+            disabled={loading}
+          />
 
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>Мініатюра (необов’язково)</label>
-            <div className={styles.uploadContainer}>
-              <label className={styles.customUploadBtn}>
-                <MdCloudUpload />
-                <span>Обрати файл</span>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setThumbImage(e.target.files[0])}
-                  hidden
-                />
-              </label>
-              <span className={styles.fileName}>
-                {thumbImage ? thumbImage.name : "Файл не вибрано"}
-              </span>
-            </div>
-          </div>
+          <AdminFileInput
+            label="Мініатюра (необов’язково)"
+            onChange={setThumbImage}
+            fileName={thumbImage?.name}
+            disabled={loading}
+          />
 
           <AdminModalActions
-                      onClose={onClose}
-                      loading={loading}
-                      submitText={"Зберегти"}
-                    />
+            onClose={onClose}
+            loading={loading}
+            submitText={"Зберегти"}
+          />
         </form>
       </div>
     </div>

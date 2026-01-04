@@ -7,6 +7,7 @@
   justify-content: center;
   z-index: 1000;
   backdrop-filter: blur(4px);
+  padding: 1rem;
 }
 
 .modal {
@@ -16,11 +17,6 @@
   width: 100%;
   max-width: 500px;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-
-  h2 {
-    margin-bottom: 1.5rem;
-    color: #1e293b;
-  }
 }
 
 .form {
@@ -40,46 +36,116 @@
     color: #64748b;
   }
 
-  input,
-  select {
-    padding: 10px;
+  input {
+    padding: 12px;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     font-size: 1rem;
+    transition: all 0.3s ease;
+
     &:focus {
-      outline: 2px solid #2563eb;
+      border-color: var(--chervoniy-volnicya);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+
+    &:disabled {
+      background-color: #f8fafc;
+      cursor: not-allowed;
+    }
+
+    &::placeholder {
+      color: #9ca3af;
     }
   }
 }
 
-.actions {
+.customSelect {
+  position: relative;
+  width: 100%;
+}
+
+.selectTrigger {
   display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  user-select: none;
 
-  button {
-    flex: 1;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
+  &:hover {
+    border-color: var(--chervoniy-volnicya);
   }
 
-  .cancelBtn {
-    background: #f1f5f9;
-    border: none;
-    color: #64748b;
-    &:hover {
-      background: #e2e8f0;
-    }
+  &.active {
+    border-color: var(--chervoniy-volnicya);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
   }
-  .submitBtn {
-    background: #2563eb;
-    border: none;
+}
+
+.arrow {
+  font-size: 1.25rem;
+  color: #64748b;
+  transition: transform 0.3s ease;
+
+  &.rotate {
+    transform: rotate(180deg);
+    color: var(--chervoniy-volnicya);
+  }
+}
+
+.selectOptions {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  overflow: hidden;
+  padding: 5px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.option {
+  padding: 10px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #1e293b;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--chervoniy-volnicya);
     color: white;
+  }
+
+  &.selected {
+    background-color: rgba(239, 68, 68, 0.08);
+    color: var(--chervoniy-volnicya);
+    font-weight: 600;
+
     &:hover {
-      background: #1d4ed8;
+      background-color: var(--chervoniy-volnicya);
+      color: white;
     }
   }
 }

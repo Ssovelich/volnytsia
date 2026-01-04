@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { HiX } from "react-icons/hi";
 import { MdCloudUpload } from "react-icons/md";
 import styles from "./MemberModal.module.scss";
 import AdminModalActions from "../AdminModalActions/AdminModalActions";
+import AdminModalHeader from "../AdminModalHeader/AdminModalHeader";
 
 export default function MemberModal({ isOpen, onClose, onSave, editData }) {
   const [formData, setFormData] = useState({
@@ -75,18 +75,10 @@ export default function MemberModal({ isOpen, onClose, onSave, editData }) {
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
-        <div className={styles.modalHeader}>
-          <h2 className={styles.title}>
-            {editData ? "Редагувати учасника" : "Додати учасника"}
-          </h2>
-          <button
-            className={styles.closeBtn}
-            onClick={onClose}
-            aria-label="Закрити"
-          >
-            <HiX />
-          </button>
-        </div>
+        <AdminModalHeader
+          title={editData ? "Редагувати учасника" : "Додати учасника"}
+          onClose={onClose}
+        />
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.content}>

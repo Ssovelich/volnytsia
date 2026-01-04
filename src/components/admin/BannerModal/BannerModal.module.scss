@@ -34,19 +34,29 @@
 .inputGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 6px;
 }
 
 .label {
-  font-weight: 500;
-  color: #1e293b;
+   font-size: 0.875rem;
+    font-weight: 700;
+    color: #374151;
 }
 
 .textInput {
   padding: 12px;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  &:focus { outline: 2px solid var(--chervoniy-volnicya); }
+
+  &:focus {
+    border-color: var(--chervoniy-volnicya);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  }
+
+  &::placeholder {
+    color: #9ca3af;
+  }
 }
 
 .actions {
@@ -55,7 +65,8 @@
   margin-top: 1rem;
 }
 
-.cancelBtn, .submitBtn {
+.cancelBtn,
+.submitBtn {
   flex: 1;
   padding: 12px;
   border-radius: 8px;
@@ -67,7 +78,9 @@
   background: #1e293b;
   color: white;
   border: none;
-  &:disabled { opacity: 0.5; }
+  &:disabled {
+    opacity: 0.5;
+  }
 }
 
 .cancelBtn {

@@ -6,6 +6,7 @@ import { addVideo, updateVideo } from "@/lib/videoGallery/videoGallerySlice";
 import { HiX } from "react-icons/hi";
 import styles from "./VideoModal.module.scss";
 import AdminModalActions from "../AdminModalActions/AdminModalActions";
+import AdminModalHeader from "../AdminModalHeader/AdminModalHeader";
 
 export default function VideoModal({ isOpen, onClose, editData = null }) {
   const dispatch = useDispatch();
@@ -65,19 +66,10 @@ export default function VideoModal({ isOpen, onClose, editData = null }) {
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
-        <div className={styles.modalHeader}>
-          <h2 className={styles.title}>
-            {editData ? "Редагувати відео" : "Додати відео YouTube"}
-          </h2>
-          <button
-            className={styles.closeBtn}
-            onClick={onClose}
-            type="button"
-            aria-label="Закрити"
-          >
-            <HiX />
-          </button>
-        </div>
+        <AdminModalHeader
+          title={editData ? "Редагувати відео" : "Додати відео YouTube"}
+          onClose={onClose}
+        />
 
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formGrid}>
