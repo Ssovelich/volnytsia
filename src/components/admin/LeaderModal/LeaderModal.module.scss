@@ -130,7 +130,8 @@
   overflow: hidden;
   background: white;
   transition: all 0.3s ease;
-  height: 200px;
+  display: flex;
+  flex-direction: column;
 
   &:focus-within {
     border-color: #ef4444;
@@ -171,6 +172,9 @@
 }
 
 .tiptapEditor {
+  height: 155px; 
+  overflow-y: auto;
+  
   :global(.tiptap) {
     min-height: 150px;
     max-height: 350px;
