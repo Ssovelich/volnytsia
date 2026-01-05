@@ -2,16 +2,23 @@
 
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { MdFormatBold, MdFormatItalic, MdList } from "react-icons/md";
 import styles from "../LeaderModal/LeaderModal.module.scss";
 
 export default function TiptapEditor({ value, onChange }) {
   const [_, setUpdateTick] = useState(0);
 
+  const prepareContent = useCallback((val) => {
+    if (!val || val.trim() === "" || val === "<p></p>") {
+      return "<p></p>";
+    }
+    return val;
+  }, []);
+
   const editor = useEditor({
     extensions: [StarterKit],
-    content: value,
+    content: prepareContent(value),
     immediatelyRender: false,
     editorProps: {
       attributes: {
@@ -21,42 +28,55 @@ export default function TiptapEditor({ value, onChange }) {
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
     },
-    onSelectionUpdate: () => {
-      setUpdateTick((tick) => tick + 1);
-    },
-    onTransaction: () => {
-      setUpdateTick((tick) => tick + 1);
-    },
+    onSelectionUpdate: () => setUpdateTick((t) => t + 1),
+    onTransaction: () => setUpdateTick((t) => t + 1),
   });
 
   useEffect(() => {
-    if (editor && value !== editor.getHTML()) {
-      editor.commands.setContent(value);
+    if (editor && !editor.isDestroyed) {
+      const timer = setTimeout(() => {
+        if (editor.isEmpty) {
+          editor.commands.setContent("<p></p>", false);
+        }
+        editor.commands.focus("end");
+      }, 150);
+      return () => clearTimeout(timer);
     }
-  }, [value, editor]);
+  }, [editor]);
+
+  useEffect(() => {
+    if (editor && value !== editor.getHTML()) {
+      editor.commands.setContent(prepareContent(value), false);
+    }
+  }, [value, editor, prepareContent]);
 
   if (!editor) return null;
+
+  const handleToolbarAction = (e, action) => {
+    e.preventDefault(); 
+    action();
+  };
 
   return (
     <div className={styles.tiptapContainer}>
       <div className={styles.tiptapToolbar}>
         <button
           type="button"
-          onClick={() => editor.chain().focus().toggleBold().run()}
+          onMouseDown={(e) => handleToolbarAction(e, () => editor.chain().focus().toggleBold().run())}
           className={editor.isActive("bold") ? styles.active : ""}
         >
           <MdFormatBold size={20} />
         </button>
         <button
           type="button"
-          onClick={() => editor.chain().focus().toggleItalic().run()}
+          onMouseDown={(e) => handleToolbarAction(e, () => editor.chain().focus().toggleItalic().run())}
           className={editor.isActive("italic") ? styles.active : ""}
         >
           <MdFormatItalic size={20} />
         </button>
         <button
           type="button"
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          onMouseDown={(e) => handleToolbarAction(e, () => editor.chain().focus().toggleBulletList().run())}
           className={editor.isActive("bulletList") ? styles.active : ""}
         >
           <MdList size={20} />
