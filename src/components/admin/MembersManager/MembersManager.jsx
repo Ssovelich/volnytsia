@@ -9,6 +9,7 @@ import {
   deleteMember,
 } from "@/lib/members/membersSlice";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
+import { toast } from "react-hot-toast";
 import PageLoader from "@/components/PageLoader/PageLoader";
 import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton";
 import MemberCard from "../MemberCard/MemberCard";
@@ -38,6 +39,11 @@ export default function MembersManager() {
     desktop: 12,
   });
 
+  const formatName = (str) => {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
   const handleOpenCreate = () => {
     setEditData(null);
     setIsModalOpen(true);
@@ -49,12 +55,43 @@ export default function MembersManager() {
   };
 
   const handleSave = async (formData) => {
-    if (editData) {
-      await dispatch(updateMember({ id: editData._id, formData }));
-    } else {
-      await dispatch(addMember(formData));
+    const name = formatName(formData.get("name"));
+    const surname = formatName(formData.get("surname"));
+    const displayName = name || surname ? `${name} ${surname}`.trim() : "учасника";
+
+    const toastId = toast.loading(
+      editData ? `Оновлення даних ${displayName}...` : `Додавання ${displayName}...`
+    );
+
+    try {
+      if (editData) {
+        await dispatch(updateMember({ id: editData._id, formData })).unwrap();
+        toast.success(`Дані ${displayName} оновлено!`, { id: toastId });
+      } else {
+        await dispatch(addMember(formData)).unwrap();
+        toast.success(`${displayName} успішно додано!`, { id: toastId });
+      }
+      setIsModalOpen(false);
+    } catch (error) {
+      toast.error(`Не вдалося зберегти дані ${displayName}`, { id: toastId });
     }
-    setIsModalOpen(false);
+  };
+
+  const handleDeleteConfirm = async () => {
+    const memberToDelete = members.find((m) => m._id === deleteModal.id);
+    const displayName = memberToDelete
+      ? `${formatName(memberToDelete.name)} ${formatName(memberToDelete.surname)}`
+      : "учасника";
+
+    const toastId = toast.loading(`Видалення ${displayName}...`);
+
+    try {
+      await dispatch(deleteMember(deleteModal.id)).unwrap();
+      toast.success(`Запис про ${displayName} видалено`, { id: toastId });
+      setDeleteModal({ isOpen: false, id: null });
+    } catch (error) {
+      toast.error(`Не вдалося видалити ${displayName}`, { id: toastId });
+    }
   };
 
   if (status === "loading" && members.length === 0) return <PageLoader />;
@@ -62,6 +99,12 @@ export default function MembersManager() {
   const noItems =
     (status === "succeeded" || status === "failed" || status === "idle") &&
     members.length === 0;
+
+
+  const memberToDelete = members.find((m) => m._id === deleteModal.id);
+  const deleteDisplayName = memberToDelete
+    ? `${formatName(memberToDelete.name)} ${formatName(memberToDelete.surname)}`
+    : "цього учасника";
 
   return (
     <div className={styles.container}>
@@ -112,12 +155,13 @@ export default function MembersManager() {
       <ConfirmModal
         isOpen={deleteModal.isOpen}
         onClose={() => setDeleteModal({ isOpen: false, id: null })}
-        onConfirm={async () => {
-          await dispatch(deleteMember(deleteModal.id));
-          setDeleteModal({ isOpen: false, id: null });
-        }}
+        onConfirm={handleDeleteConfirm}
         title="Видалити учасника?"
-        message="Ця дія видалить усі дані про учасника безповоротно."
+        message={
+          <>
+            Ви впевнені, що хочете видалити <strong>{deleteDisplayName}</strong>?
+          </>
+        }
       />
     </div>
   );

@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import StoreProvider from "@/app/(main)/StoreProvider";
+import { Toaster } from "react-hot-toast";
 import { HiMenuAlt2, HiX } from "react-icons/hi";
 import {
   HiOutlineTrophy,
@@ -41,6 +42,28 @@ export default function AdminClientLayout({ children }) {
 
   const isLoginPage = pathname === "/admin/login";
 
+  const toasterConfig = (
+    <Toaster
+      position="top-center"
+      reverseOrder={false}
+      toastOptions={{
+        duration: 3000,
+        style: {
+          background: "#374151",
+          color: "#fff",
+          fontSize: "14px",
+          borderRadius: "8px",
+        },
+        success: {
+          iconTheme: {
+            primary: "#10B981",
+            secondary: "#fff",
+          },
+        },
+      }}
+    />
+  );
+
   // Якщо сторінка логіну - не показуємо сайдбар
   if (isLoginPage) {
     return (
@@ -52,6 +75,7 @@ export default function AdminClientLayout({ children }) {
 
   return (
     <StoreProvider>
+      {toasterConfig}
       <div className={styles.wrapper}>
         <button
           className={styles.mobileToggle}

@@ -9,6 +9,7 @@ import {
   deleteLeader,
 } from "@/lib/leaders/leadersSlice";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
+import { toast } from "react-hot-toast";
 import PageLoader from "@/components/PageLoader/PageLoader";
 import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton";
 import LeaderCard from "../LeaderCard/LeaderCard";
@@ -48,16 +49,53 @@ export default function LeadersManager() {
     setIsModalOpen(true);
   };
 
+  const formatName = (str) => {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
   const handleSave = async (formData) => {
+    const name = formatName(formData.get("name"));
+    const surname = formatName(formData.get("surname"));
+    const displayName =
+      name || surname ? `${name} ${surname}`.trim() : "керівника";
+
+    const toastId = toast.loading(
+      editData
+        ? `Оновлення даних ${displayName}...`
+        : `Додавання ${displayName}...`
+    );
+
     try {
       if (editData) {
         await dispatch(updateLeader({ id: editData._id, formData })).unwrap();
+        toast.success(`Дані ${displayName} оновлено!`, { id: toastId });
       } else {
         await dispatch(addLeader(formData)).unwrap();
+        toast.success(`${displayName} успішно додано!`, { id: toastId });
       }
       setIsModalOpen(false);
     } catch (error) {
-      console.error("Save failed:", error);
+      toast.error(`Не вдалося зберегти дані ${displayName}`, { id: toastId });
+    }
+  };
+
+  const handleDeleteConfirm = async () => {
+    const leaderToDelete = leaders.find((l) => l._id === deleteModal.id);
+    const displayName = leaderToDelete
+      ? `${formatName(leaderToDelete.name)} ${formatName(
+          leaderToDelete.surname
+        )}`
+      : "керівника";
+
+    const toastId = toast.loading(`Видалення ${displayName}...`);
+
+    try {
+      await dispatch(deleteLeader(deleteModal.id)).unwrap();
+      toast.success(`Запис про ${displayName} видалено`, { id: toastId });
+      setDeleteModal({ isOpen: false, id: null });
+    } catch (error) {
+      toast.error(`Не вдалося видалити ${displayName}`, { id: toastId });
     }
   };
 
@@ -66,6 +104,11 @@ export default function LeadersManager() {
   const noItems =
     (status === "succeeded" || status === "failed" || status === "idle") &&
     leaders.length === 0;
+
+  const leaderToDelete = leaders.find((l) => l._id === deleteModal.id);
+  const deleteDisplayName = leaderToDelete
+    ? `${formatName(leaderToDelete.name)} ${formatName(leaderToDelete.surname)}`
+    : "цього керівника";
 
   return (
     <div className={styles.container}>
@@ -116,12 +159,13 @@ export default function LeadersManager() {
       <ConfirmModal
         isOpen={deleteModal.isOpen}
         onClose={() => setDeleteModal({ isOpen: false, id: null })}
-        onConfirm={async () => {
-          await dispatch(deleteLeader(deleteModal.id));
-          setDeleteModal({ isOpen: false, id: null });
-        }}
+        onConfirm={handleDeleteConfirm}
         title="Видалити керівника?"
-        message="Ця дія видалить усі дані про керівника безповоротно."
+        message={
+          <>
+            Ви впевнені, що хочете видалити <strong>{deleteDisplayName}</strong>?
+          </>
+        }
       />
     </div>
   );

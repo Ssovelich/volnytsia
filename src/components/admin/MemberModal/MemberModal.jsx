@@ -6,6 +6,7 @@ import { MdCloudUpload } from "react-icons/md";
 import styles from "./MemberModal.module.scss";
 import AdminModalActions from "../AdminModalActions/AdminModalActions";
 import AdminModalHeader from "../AdminModalHeader/AdminModalHeader";
+import AdminFileInput from "../AdminAddFileInput/AdminAddFileInput";
 
 export default function MemberModal({ isOpen, onClose, onSave, editData }) {
   const [formData, setFormData] = useState({
@@ -38,8 +39,7 @@ export default function MemberModal({ isOpen, onClose, onSave, editData }) {
     setFile(null);
   }, [editData, isOpen]);
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
+  const handleFileChange = (selectedFile) => {
     if (selectedFile) {
       setFile(selectedFile);
       if (preview && preview.startsWith("blob:")) {
@@ -85,35 +85,21 @@ export default function MemberModal({ isOpen, onClose, onSave, editData }) {
           <div className={styles.content}>
             <div className={styles.photoSection}>
               <div className={styles.previewBox}>
-                {preview ? (
-                  <Image
-                    src={preview || DEFAULT_IMG}
-                    alt="Прев'ю зображення учасника"
-                    fill
-                    className="object-cover"
-                    priority
-                    unoptimized={preview.startsWith("blob:")}
-                  />
-                ) : (
-                  <div className={styles.placeholder}>Немає фото</div>
-                )}
+                <Image
+                  src={preview || DEFAULT_IMG}
+                  alt="Прев'ю фото учасника"
+                  fill
+                  className="object-cover"
+                  priority
+                  unoptimized={preview?.startsWith("blob:")}
+                />
               </div>
-
-              <div className={styles.uploadContainer}>
-                <label className={styles.customUploadBtn}>
-                  <MdCloudUpload />
-                  <span>Обрати фото</span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    hidden
-                  />
-                </label>
-                <span className={styles.fileName}>
-                  {file ? file.name : "Файл не вибрано"}
-                </span>
-              </div>
+              <AdminFileInput
+                onChange={handleFileChange}
+                fileName={file?.name}
+                label="Фото учасника"
+                centered={true}
+              />
             </div>
 
             <div className={styles.formGrid}>

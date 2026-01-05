@@ -10,9 +10,10 @@ export default function AdminFileInput({
   required = false,
   accept = "image/*",
   disabled = false,
+  centered = false,
 }) {
   return (
-    <div className={styles.inputGroup}>
+   <div className={`${styles.inputGroup} ${centered ? styles.centered : ""}`}>
       {label && (
         <label className={styles.label}>
           {label}

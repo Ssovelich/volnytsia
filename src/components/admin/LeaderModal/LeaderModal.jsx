@@ -95,7 +95,7 @@ export default function LeaderModal({ isOpen, onClose, onSave, editData }) {
               <div className={styles.previewBox}>
                 <Image
                   src={preview || DEFAULT_IMG}
-                  alt="Прев'ю"
+                  alt="Прев'ю фото керівника"
                   fill
                   className="object-cover"
                   unoptimized={preview?.startsWith("blob:")}
@@ -106,6 +106,7 @@ export default function LeaderModal({ isOpen, onClose, onSave, editData }) {
                 onChange={handleFileChange}
                 fileName={file?.name}
                 label="Фото керівника"
+                centered={true}
               />
             </div>
 

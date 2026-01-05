@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
 import {
   fetchCopyright,
   updateCopyright,
@@ -39,9 +40,29 @@ export default function FooterManager() {
     setIsInitialized(true);
   }
 
-  const handleSaveCopyright = () => {
-    dispatch(updateCopyright({ key: "footer_copy", value: copyText }));
-    alert("Копірайт оновлено!");
+  const handleSaveCopyright = async () => {
+    if (!copyText.trim()) return toast.error("Текст порожній");
+
+    const toastId = toast.loading("Збереження...");
+    try {
+      await dispatch(
+        updateCopyright({ key: "footer_copy", value: copyText })
+      ).unwrap();
+      toast.success("Копірайт оновлено!", { id: toastId });
+    } catch (error) {
+      toast.error("Помилка при збереженні", { id: toastId });
+    }
+  };
+
+  const handleDeleteConfirm = async () => {
+    const toastId = toast.loading("Видалення...");
+    try {
+      await dispatch(deleteSocial(deleteModal.id)).unwrap();
+      toast.success("Соціальну мережу видалено", { id: toastId });
+      setDeleteModal({ isOpen: false, id: null });
+    } catch (error) {
+      toast.error("Не вдалося видалити", { id: toastId });
+    }
   };
 
   if (copyStatus === "loading" || socialsStatus === "loading")
@@ -102,7 +123,7 @@ export default function FooterManager() {
             value={copyText}
             onChange={(e) => setCopyText(e.target.value)}
             className={styles.input}
-            placeholder="Напр.: Княжа Вольниця, 2026. Всі права захищено."
+            placeholder="Копірайт..."
           />
           <button onClick={handleSaveCopyright} className={styles.saveBtn}>
             Зберегти
@@ -123,10 +144,7 @@ export default function FooterManager() {
       <ConfirmModal
         isOpen={deleteModal.isOpen}
         onClose={() => setDeleteModal({ isOpen: false, id: null })}
-        onConfirm={async () => {
-          await dispatch(deleteSocial(deleteModal.id));
-          setDeleteModal({ isOpen: false, id: null });
-        }}
+        onConfirm={handleDeleteConfirm}
         title="Видалити посилання?"
       />
     </div>
