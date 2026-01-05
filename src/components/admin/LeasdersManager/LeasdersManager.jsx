@@ -3,23 +3,23 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchMembers,
-  addMember,
-  updateMember,
-  deleteMember,
-} from "@/lib/members/membersSlice";
+  fetchLeaders,
+  addLeader,
+  updateLeader,
+  deleteLeader,
+} from "@/lib/leaders/leadersSlice";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import PageLoader from "@/components/PageLoader/PageLoader";
 import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton";
-import MemberCard from "../MemberCard/MemberCard";
-import MemberModal from "../MemberModal/MemberModal";
+import LeaderCard from "../LeaderCard/LeaderCard";
+import LeaderModal from "../LeaderModal/LeaderModal";
 import AdminHeader from "../AdminHeader/AdminHeader";
-import styles from "./MembersManager.module.scss";
+import styles from "./LeadersManager.module.scss";
 import AdminEmptyState from "../AdminEmptyState/AdminEmptyState";
 
-export default function MembersManager() {
+export default function LeadersManager() {
   const dispatch = useDispatch();
-  const { items: members, status } = useSelector((state) => state.members);
+  const { items: leaders, status } = useSelector((state) => state.leaders);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editData, setEditData] = useState(null);
@@ -27,12 +27,12 @@ export default function MembersManager() {
 
   useEffect(() => {
     if (status === "idle") {
-      dispatch(fetchMembers());
+      dispatch(fetchLeaders());
     }
   }, [status, dispatch]);
 
   const { visibleItems, loadMoreButton } = LoadMoreButton({
-    data: members,
+    data: leaders,
     mobile: 4,
     tablet: 8,
     desktop: 12,
@@ -43,32 +43,32 @@ export default function MembersManager() {
     setIsModalOpen(true);
   };
 
-  const handleOpenEdit = (member) => {
-    setEditData(member);
+  const handleOpenEdit = (leader) => {
+    setEditData(leader);
     setIsModalOpen(true);
   };
 
   const handleSave = async (formData) => {
     if (editData) {
-      await dispatch(updateMember({ id: editData._id, formData }));
+      await dispatch(updateLeader({ id: editData._id, formData }));
     } else {
-      await dispatch(addMember(formData));
+      await dispatch(addLeader(formData));
     }
     setIsModalOpen(false);
   };
 
-  if (status === "loading" && members.length === 0) return <PageLoader />;
+  if (status === "loading" && leaders.length === 0) return <PageLoader />;
 
   const noItems =
     (status === "succeeded" || status === "failed" || status === "idle") &&
-    members.length === 0;
+    leaders.length === 0;
 
   return (
     <div className={styles.container}>
       <AdminHeader
-        title="Учасники колективу"
-        onAdd={handleOpenCreate}
-        btnText="+ Додати учасника"
+        title="Керівники колективу"
+        onCreate={handleOpenCreate}
+        createLabel="+ Додати керівника"
       />
 
       <div>
@@ -79,19 +79,19 @@ export default function MembersManager() {
             message={
               status === "failed"
                 ? "На жаль, виникла проблема з доступом до даних."
-                : "Учасників поки що немає. Ви можете додати першого!"
+                : "Керівників поки що немає. Ви можете додати першого!"
             }
           />
         ) : (
           <>
             <div className={styles.grid}>
-              {visibleItems.map((member) => (
-                <MemberCard
-                  key={member._id}
-                  member={member}
-                  onEdit={() => handleOpenEdit(member)}
+              {visibleItems.map((leader) => (
+                <LeaderCard
+                  key={leader._id}
+                  leader={leader}
+                  onEdit={() => handleOpenEdit(leader)}
                   onDelete={() =>
-                    setDeleteModal({ isOpen: true, id: member._id })
+                    setDeleteModal({ isOpen: true, id: leader._id })
                   }
                 />
               ))}
@@ -101,23 +101,23 @@ export default function MembersManager() {
         )}
       </div>
 
-      <MemberModal
-        key={editData ? editData._id : "new-member"}
+      <LeaderModal
+        key={editData ? editData._id : "new-leader"}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSave}
-        editData={editData}
+        initialData={editData}
       />
 
       <ConfirmModal
         isOpen={deleteModal.isOpen}
         onClose={() => setDeleteModal({ isOpen: false, id: null })}
         onConfirm={async () => {
-          await dispatch(deleteMember(deleteModal.id));
+          await dispatch(deleteLeader(deleteModal.id));
           setDeleteModal({ isOpen: false, id: null });
         }}
-        title="Видалити учасника?"
-        message="Ця дія видалить усі дані про учасника безповоротно."
+        title="Видалити керівника?"
+        message="Ця дія видалить усі дані про керівника безповоротно."
       />
     </div>
   );
