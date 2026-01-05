@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
+    "@tiptap/pm": "^3.14.0",
+    "@tiptap/react": "^3.14.0",
+    "@tiptap/starter-kit": "^3.14.0",
     "@use-gesture/react": "^10.3.1",
     "axios": "^1.13.2",
     "js-cookie": "^3.0.5",

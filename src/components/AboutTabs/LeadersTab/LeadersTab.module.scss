@@ -3,7 +3,55 @@
   flex-direction: column;
   gap: 120px;
 
-    @media (min-width: 1440px) {
-      gap: 80px;
-    }
+  @media (min-width: 1440px) {
+    gap: 80px;
+  }
+}
+
+.errorContainer,
+.emptyState {
+  text-align: center;
+  padding: 50px 20px;
+  width: 100%;
+}
+
+.retryBtn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: var(--chervoniy-volnicya);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+
+  &:hover {
+    background-color: var(--svіtlo-chervoniy);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(2px);
+  }
+}
+
+.leaders {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.emptyMessage {
+  padding: 3rem 1rem;
+  text-align: center;
+  border-radius: 25px;
+  margin: 20px 0;
+
+  p {
+    font-size: 1.1rem;
+    color: #64748b;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
 }

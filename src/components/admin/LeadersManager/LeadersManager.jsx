@@ -49,12 +49,16 @@ export default function LeadersManager() {
   };
 
   const handleSave = async (formData) => {
-    if (editData) {
-      await dispatch(updateLeader({ id: editData._id, formData }));
-    } else {
-      await dispatch(addLeader(formData));
+    try {
+      if (editData) {
+        await dispatch(updateLeader({ id: editData._id, formData })).unwrap();
+      } else {
+        await dispatch(addLeader(formData)).unwrap();
+      }
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Save failed:", error);
     }
-    setIsModalOpen(false);
   };
 
   if (status === "loading" && leaders.length === 0) return <PageLoader />;
@@ -67,15 +71,15 @@ export default function LeadersManager() {
     <div className={styles.container}>
       <AdminHeader
         title="Керівники колективу"
-        onCreate={handleOpenCreate}
-        createLabel="+ Додати керівника"
+        onAdd={handleOpenCreate}
+        btnText="+ Додати керівника"
       />
 
       <div>
         {noItems ? (
           <AdminEmptyState
             isFailed={status === "failed"}
-            onRetry={() => dispatch(fetchMembers())}
+            onRetry={() => dispatch(fetchLeaders())}
             message={
               status === "failed"
                 ? "На жаль, виникла проблема з доступом до даних."
@@ -106,7 +110,7 @@ export default function LeadersManager() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSave}
-        initialData={editData}
+        editData={editData}
       />
 
       <ConfirmModal

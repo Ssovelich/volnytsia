@@ -76,15 +76,17 @@ export default function FooterManager() {
                   </span>
                 </div>
               </div>
-              <AdminCardActions
-                onEdit={() => {
-                  setEditData(social);
-                  setIsModalOpen(true);
-                }}
-                onDelete={() =>
-                  setDeleteModal({ isOpen: true, id: social._id })
-                }
-              />
+              <div className={styles.adminActions}>
+                <AdminCardActions
+                  onEdit={() => {
+                    setEditData(social);
+                    setIsModalOpen(true);
+                  }}
+                  onDelete={() =>
+                    setDeleteModal({ isOpen: true, id: social._id })
+                  }
+                />
+              </div>
             </div>
           ))}
         </div>

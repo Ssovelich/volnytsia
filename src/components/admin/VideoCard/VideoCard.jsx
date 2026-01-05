@@ -45,7 +45,9 @@ export default function VideoCard({ video, onEdit, onDelete }) {
         <p className={styles.created}>Додано: {formatDate(video.createdAt)}</p>
       </div>
 
-      <AdminCardActions onEdit={() => onEdit(video)} onDelete={onDelete} />
+      <div className={styles.adminActions}>
+        <AdminCardActions onEdit={() => onEdit(video)} onDelete={onDelete} />
+      </div>
     </div>
   );
 }

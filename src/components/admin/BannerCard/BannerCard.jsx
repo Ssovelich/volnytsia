@@ -27,8 +27,12 @@ export default function BannerCard({ banner, onEdit, onDelete }) {
       <div className={styles.info}>
         <p className={styles.created}>Додано: {formatDate(banner.createdAt)}</p>
       </div>
-
-      <AdminCardActions onEdit={onEdit} onDelete={() => onDelete(banner._id)} />
+      <div className={styles.adminActions}>
+        <AdminCardActions
+          onEdit={onEdit}
+          onDelete={() => onDelete(banner._id)}
+        />
+      </div>
     </div>
   );
 }

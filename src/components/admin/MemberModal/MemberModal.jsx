@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { MdCloudUpload } from "react-icons/md";
@@ -86,8 +87,8 @@ export default function MemberModal({ isOpen, onClose, onSave, editData }) {
               <div className={styles.previewBox}>
                 {preview ? (
                   <Image
-                    src={preview}
-                    alt="Preview"
+                    src={preview || DEFAULT_IMG}
+                    alt="Прев'ю зображення учасника"
                     fill
                     className="object-cover"
                     priority

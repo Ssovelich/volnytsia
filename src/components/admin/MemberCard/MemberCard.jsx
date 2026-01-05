@@ -34,10 +34,12 @@ export default function MemberCard({ member, onEdit, onDelete }) {
         <p>{member.role || "Учасник колективу"}</p>
       </div>
 
-      <AdminCardActions
-        onEdit={() => onEdit(member)}
-        onDelete={() => onDelete(member._id)}
-      />
+      <div className={styles.adminActions}>
+        <AdminCardActions
+          onEdit={() => onEdit(member)}
+          onDelete={() => onDelete(member._id)}
+        />
+      </div>
     </div>
   );
 }
