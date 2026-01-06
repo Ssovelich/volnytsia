@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAwards, deleteAward } from "@/lib/awards/awardsSlice";
+import { toast } from "react-hot-toast";
 import PageLoader from "@/components/PageLoader/PageLoader";
 import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton";
 import styles from "./AwardsManager.module.scss";
@@ -11,6 +12,7 @@ import AddAwardModal from "../AddAwardModal/AddAwardModal";
 import AdminHeader from "../AdminHeader/AdminHeader";
 import AdminEmptyState from "../AdminEmptyState/AdminEmptyState";
 import AwardCard from "../AwardCard/AwardCard";
+import { getDisplayName } from "@/lib/formattersName";
 
 export default function AwardsManager() {
   const dispatch = useDispatch();
@@ -36,9 +38,17 @@ export default function AwardsManager() {
   });
 
   const handleConfirmDelete = async () => {
-    if (deleteModal.id) {
-      await dispatch(deleteAward(deleteModal.id));
+    if (!deleteModal.id) return;
+
+    const awardToDelete = awards.find((a) => a._id === deleteModal.id);
+    const displayName = getDisplayName(awardToDelete, "award");
+
+    try {
       setDeleteModal({ isOpen: false, id: null });
+      await dispatch(deleteAward(deleteModal.id)).unwrap();
+      toast.success(`${displayName} видалено`);
+    } catch (error) {
+      toast.error(`Не вдалося видалити ${displayName}`);
     }
   };
 
@@ -47,6 +57,11 @@ export default function AwardsManager() {
   const noItems =
     (status === "succeeded" || status === "failed" || status === "idle") &&
     awards.length === 0;
+
+  const deleteDisplayName = getDisplayName(
+    awards.find((a) => a._id === deleteModal.id),
+    "award"
+  );
 
   return (
     <div className={styles.container}>
@@ -94,7 +109,12 @@ export default function AwardsManager() {
         onClose={() => setDeleteModal({ isOpen: false, id: null })}
         onConfirm={handleConfirmDelete}
         title="Видалити відзнаку?"
-        message="Ви впевнені, що хочете видалити цю нагороду?"
+        message={
+          <>
+            Ви впевнені, що хочете видалити <strong>{deleteDisplayName}</strong>
+            ?
+          </>
+        }
       />
     </div>
   );

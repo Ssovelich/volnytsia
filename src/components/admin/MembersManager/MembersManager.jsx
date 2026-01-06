@@ -15,8 +15,9 @@ import LoadMoreButton from "@/components/LoadMoreButton/LoadMoreButton";
 import MemberCard from "../MemberCard/MemberCard";
 import MemberModal from "../MemberModal/MemberModal";
 import AdminHeader from "../AdminHeader/AdminHeader";
-import styles from "./MembersManager.module.scss";
 import AdminEmptyState from "../AdminEmptyState/AdminEmptyState";
+import { getDisplayName } from "@/lib/formattersName";
+import styles from "./MembersManager.module.scss";
 
 export default function MembersManager() {
   const dispatch = useDispatch();
@@ -27,9 +28,7 @@ export default function MembersManager() {
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, id: null });
 
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchMembers());
-    }
+    if (status === "idle") dispatch(fetchMembers());
   }, [status, dispatch]);
 
   const { visibleItems, loadMoreButton } = LoadMoreButton({
@@ -39,113 +38,87 @@ export default function MembersManager() {
     desktop: 12,
   });
 
-  const formatName = (str) => {
-    if (!str) return "";
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-  };
-
-  const handleOpenCreate = () => {
-    setEditData(null);
-    setIsModalOpen(true);
-  };
-
-  const handleOpenEdit = (member) => {
-    setEditData(member);
-    setIsModalOpen(true);
-  };
-
   const handleSave = async (formData) => {
-    const name = formatName(formData.get("name"));
-    const surname = formatName(formData.get("surname"));
-    const displayName = name || surname ? `${name} ${surname}`.trim() : "учасника";
-
-    const toastId = toast.loading(
-      editData ? `Оновлення даних ${displayName}...` : `Додавання ${displayName}...`
-    );
+    const displayName = getDisplayName(formData, "member");
 
     try {
       if (editData) {
         await dispatch(updateMember({ id: editData._id, formData })).unwrap();
-        toast.success(`Дані ${displayName} оновлено!`, { id: toastId });
+        toast.success(`${displayName} оновлено!`);
       } else {
         await dispatch(addMember(formData)).unwrap();
-        toast.success(`${displayName} успішно додано!`, { id: toastId });
+        toast.success(`${displayName} додано!`);
       }
       setIsModalOpen(false);
     } catch (error) {
-      toast.error(`Не вдалося зберегти дані ${displayName}`, { id: toastId });
+      toast.error(`Помилка збереження ${displayName}`);
     }
   };
 
   const handleDeleteConfirm = async () => {
-    const memberToDelete = members.find((m) => m._id === deleteModal.id);
-    const displayName = memberToDelete
-      ? `${formatName(memberToDelete.name)} ${formatName(memberToDelete.surname)}`
-      : "учасника";
-
-    const toastId = toast.loading(`Видалення ${displayName}...`);
+    const itemToDelete = members.find((m) => m._id === deleteModal.id);
+    const displayName = getDisplayName(itemToDelete, "member");
 
     try {
-      await dispatch(deleteMember(deleteModal.id)).unwrap();
-      toast.success(`Запис про ${displayName} видалено`, { id: toastId });
       setDeleteModal({ isOpen: false, id: null });
+      await dispatch(deleteMember(deleteModal.id)).unwrap();
+      toast.success(`${displayName} видалено`);
     } catch (error) {
-      toast.error(`Не вдалося видалити ${displayName}`, { id: toastId });
+      toast.error(`Не вдалося видалити ${displayName}`);
     }
   };
 
   if (status === "loading" && members.length === 0) return <PageLoader />;
 
-  const noItems =
-    (status === "succeeded" || status === "failed" || status === "idle") &&
-    members.length === 0;
-
-
-  const memberToDelete = members.find((m) => m._id === deleteModal.id);
-  const deleteDisplayName = memberToDelete
-    ? `${formatName(memberToDelete.name)} ${formatName(memberToDelete.surname)}`
-    : "цього учасника";
+  const deleteDisplayName = getDisplayName(
+    members.find((m) => m._id === deleteModal.id),
+    "member"
+  );
 
   return (
     <div className={styles.container}>
       <AdminHeader
         title="Учасники колективу"
-        onAdd={handleOpenCreate}
+        onAdd={() => {
+          setEditData(null);
+          setIsModalOpen(true);
+        }}
         btnText="+ Додати учасника"
       />
 
-      <div>
-        {noItems ? (
-          <AdminEmptyState
-            isFailed={status === "failed"}
-            onRetry={() => dispatch(fetchMembers())}
-            message={
-              status === "failed"
-                ? "На жаль, виникла проблема з доступом до даних."
-                : "Учасників поки що немає. Ви можете додати першого!"
-            }
-          />
-        ) : (
-          <>
-            <div className={styles.grid}>
-              {visibleItems.map((member) => (
-                <MemberCard
-                  key={member._id}
-                  member={member}
-                  onEdit={() => handleOpenEdit(member)}
-                  onDelete={() =>
-                    setDeleteModal({ isOpen: true, id: member._id })
-                  }
-                />
-              ))}
-            </div>
-            <div>{loadMoreButton}</div>
-          </>
-        )}
-      </div>
+      {status !== "loading" && members.length === 0 ? (
+        <AdminEmptyState
+          isFailed={status === "failed"}
+          onRetry={() => dispatch(fetchMembers())}
+          message={
+            status === "failed"
+              ? "Проблема з доступом до даних."
+              : "Учасників поки немає."
+          }
+        />
+      ) : (
+        <>
+          <div className={styles.grid}>
+            {visibleItems.map((member) => (
+              <MemberCard
+                key={member._id}
+                member={member}
+                onEdit={() => {
+                  setEditData(member);
+                  setIsModalOpen(true);
+                }}
+                onDelete={() =>
+                  setDeleteModal({ isOpen: true, id: member._id })
+                }
+              />
+            ))}
+          </div>
+          {loadMoreButton}
+        </>
+      )}
 
       <MemberModal
-        key={editData ? editData._id : "new-member"}
+        key={editData?._id || "new"}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSave={handleSave}
@@ -159,7 +132,8 @@ export default function MembersManager() {
         title="Видалити учасника?"
         message={
           <>
-            Ви впевнені, що хочете видалити <strong>{deleteDisplayName}</strong>?
+            Ви впевнені, що хочете видалити <strong>{deleteDisplayName}</strong>
+            ?
           </>
         }
       />

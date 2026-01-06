@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { MdCloudUpload } from "react-icons/md";
 import styles from "./MemberModal.module.scss";
 import AdminModalActions from "../AdminModalActions/AdminModalActions";
 import AdminModalHeader from "../AdminModalHeader/AdminModalHeader";

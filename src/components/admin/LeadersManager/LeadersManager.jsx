@@ -16,6 +16,7 @@ import LeaderCard from "../LeaderCard/LeaderCard";
 import LeaderModal from "../LeaderModal/LeaderModal";
 import AdminHeader from "../AdminHeader/AdminHeader";
 import styles from "./LeadersManager.module.scss";
+import { getDisplayName } from "@/lib/formattersName";
 import AdminEmptyState from "../AdminEmptyState/AdminEmptyState";
 
 export default function LeadersManager() {
@@ -49,53 +50,33 @@ export default function LeadersManager() {
     setIsModalOpen(true);
   };
 
-  const formatName = (str) => {
-    if (!str) return "";
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-  };
-
   const handleSave = async (formData) => {
-    const name = formatName(formData.get("name"));
-    const surname = formatName(formData.get("surname"));
-    const displayName =
-      name || surname ? `${name} ${surname}`.trim() : "керівника";
-
-    const toastId = toast.loading(
-      editData
-        ? `Оновлення даних ${displayName}...`
-        : `Додавання ${displayName}...`
-    );
+    const displayName = getDisplayName(formData, "leader");
 
     try {
       if (editData) {
         await dispatch(updateLeader({ id: editData._id, formData })).unwrap();
-        toast.success(`Дані ${displayName} оновлено!`, { id: toastId });
+        toast.success(`${displayName} оновлено!`);
       } else {
         await dispatch(addLeader(formData)).unwrap();
-        toast.success(`${displayName} успішно додано!`, { id: toastId });
+        toast.success(`${displayName} додано!`);
       }
       setIsModalOpen(false);
     } catch (error) {
-      toast.error(`Не вдалося зберегти дані ${displayName}`, { id: toastId });
+      toast.error(`Помилка збереження ${displayName}`);
     }
   };
 
   const handleDeleteConfirm = async () => {
-    const leaderToDelete = leaders.find((l) => l._id === deleteModal.id);
-    const displayName = leaderToDelete
-      ? `${formatName(leaderToDelete.name)} ${formatName(
-          leaderToDelete.surname
-        )}`
-      : "керівника";
-
-    const toastId = toast.loading(`Видалення ${displayName}...`);
+    const itemToDelete = leaders.find((l) => l._id === deleteModal.id);
+    const displayName = getDisplayName(itemToDelete, "leader");
 
     try {
-      await dispatch(deleteLeader(deleteModal.id)).unwrap();
-      toast.success(`Запис про ${displayName} видалено`, { id: toastId });
       setDeleteModal({ isOpen: false, id: null });
+      await dispatch(deleteLeader(deleteModal.id)).unwrap();
+      toast.success(`${displayName} видалено`);
     } catch (error) {
-      toast.error(`Не вдалося видалити ${displayName}`, { id: toastId });
+      toast.error(`Не вдалося видалити ${displayName}`);
     }
   };
 
@@ -105,10 +86,10 @@ export default function LeadersManager() {
     (status === "succeeded" || status === "failed" || status === "idle") &&
     leaders.length === 0;
 
-  const leaderToDelete = leaders.find((l) => l._id === deleteModal.id);
-  const deleteDisplayName = leaderToDelete
-    ? `${formatName(leaderToDelete.name)} ${formatName(leaderToDelete.surname)}`
-    : "цього керівника";
+  const deleteDisplayName = getDisplayName(
+    leaders.find((l) => l._id === deleteModal.id),
+    "leader"
+  );
 
   return (
     <div className={styles.container}>
@@ -163,7 +144,8 @@ export default function LeadersManager() {
         title="Видалити керівника?"
         message={
           <>
-            Ви впевнені, що хочете видалити <strong>{deleteDisplayName}</strong>?
+            Ви впевнені, що хочете видалити <strong>{deleteDisplayName}</strong>
+            ?
           </>
         }
       />

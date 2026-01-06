@@ -7,12 +7,18 @@ import {
   fetchCopyright,
   updateCopyright,
 } from "@/lib/copyright/copyrightSlice";
-import { fetchSocials, deleteSocial } from "@/lib/socials/socialsSlice";
+import {
+  fetchSocials,
+  deleteSocial,
+  addSocial,
+  updateSocial,
+} from "@/lib/socials/socialsSlice";
 import AdminHeader from "../AdminHeader/AdminHeader";
 import AdminCardActions from "../AdminCardActions/AdminCardActions";
 import SocialModal from "../SocialModal/SocialModal";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import PageLoader from "@/components/PageLoader/PageLoader";
+import { getDisplayName } from "@/lib/formattersName";
 import styles from "./FooterManager.module.scss";
 
 export default function FooterManager() {
@@ -42,8 +48,7 @@ export default function FooterManager() {
 
   const handleSaveCopyright = async () => {
     if (!copyText.trim()) return toast.error("Текст порожній");
-
-    const toastId = toast.loading("Збереження...");
+    const toastId = toast.loading("Оновлення копірайту...");
     try {
       await dispatch(
         updateCopyright({ key: "footer_copy", value: copyText })
@@ -54,19 +59,43 @@ export default function FooterManager() {
     }
   };
 
-  const handleDeleteConfirm = async () => {
-    const toastId = toast.loading("Видалення...");
+  const handleSaveSocial = async (data) => {
+    const displayName = getDisplayName(data, "social");
+
     try {
-      await dispatch(deleteSocial(deleteModal.id)).unwrap();
-      toast.success("Соціальну мережу видалено", { id: toastId });
-      setDeleteModal({ isOpen: false, id: null });
+      if (editData) {
+        await dispatch(updateSocial({ ...data, _id: editData._id })).unwrap();
+        toast.success(`${displayName} оновлено!`);
+      } else {
+        await dispatch(addSocial(data)).unwrap();
+        toast.success(`${displayName} додано!`);
+      }
+      setIsModalOpen(false);
     } catch (error) {
-      toast.error("Не вдалося видалити", { id: toastId });
+      toast.error(`Помилка збереження ${displayName}`);
+    }
+  };
+
+  const handleDeleteConfirm = async () => {
+    const itemToDelete = socials.find((s) => s._id === deleteModal.id);
+    const displayName = getDisplayName(itemToDelete, "social");
+
+    try {
+      setDeleteModal({ isOpen: false, id: null });
+      await dispatch(deleteSocial(deleteModal.id)).unwrap();
+      toast.success(`${displayName} видалено`);
+    } catch (error) {
+      toast.error(`Не вдалося видалити ${displayName}`);
     }
   };
 
   if (copyStatus === "loading" || socialsStatus === "loading")
     return <PageLoader />;
+
+  const deleteDisplayName = getDisplayName(
+    socials.find((s) => s._id === deleteModal.id),
+    "social"
+  );
 
   return (
     <div className={styles.container}>
@@ -97,17 +126,15 @@ export default function FooterManager() {
                   </span>
                 </div>
               </div>
-              <div className={styles.adminActions}>
-                <AdminCardActions
-                  onEdit={() => {
-                    setEditData(social);
-                    setIsModalOpen(true);
-                  }}
-                  onDelete={() =>
-                    setDeleteModal({ isOpen: true, id: social._id })
-                  }
-                />
-              </div>
+              <AdminCardActions
+                onEdit={() => {
+                  setEditData(social);
+                  setIsModalOpen(true);
+                }}
+                onDelete={() =>
+                  setDeleteModal({ isOpen: true, id: social._id })
+                }
+              />
             </div>
           ))}
         </div>
@@ -123,7 +150,6 @@ export default function FooterManager() {
             value={copyText}
             onChange={(e) => setCopyText(e.target.value)}
             className={styles.input}
-            placeholder="Копірайт..."
           />
           <button onClick={handleSaveCopyright} className={styles.saveBtn}>
             Зберегти
@@ -132,12 +158,13 @@ export default function FooterManager() {
       </section>
 
       <SocialModal
-        key={editData?._id || "new-social"}
+        key={editData?._id || "new"}
         isOpen={isModalOpen}
         onClose={() => {
           setIsModalOpen(false);
           setEditData(null);
         }}
+        onSave={handleSaveSocial}
         editData={editData}
       />
 
@@ -145,7 +172,13 @@ export default function FooterManager() {
         isOpen={deleteModal.isOpen}
         onClose={() => setDeleteModal({ isOpen: false, id: null })}
         onConfirm={handleDeleteConfirm}
-        title="Видалити посилання?"
+        title="Видалити?"
+        message={
+          <>
+            Ви впевнені, що хочете видалити <strong>{deleteDisplayName}</strong>
+            ?
+          </>
+        }
       />
     </div>
   );

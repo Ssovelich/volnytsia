@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { addSocial, updateSocial } from "@/lib/socials/socialsSlice";
 import styles from "./SocialModal.module.scss";
 import AdminModalActions from "../AdminModalActions/AdminModalActions";
 import AdminModalHeader from "../AdminModalHeader/AdminModalHeader";
@@ -22,14 +20,18 @@ const initialForm = {
   order: 0,
 };
 
-export default function SocialModal({ isOpen, onClose, editData }) {
-  const dispatch = useDispatch();
+export default function SocialModal({ isOpen, onClose, editData, onSave }) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(
     editData ? { ...editData } : initialForm
   );
   const [isSelectOpen, setIsSelectOpen] = useState(false);
   const selectRef = useRef(null);
+
+  useEffect(() => {
+    if (editData) setFormData({ ...editData });
+    else setFormData(initialForm);
+  }, [editData, isOpen]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -57,12 +59,14 @@ export default function SocialModal({ isOpen, onClose, editData }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
-      if (formData._id) await dispatch(updateSocial(formData)).unwrap();
-      else await dispatch(addSocial(formData)).unwrap();
+      if (onSave) {
+        await onSave(formData);
+      }
       handleClose();
     } catch (error) {
-      alert("Помилка при збереженні");
+      console.error("Submit error:", error);
     } finally {
       setLoading(false);
     }

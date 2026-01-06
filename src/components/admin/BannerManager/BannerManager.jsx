@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBanners, deleteBanner } from "@/lib/banners/bannersSlice";
+import { toast } from "react-hot-toast";
+import { getDisplayName } from "@/lib/formattersName";
 import BannerCard from "../BannerCard/BannerCard";
 import BannerModal from "../BannerModal/BannerModal";
 import AdminHeader from "../AdminHeader/AdminHeader";
@@ -33,14 +35,17 @@ export default function BannerManager() {
     desktop: 5,
   });
 
-  const handleOpenCreate = () => {
-    setEditData(null);
-    setIsModalOpen(true);
-  };
+  const handleDeleteConfirm = async () => {
+    const bannerToDelete = banners.find((b) => b._id === deleteModal.id);
+    const displayName = getDisplayName(bannerToDelete, "banner");
 
-  const handleOpenEdit = (banner) => {
-    setEditData(banner);
-    setIsModalOpen(true);
+    try {
+      setDeleteModal({ isOpen: false, id: null });
+      await dispatch(deleteBanner(deleteModal.id)).unwrap();
+      toast.success(`${displayName} видалено`);
+    } catch (error) {
+      toast.error(`Не вдалося видалити ${displayName}`);
+    }
   };
 
   if (status === "loading" && banners.length === 0) return <PageLoader />;
@@ -49,11 +54,19 @@ export default function BannerManager() {
     (status === "succeeded" || status === "failed" || status === "idle") &&
     banners.length === 0;
 
+  const deleteDisplayName = getDisplayName(
+    banners.find((b) => b._id === deleteModal.id),
+    "banner"
+  );
+
   return (
     <div className={styles.container}>
       <AdminHeader
         title="Керування Банером"
-        onAdd={handleOpenCreate}
+        onAdd={() => {
+          setEditData(null);
+          setIsModalOpen(true);
+        }}
         btnText="+ Додати слайд"
       />
 
@@ -64,8 +77,8 @@ export default function BannerManager() {
             onRetry={() => dispatch(fetchBanners())}
             message={
               status === "failed"
-                ? "На жаль, виникла проблема з доступом до даних."
-                : "Слайдів поки що немає. Ви можете додати перший!"
+                ? "Проблема з доступом до даних."
+                : "Слайдів поки немає."
             }
           />
         ) : (
@@ -75,14 +88,16 @@ export default function BannerManager() {
                 <BannerCard
                   key={banner._id}
                   banner={banner}
-                  onEdit={() => handleOpenEdit(banner)}
+                  onEdit={() => {
+                    setEditData(banner);
+                    setIsModalOpen(true);
+                  }}
                   onDelete={() =>
                     setDeleteModal({ isOpen: true, id: banner._id })
                   }
                 />
               ))}
             </div>
-
             <div>{loadMoreButton}</div>
           </>
         )}
@@ -98,12 +113,14 @@ export default function BannerManager() {
       <ConfirmModal
         isOpen={deleteModal.isOpen}
         onClose={() => setDeleteModal({ isOpen: false, id: null })}
-        onConfirm={async () => {
-          await dispatch(deleteBanner(deleteModal.id));
-          setDeleteModal({ isOpen: false, id: null });
-        }}
+        onConfirm={handleDeleteConfirm}
         title="Видалити слайд?"
-        message="Це зображення буде видалено з банеру назавжди."
+        message={
+          <>
+            Ви впевнені, що хочете видалити <strong>{deleteDisplayName}</strong>
+            ?
+          </>
+        }
       />
     </div>
   );

@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchAwards } from "@/lib/awards/awardsSlice";
-import { MdCloudUpload } from "react-icons/md";
+import { toast } from "react-hot-toast";
 import styles from "./AddAwardModal.module.scss";
 import AdminModalActions from "../AdminModalActions/AdminModalActions";
 import AdminModalHeader from "../AdminModalHeader/AdminModalHeader";
 import AdminFileInput from "../AdminAddFileInput/AdminAddFileInput";
+import { getDisplayName } from "@/lib/formattersName";
 
 export default function AddAwardModal({ isOpen, onClose }) {
   const dispatch = useDispatch();
@@ -19,7 +20,8 @@ export default function AddAwardModal({ isOpen, onClose }) {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    if (!fullImage) return alert("Будь ласка, виберіть основне зображення");
+    if (!fullImage)
+      return toast.error("Будь ласка, виберіть основне зображення");
 
     setLoading(true);
     const formData = new FormData();
@@ -29,6 +31,8 @@ export default function AddAwardModal({ isOpen, onClose }) {
       formData.append("thumbnail", thumbImage);
     }
 
+    const displayName = getDisplayName(null, "award");
+
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/awards`, {
         method: "POST",
@@ -36,13 +40,17 @@ export default function AddAwardModal({ isOpen, onClose }) {
       });
 
       if (res.ok) {
+        toast.success(`${displayName} успішно додано!`);
         dispatch(fetchAwards());
         setFullImage(null);
         setThumbImage(null);
         onClose();
+      } else {
+        throw new Error("Failed to upload");
       }
     } catch (error) {
       console.error("Upload error:", error);
+      toast.error(`Помилка при додаванні ${displayName}`);
     } finally {
       setLoading(false);
     }

@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addBanner, updateBanner } from "@/lib/banners/bannersSlice";
+import { toast } from "react-hot-toast";
+import { getDisplayName, formatName } from "@/lib/formattersName";
 import styles from "./BannerModal.module.scss";
 import AdminModalActions from "../AdminModalActions/AdminModalActions";
 import AdminModalHeader from "../AdminModalHeader/AdminModalHeader";
@@ -31,15 +33,20 @@ export default function BannerModal({ isOpen, onClose, editData }) {
     formData.append("order", order);
     if (file) formData.append("image", file);
 
+    const displayName = getDisplayName(editData, "banner");
+    const formattedName = formatName(displayName);
+
     try {
       if (editData) {
         await dispatch(updateBanner({ id: editData._id, formData })).unwrap();
+        toast.success(`${formattedName} оновлено!`);
       } else {
         await dispatch(addBanner(formData)).unwrap();
+        toast.success(`${formattedName} додано!`);
       }
       onClose();
     } catch (err) {
-      alert("Помилка збереження");
+      toast.error(`Помилка збереження: ${displayName}`);
     } finally {
       setLoading(false);
     }
