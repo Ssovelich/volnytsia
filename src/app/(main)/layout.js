@@ -7,6 +7,7 @@ import { Inter, Marmelad, Marck_Script } from "next/font/google";
 import ScrollToTop from "@/components/ScrollToTop/ScrollToTop";
 
 export const metadata = {
+  metadataBase: new URL("https://volnytsia.vercel.app"),
   title: {
     default: "Княжа Вольниця",
     template: "%s | Княжа Вольниця",
