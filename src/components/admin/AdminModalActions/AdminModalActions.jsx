@@ -19,8 +19,19 @@ export default function AdminModalActions({
       >
         {cancelText}
       </button>
-      <button type={type} className={styles.submitBtn} disabled={loading}>
-        {loading ? "Збереження..." : submitText}
+      <button 
+        type={type} 
+        className={styles.submitBtn} 
+        disabled={loading}
+      >
+        {loading ? (
+          <div className={styles.loaderWrapper}>
+            <span className={styles.spinner}></span>
+            <span>Збереження...</span>
+          </div>
+        ) : (
+          submitText
+        )}
       </button>
     </div>
   );
