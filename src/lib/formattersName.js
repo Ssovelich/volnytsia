@@ -1,5 +1,4 @@
 // (Перша велика, інші маленькі)
-
 export const formatName = (str) => {
   if (!str) return "";
   const trimmed = String(str).trim();

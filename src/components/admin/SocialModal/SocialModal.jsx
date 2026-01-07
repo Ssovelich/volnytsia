@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import styles from "./SocialModal.module.scss";
+import { toast } from "react-hot-toast";
 import AdminModalActions from "../AdminModalActions/AdminModalActions";
 import AdminModalHeader from "../AdminModalHeader/AdminModalHeader";
 import { HiChevronDown } from "react-icons/hi";
@@ -58,29 +59,47 @@ export default function SocialModal({ isOpen, onClose, editData, onSave }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let url = formData.href.trim();
+
+    if (!url) {
+      return toast.error("Введіть посилання!");
+    }
+
+    if (!/^https?:\/\//i.test(url)) {
+      url = `https://${url}`;
+    }
+
+    try {
+      new URL(url);
+    } catch (err) {
+      return toast.error("Будь ласка, введіть коректну URL-адресу!");
+    }
+
     setLoading(true);
 
     try {
       if (onSave) {
-        await onSave(formData);
+        await onSave({ ...formData, href: url });
       }
       handleClose();
     } catch (error) {
       console.error("Submit error:", error);
+      toast.error(error.response?.data?.message || "Не вдалося зберегти зміни");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className={styles.overlay} onClick={handleClose}>
+    <div className={styles.overlay}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <AdminModalHeader
           title={editData ? "Редагувати посилання" : "Додати соцмережу"}
           onClose={handleClose}
         />
 
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <form onSubmit={handleSubmit} className={styles.form} noValidate>
           <div className={styles.field}>
             <label>Виберіть мережу (іконка)</label>
             <div className={styles.customSelect} ref={selectRef}>
@@ -142,7 +161,6 @@ export default function SocialModal({ isOpen, onClose, editData, onSave }) {
               onChange={(e) =>
                 setFormData({ ...formData, href: e.target.value })
               }
-              required
               disabled={loading}
             />
           </div>

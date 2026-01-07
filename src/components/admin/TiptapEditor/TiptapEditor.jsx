@@ -38,7 +38,6 @@ export default function TiptapEditor({ value, onChange }) {
         if (editor.isEmpty) {
           editor.commands.setContent("<p></p>", false);
         }
-        editor.commands.focus("end");
       }, 150);
       return () => clearTimeout(timer);
     }
@@ -53,7 +52,7 @@ export default function TiptapEditor({ value, onChange }) {
   if (!editor) return null;
 
   const handleToolbarAction = (e, action) => {
-    e.preventDefault(); 
+    e.preventDefault();
     action();
   };
 
@@ -62,21 +61,33 @@ export default function TiptapEditor({ value, onChange }) {
       <div className={styles.tiptapToolbar}>
         <button
           type="button"
-          onMouseDown={(e) => handleToolbarAction(e, () => editor.chain().focus().toggleBold().run())}
+          onMouseDown={(e) =>
+            handleToolbarAction(e, () =>
+              editor.chain().focus().toggleBold().run()
+            )
+          }
           className={editor.isActive("bold") ? styles.active : ""}
         >
           <MdFormatBold size={20} />
         </button>
         <button
           type="button"
-          onMouseDown={(e) => handleToolbarAction(e, () => editor.chain().focus().toggleItalic().run())}
+          onMouseDown={(e) =>
+            handleToolbarAction(e, () =>
+              editor.chain().focus().toggleItalic().run()
+            )
+          }
           className={editor.isActive("italic") ? styles.active : ""}
         >
           <MdFormatItalic size={20} />
         </button>
         <button
           type="button"
-          onMouseDown={(e) => handleToolbarAction(e, () => editor.chain().focus().toggleBulletList().run())}
+          onMouseDown={(e) =>
+            handleToolbarAction(e, () =>
+              editor.chain().focus().toggleBulletList().run()
+            )
+          }
           className={editor.isActive("bulletList") ? styles.active : ""}
         >
           <MdList size={20} />

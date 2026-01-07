@@ -11,13 +11,26 @@ export default function AdminFileInput({
   accept = "image/*",
   disabled = false,
   centered = false,
+  multiple = false,
 }) {
+  const handleFileChange = (e) => {
+    if (disabled) return;
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    if (multiple) {
+      onChange(files);
+    } else {
+      onChange(files[0]);
+    }
+  };
+
   return (
-   <div className={`${styles.inputGroup} ${centered ? styles.centered : ""}`}>
+    <div className={`${styles.inputGroup} ${centered ? styles.centered : ""}`}>
       {label && (
         <label className={styles.label}>
           {label}
-          {required && "*"}
+          {required}
         </label>
       )}
       <div className={styles.uploadContainer}>
@@ -27,13 +40,14 @@ export default function AdminFileInput({
           }`}
         >
           <MdCloudUpload />
-          <span>Обрати файл</span>
+          <span>{multiple ? "Обрати файли" : "Обрати файл"}</span>
           <input
             type="file"
             accept={accept}
-            onChange={(e) => onChange(e.target.files[0])}
+            onChange={handleFileChange}
             required={required}
             disabled={disabled}
+            multiple={multiple}
             hidden
           />
         </label>

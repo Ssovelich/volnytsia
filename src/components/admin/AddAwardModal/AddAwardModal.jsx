@@ -56,6 +56,12 @@ export default function AddAwardModal({ isOpen, onClose }) {
     }
   };
 
+  const handleClose = () => {
+    setFullImage(null);
+    setThumbImage(null);
+    onClose();
+  };
+
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
@@ -64,7 +70,6 @@ export default function AddAwardModal({ isOpen, onClose }) {
         <form onSubmit={handleUpload} className={styles.form}>
           <AdminFileInput
             label="Основне зображення"
-            required
             onChange={setFullImage}
             fileName={fullImage?.name}
             disabled={loading}

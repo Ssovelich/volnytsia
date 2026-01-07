@@ -39,6 +39,22 @@ export default function VideoModal({ isOpen, onClose, editData = null }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!title.trim()) {
+      toast.error("Введіть назву відео!");
+      return;
+    }
+
+    if (!url.trim()) {
+      toast.error("Додайте посилання на YouTube відео!");
+      return;
+    }
+
+    if (!url.includes("youtube.com") && !url.includes("youtu.be")) {
+      toast.error("Будь ласка, введіть коректне посилання на YouTube");
+      return;
+    }
+
     setLoading(true);
 
     const videoData = {
@@ -77,7 +93,7 @@ export default function VideoModal({ isOpen, onClose, editData = null }) {
           onClose={onClose}
         />
 
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <form onSubmit={handleSubmit} className={styles.form} noValidate>
           <div className={styles.formGrid}>
             <div className={styles.inputGroup}>
               <label className={styles.label}>Назва відео</label>
@@ -86,7 +102,6 @@ export default function VideoModal({ isOpen, onClose, editData = null }) {
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                required
                 className={styles.textInput}
                 placeholder="Введіть назву..."
                 disabled={loading}
@@ -96,10 +111,9 @@ export default function VideoModal({ isOpen, onClose, editData = null }) {
             <div className={styles.inputGroup}>
               <label className={styles.label}>Посилання YouTube</label>
               <input
-                type="url"
+                type="text"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
-                required
                 className={styles.textInput}
                 placeholder="https://www.youtube.com/watch?v=..."
                 disabled={loading}

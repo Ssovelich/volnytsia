@@ -27,6 +27,12 @@ export default function BannerModal({ isOpen, onClose, editData }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!editData && !file) {
+      toast.error("Будь ласка, оберіть зображення для банера!");
+      return;
+    }
+
     setLoading(true);
 
     const formData = new FormData();
@@ -67,7 +73,6 @@ export default function BannerModal({ isOpen, onClose, editData }) {
             label="Зображення (1390x480 рекомендується)"
             onChange={setFile}
             fileName={file?.name}
-            required={!editData}
             disabled={loading}
           />
 

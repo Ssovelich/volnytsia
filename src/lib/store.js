@@ -6,6 +6,7 @@ import videoGalleryReducer from "./videoGallery/videoGallerySlice";
 import bannersReducer from "./banners/bannersSlice";
 import copyrightReducer from "./copyright/copyrightSlice";
 import socialsReducer from "./socials/socialsSlice";
+import galleryPhotosReducer from "./galleryPhoto/galleryPhotoSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     banners: bannersReducer,
     copyright: copyrightReducer,
     socials: socialsReducer,
+    galleryPhotos: galleryPhotosReducer,
   },
 });

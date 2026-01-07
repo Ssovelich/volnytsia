@@ -53,6 +53,7 @@ export default function AdminClientLayout({ children }) {
           color: "#fff",
           fontSize: "14px",
           borderRadius: "8px",
+          textAlign: "center",
         },
         success: {
           iconTheme: {

@@ -1,7 +1,11 @@
 .leaders {
   display: flex;
   flex-direction: column;
-  gap: 120px;
+  gap: 48px;
+
+   @media (min-width: 744px) {
+    gap: 60px;
+  }
 
   @media (min-width: 1440px) {
     gap: 80px;
@@ -33,12 +37,6 @@
   &:active {
     transform: translateY(2px);
   }
-}
-
-.leaders {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
 }
 
 .emptyMessage {

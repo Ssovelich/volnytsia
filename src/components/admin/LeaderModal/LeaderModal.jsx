@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { toast } from "react-hot-toast";
+import { getDisplayName, formatName } from "@/lib/formattersName";
 import styles from "./LeaderModal.module.scss";
 import AdminModalActions from "../AdminModalActions/AdminModalActions";
 import AdminModalHeader from "../AdminModalHeader/AdminModalHeader";
@@ -64,6 +66,11 @@ export default function LeaderModal({ isOpen, onClose, onSave, editData }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.surname.trim()) return toast.error("Введіть прізвище!");
+    if (!formData.name.trim()) return toast.error("Введіть ім'я!");
+    if (!formData.role.trim()) return toast.error("Вкажіть роль!");
+
     setLoading(true);
 
     const data = new FormData();
@@ -115,11 +122,11 @@ export default function LeaderModal({ isOpen, onClose, onSave, editData }) {
                 <label className={styles.label}>Прізвище</label>
                 <input
                   type="text"
+                  autoFocus
                   value={formData.surname}
                   onChange={(e) =>
                     setFormData({ ...formData, surname: e.target.value })
                   }
-                  required
                   className={styles.textInput}
                 />
               </div>
@@ -132,7 +139,6 @@ export default function LeaderModal({ isOpen, onClose, onSave, editData }) {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  required
                   className={styles.textInput}
                 />
               </div>
@@ -145,7 +151,6 @@ export default function LeaderModal({ isOpen, onClose, onSave, editData }) {
                   onChange={(e) =>
                     setFormData({ ...formData, middle_name: e.target.value })
                   }
-                  required
                   className={styles.textInput}
                 />
               </div>
@@ -158,7 +163,6 @@ export default function LeaderModal({ isOpen, onClose, onSave, editData }) {
                   onChange={(e) =>
                     setFormData({ ...formData, role: e.target.value })
                   }
-                  required
                   className={styles.textInput}
                   placeholder="напр. Концертмейстр"
                 />

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { toast } from "react-hot-toast";
 import styles from "./MemberModal.module.scss";
 import AdminModalActions from "../AdminModalActions/AdminModalActions";
 import AdminModalHeader from "../AdminModalHeader/AdminModalHeader";
@@ -50,6 +51,11 @@ export default function MemberModal({ isOpen, onClose, onSave, editData }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!formData.surname.trim()) return toast.error("Введіть прізвище!");
+    if (!formData.name.trim()) return toast.error("Введіть ім'я!");
+    if (!formData.role.trim()) return toast.error("Вкажіть роль!");
+
     setLoading(true);
 
     const data = new FormData();
@@ -64,7 +70,7 @@ export default function MemberModal({ isOpen, onClose, onSave, editData }) {
       onClose();
     } catch (error) {
       console.error("Save error:", error);
-      alert("Помилка при збереженні.");
+      toast.error(error.response?.data?.message || "Помилка при збереженні.");
     } finally {
       setLoading(false);
     }
@@ -74,13 +80,13 @@ export default function MemberModal({ isOpen, onClose, onSave, editData }) {
 
   return (
     <div className={styles.overlay}>
-      <div className={styles.modal}>
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <AdminModalHeader
           title={editData ? "Редагувати учасника" : "Додати учасника"}
           onClose={onClose}
         />
 
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <form onSubmit={handleSubmit} className={styles.form} noValidate>
           <div className={styles.content}>
             <div className={styles.photoSection}>
               <div className={styles.previewBox}>
@@ -106,11 +112,11 @@ export default function MemberModal({ isOpen, onClose, onSave, editData }) {
                 <label className={styles.label}>Прізвище</label>
                 <input
                   type="text"
+                  autoFocus
                   value={formData.surname}
                   onChange={(e) =>
                     setFormData({ ...formData, surname: e.target.value })
                   }
-                  required
                   className={styles.textInput}
                 />
               </div>
@@ -122,7 +128,6 @@ export default function MemberModal({ isOpen, onClose, onSave, editData }) {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  required
                   className={styles.textInput}
                 />
               </div>
@@ -135,7 +140,6 @@ export default function MemberModal({ isOpen, onClose, onSave, editData }) {
                   onChange={(e) =>
                     setFormData({ ...formData, role: e.target.value })
                   }
-                  required
                   className={styles.textInput}
                 />
               </div>
