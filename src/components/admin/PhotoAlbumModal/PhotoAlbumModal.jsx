@@ -26,6 +26,7 @@ export default function PhotoAlbumModal({ isOpen, onClose, editData = null }) {
       setTitle(editData.title || "");
       setOrder(editData.order || 0);
       setCover(null);
+      setImages(null);
     } else {
       setTitle("");
       setOrder(0);
@@ -37,7 +38,7 @@ export default function PhotoAlbumModal({ isOpen, onClose, editData = null }) {
 
   if (!isOpen) return null;
 
- const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!title.trim()) {
@@ -56,6 +57,11 @@ export default function PhotoAlbumModal({ isOpen, onClose, editData = null }) {
       }
     }
 
+    if (images && images.length > 50) {
+      toast.error("Можна завантажити не більше 50 фото за один раз");
+      return;
+    }
+
     setLoading(true);
 
     const formData = new FormData();
@@ -66,7 +72,7 @@ export default function PhotoAlbumModal({ isOpen, onClose, editData = null }) {
       formData.append("cover", cover);
     }
 
-    if (!editData && images) {
+    if (images && images.length > 0) {
       Array.from(images).forEach((file) => {
         formData.append("images", file);
       });
@@ -81,7 +87,11 @@ export default function PhotoAlbumModal({ isOpen, onClose, editData = null }) {
         await dispatch(
           updateAlbum({ id: editData._id, formData })
         ).unwrap();
-        toast.success(`Альбом ${formattedName} оновлено!`);
+        toast.success(
+          images 
+            ? `Альбом ${formattedName} оновлено, фото додано!` 
+            : `Альбом ${formattedName} оновлено!`
+        );
       } else {
         await dispatch(addAlbum(formData)).unwrap();
         toast.success(`Альбом ${formattedName} створено!`);
@@ -138,23 +148,27 @@ export default function PhotoAlbumModal({ isOpen, onClose, editData = null }) {
               disabled={loading}
             />
 
-            {!editData && (
-              <AdminFileInput
-                label="Фотографії альбому"
-                onChange={(files) => setImages(files)}
-                fileName={
-                  images ? `Вибрано ${images.length} фото` : "Файли не вибрано"
-                }
-                disabled={loading}
-                multiple={true}
-              />
+            <AdminFileInput
+              label={editData ? "Додати нові фото до альбому" : "Фотографії альбому"}
+              onChange={(files) => setImages(files)}
+              fileName={
+                images ? `Вибрано ${images.length} фото` : "Файли не вибрано"
+              }
+              disabled={loading}
+              multiple={true}
+            />
+            
+            {editData && (
+              <p className={styles.hint}>
+                * Вибрані фото будуть додані до вже існуючих в альбомі.
+              </p>
             )}
           </div>
 
           <AdminModalActions
             onClose={onClose}
             loading={loading}
-            submitText={editData ? "Оновити" : "Завантажити альбом"}
+            submitText={editData ? "Зберегти зміни" : "Завантажити альбом"}
           />
         </form>
       </div>
