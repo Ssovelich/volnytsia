@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🏰 Website Княжа Вольниця + Admin Panel
+Сучасна веб-платформа для управління контентом культурно-історичного проєкту "Княжа Вольниця". Система дозволяє динамічно керувати медіа-контентом, учасниками, нагородами та банерами через зручну адміністративну панель.
 
-## Getting Started
+🚀 Технологічний стек
+Frontend
+Next.js 14+ (App Router) — основний фреймворк.
 
-First, run the development server:
+Redux Toolkit — централізоване керування станом (Gallery, Leaders, Members, Awards ... ).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+SCSS Modules — ізольована та гнучка стилізація.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Axios — взаємодія з REST API.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+React Hot Toast — інтерактивна система сповіщень.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Backend
+Node.js & Express — серверна частина.
 
-## Learn More
+Multer — обробка завантаження файлів (multipart/form-data).
 
-To learn more about Next.js, take a look at the following resources:
+Cloudinary SDK — хмарне зберігання та трансформація зображень "на льоту".
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Mongoose — робота з MongoDB.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Інфраструктура та DevTools
+База даних: MongoDB Atlas (NoSQL).
 
-## Deploy on Vercel
+Медіа-хостинг: Cloudinary (автоматична оптимізація форматів WebP/AVIF).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Деплой: Vercel (Frontend) та Render (Backend).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Стабільність: Cron-job.org — інтегрований сервіс для запобігання "засинанню" (idling) безкоштовного інстансу на Render. Кожні 10 хвилин виконується системний запит до API, що забезпечує миттєвий відгук сайту для користувачів 24/7.
