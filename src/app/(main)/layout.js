@@ -5,6 +5,7 @@ import PageLoader from "@/components/PageLoader/PageLoader";
 import StoreProvider from "@/app/(main)/StoreProvider";
 import { Inter, Marmelad, Marck_Script } from "next/font/google";
 import ScrollToTop from "@/components/ScrollToTop/ScrollToTop";
+import CookieBanner from "@/components/CookieBanner/CookieBanner";
 
 export const metadata = {
   metadataBase: new URL("https://volnytsia.vercel.app"),
@@ -98,6 +99,7 @@ export default function MainLayout({ children }) {
         <main>{children}</main>
         <Footer />
         <ScrollToTop />
+        <CookieBanner />
       </StoreProvider>
     </div>
   );

@@ -1,0 +1,109 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: all;
+
+  &:not(.backdropHidden) {
+    opacity: 1;
+  }
+}
+
+.backdropHidden {
+  opacity: 0 !important;
+}
+
+.banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  transform: translateY(150%);
+  opacity: 0;
+}
+
+.slideUp {
+  animation: slideUp 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.slideDown {
+  animation: slideDown 0.9s ease-in forwards;
+}
+
+.container {
+  background-color: #fff;
+  backdrop-filter: blur(10px);
+  padding: 32px 16px;
+  width: 100%;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+.button {
+  background-color: var(--korichneviy-volnicya);
+  color: #fff;
+  width: 200px;
+  height: 48px;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 115%;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: var(--chervoniy-volnicya);
+  }
+
+  &:active {
+    background-color: var(--svіtlo-chervoniy);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(150%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(150%);
+    opacity: 0;
+  }
+}
